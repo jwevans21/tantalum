@@ -1,0 +1,269 @@
+---
+source: tantalum_parser/tests/snapshots.rs
+expression: ast
+snapshot_kind: text
+---
+Ok([
+  TopLevelExpression(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 0,
+      end: 46,
+      line: 1,
+      column: 1,
+    ),
+    kind: ExternalFunction(
+      name: "printf",
+      parameters: [
+        Parameter(
+          span: Span(
+            file_name: "hello_world.ta",
+            start: 17,
+            end: 34,
+            line: 1,
+            column: 18,
+          ),
+          kind: Named(
+            name: "format",
+            ty: Type(
+              span: Span(
+                file_name: "hello_world.ta",
+                start: 25,
+                end: 34,
+                line: 1,
+                column: 26,
+              ),
+              kind: Pointer(Type(
+                span: Span(
+                  file_name: "hello_world.ta",
+                  start: 26,
+                  end: 34,
+                  line: 1,
+                  column: 27,
+                ),
+                kind: Const(Type(
+                  span: Span(
+                    file_name: "hello_world.ta",
+                    start: 32,
+                    end: 34,
+                    line: 1,
+                    column: 33,
+                  ),
+                  kind: Named("u8"),
+                )),
+              )),
+            ),
+          ),
+        ),
+      ],
+      return_type: Type(
+        span: Span(
+          file_name: "hello_world.ta",
+          start: 42,
+          end: 45,
+          line: 1,
+          column: 43,
+        ),
+        kind: Named("i32"),
+      ),
+      is_variadic: true,
+    ),
+  ),
+  TopLevelExpression(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 48,
+      end: 122,
+      line: 3,
+      column: 0,
+    ),
+    kind: FunctionDeclaration(
+      name: "main",
+      parameters: [],
+      return_type: Type(
+        span: Span(
+          file_name: "hello_world.ta",
+          start: 59,
+          end: 62,
+          line: 3,
+          column: 11,
+        ),
+        kind: Named("i32"),
+      ),
+      body: Statement(
+        span: Span(
+          file_name: "hello_world.ta",
+          start: 63,
+          end: 122,
+          line: 3,
+          column: 15,
+        ),
+        kind: Block(
+          statements: [
+            Statement(
+              span: Span(
+                file_name: "hello_world.ta",
+                start: 69,
+                end: 97,
+                line: 4,
+                column: 4,
+              ),
+              kind: Expression(
+                expression: Expression(
+                  span: Span(
+                    file_name: "hello_world.ta",
+                    start: 69,
+                    end: 96,
+                    line: 4,
+                    column: 4,
+                  ),
+                  kind: FunctionCall(
+                    source: Expression(
+                      span: Span(
+                        file_name: "hello_world.ta",
+                        start: 69,
+                        end: 75,
+                        line: 4,
+                        column: 4,
+                      ),
+                      kind: Variable(
+                        name: "printf",
+                      ),
+                    ),
+                    arguments: [
+                      Expression(
+                        span: Span(
+                          file_name: "hello_world.ta",
+                          start: 76,
+                          end: 95,
+                          line: 4,
+                          column: 11,
+                        ),
+                        kind: UnaryOperation(
+                          operator: UnaryOperator(
+                            span: Span(
+                              file_name: "hello_world.ta",
+                              start: 93,
+                              end: 95,
+                              line: 4,
+                              column: 28,
+                            ),
+                            kind: AddressOf,
+                          ),
+                          operand: Expression(
+                            span: Span(
+                              file_name: "hello_world.ta",
+                              start: 76,
+                              end: 93,
+                              line: 4,
+                              column: 11,
+                            ),
+                            kind: StringLiteral(
+                              value: "\"Hello, World!\\n\"",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "hello_world.ta",
+                start: 103,
+                end: 120,
+                line: 6,
+                column: 4,
+              ),
+              kind: Return(
+                value: Some(Expression(
+                  span: Span(
+                    file_name: "hello_world.ta",
+                    start: 110,
+                    end: 119,
+                    line: 6,
+                    column: 11,
+                  ),
+                  kind: BinaryOperation(
+                    left: Expression(
+                      span: Span(
+                        file_name: "hello_world.ta",
+                        start: 110,
+                        end: 115,
+                        line: 6,
+                        column: 11,
+                      ),
+                      kind: BinaryOperation(
+                        left: Expression(
+                          span: Span(
+                            file_name: "hello_world.ta",
+                            start: 110,
+                            end: 111,
+                            line: 6,
+                            column: 11,
+                          ),
+                          kind: IntegerLiteral(
+                            value: "3",
+                            radix: 10,
+                          ),
+                        ),
+                        operator: BinaryOperator(
+                          span: Span(
+                            file_name: "hello_world.ta",
+                            start: 112,
+                            end: 113,
+                            line: 6,
+                            column: 13,
+                          ),
+                          kind: Multiplication,
+                        ),
+                        right: Expression(
+                          span: Span(
+                            file_name: "hello_world.ta",
+                            start: 114,
+                            end: 115,
+                            line: 6,
+                            column: 15,
+                          ),
+                          kind: IntegerLiteral(
+                            value: "7",
+                            radix: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                    operator: BinaryOperator(
+                      span: Span(
+                        file_name: "hello_world.ta",
+                        start: 116,
+                        end: 117,
+                        line: 6,
+                        column: 17,
+                      ),
+                      kind: Addition,
+                    ),
+                    right: Expression(
+                      span: Span(
+                        file_name: "hello_world.ta",
+                        start: 118,
+                        end: 119,
+                        line: 6,
+                        column: 19,
+                      ),
+                      kind: IntegerLiteral(
+                        value: "2",
+                        radix: 10,
+                      ),
+                    ),
+                  ),
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ),
+])

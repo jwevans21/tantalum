@@ -1,0 +1,30 @@
+use crate::single_token_test_case;
+
+single_token_test_case! {
+    Colon : ":" => ":" (0..1, 1, 1),
+    ColonColon : "::" => "::" (0..2, 1, 1),
+    Dot : "." => "." (0..1, 1, 1),
+    DotStar : ".*" => ".*" (0..2, 1, 1),
+    DotAmpersand : ".&" => ".&" (0..2, 1, 1),
+    Equal : "=" => "=" (0..1, 1, 1),
+    Plus : "+" => "+" (0..1, 1, 1),
+    Minus : "-" => "-" (0..1, 1, 1),
+    Star : "*" => "*" (0..1, 1, 1),
+    Slash : "/" => "/" (0..1, 1, 1),
+    Percent : "%" => "%" (0..1, 1, 1),
+    AmpersandAmpersand : "&&" => "&&" (0..2, 1, 1),
+    PipePipe : "||" => "||" (0..2, 1, 1),
+    Exclamation : "!" => "!" (0..1, 1, 1),
+    Ampersand : "&" => "&" (0..1, 1, 1),
+    Pipe : "|" => "|" (0..1, 1, 1),
+    Caret : "^" => "^" (0..1, 1, 1),
+    Tilde : "~" => "~" (0..1, 1, 1),
+    LeftAngleLeftAngle : "<<" => "<<" (0..2, 1, 1),
+    RightAngleRightAngle : ">>" => ">>" (0..2, 1, 1),
+    EqualEqual : "==" => "==" (0..2, 1, 1),
+    ExclamationEqual : "!=" => "!=" (0..2, 1, 1),
+    LeftAngle : "<" => "<" (0..1, 1, 1),
+    LeftAngleEqual : "<=" => "<=" (0..2, 1, 1),
+    RightAngle : ">" => ">" (0..1, 1, 1),
+    RightAngleEqual : ">=" => ">=" (0..2, 1, 1)
+}

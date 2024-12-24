@@ -1,0 +1,27 @@
+[package]
+name = "tantalum_parser"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde = { workspace = true, optional = true }
+
+tantalum_ast = { path = "../tantalum_ast" }
+tantalum_lexer = { path = "../tantalum_lexer" }
+tantalum_span = { path = "../tantalum_span" }
+
+[features]
+default = ["serde"]
+serde = ["dep:serde"]
+
+[dev-dependencies]
+insta = { workspace = true}
+pretty_assertions = { workspace = true }
+
+[lints]
+workspace = true

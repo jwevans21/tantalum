@@ -1,0 +1,128 @@
+---
+source: tantalum_lexer/tests/snapshots.rs
+expression: tokens
+snapshot_kind: text
+---
+[
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 0,
+      end: 2,
+      line: 1,
+      column: 1,
+    ),
+    lexeme: "fn",
+    kind: KeywordFn,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 3,
+      end: 7,
+      line: 1,
+      column: 4,
+    ),
+    lexeme: "main",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 7,
+      end: 8,
+      line: 1,
+      column: 8,
+    ),
+    lexeme: "(",
+    kind: LeftParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 8,
+      end: 9,
+      line: 1,
+      column: 9,
+    ),
+    lexeme: ")",
+    kind: RightParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 9,
+      end: 10,
+      line: 1,
+      column: 10,
+    ),
+    lexeme: ":",
+    kind: Colon,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 11,
+      end: 14,
+      line: 1,
+      column: 12,
+    ),
+    lexeme: "i32",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 15,
+      end: 16,
+      line: 1,
+      column: 16,
+    ),
+    lexeme: "{",
+    kind: LeftBrace,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 21,
+      end: 27,
+      line: 2,
+      column: 4,
+    ),
+    lexeme: "return",
+    kind: KeywordReturn,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 28,
+      end: 29,
+      line: 2,
+      column: 11,
+    ),
+    lexeme: "0",
+    kind: DecimalIntegerLiteral,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 29,
+      end: 30,
+      line: 2,
+      column: 12,
+    ),
+    lexeme: ";",
+    kind: Semicolon,
+  ),
+  Token(
+    span: Span(
+      file_name: "start.ta",
+      start: 31,
+      end: 32,
+      line: 3,
+      column: 0,
+    ),
+    lexeme: "}",
+    kind: RightBrace,
+  ),
+]

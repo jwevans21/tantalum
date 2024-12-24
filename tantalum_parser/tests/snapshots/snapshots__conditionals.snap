@@ -1,0 +1,368 @@
+---
+source: tantalum_parser/tests/snapshots.rs
+expression: ast
+snapshot_kind: text
+---
+Ok([
+  TopLevelExpression(
+    span: Span(
+      file_name: "conditionals.ta",
+      start: 0,
+      end: 192,
+      line: 1,
+      column: 1,
+    ),
+    kind: FunctionDeclaration(
+      name: "main",
+      parameters: [],
+      return_type: Type(
+        span: Span(
+          file_name: "conditionals.ta",
+          start: 11,
+          end: 14,
+          line: 1,
+          column: 12,
+        ),
+        kind: Named("i32"),
+      ),
+      body: Statement(
+        span: Span(
+          file_name: "conditionals.ta",
+          start: 15,
+          end: 192,
+          line: 1,
+          column: 16,
+        ),
+        kind: Block(
+          statements: [
+            Statement(
+              span: Span(
+                file_name: "conditionals.ta",
+                start: 21,
+                end: 37,
+                line: 2,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "a",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 28,
+                    end: 31,
+                    line: 2,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 34,
+                    end: 36,
+                    line: 2,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "10",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "conditionals.ta",
+                start: 42,
+                end: 58,
+                line: 3,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "b",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 49,
+                    end: 52,
+                    line: 3,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 55,
+                    end: 57,
+                    line: 3,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "20",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "conditionals.ta",
+                start: 63,
+                end: 79,
+                line: 4,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "c",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 70,
+                    end: 73,
+                    line: 4,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 76,
+                    end: 78,
+                    line: 4,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "30",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "conditionals.ta",
+                start: 85,
+                end: 190,
+                line: 6,
+                column: 4,
+              ),
+              kind: If(
+                condition: Expression(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 88,
+                    end: 93,
+                    line: 6,
+                    column: 7,
+                  ),
+                  kind: BinaryOperation(
+                    left: Expression(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 88,
+                        end: 89,
+                        line: 6,
+                        column: 7,
+                      ),
+                      kind: Variable(
+                        name: "a",
+                      ),
+                    ),
+                    operator: BinaryOperator(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 90,
+                        end: 91,
+                        line: 6,
+                        column: 9,
+                      ),
+                      kind: GreaterThan,
+                    ),
+                    right: Expression(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 92,
+                        end: 93,
+                        line: 6,
+                        column: 11,
+                      ),
+                      kind: Variable(
+                        name: "b",
+                      ),
+                    ),
+                  ),
+                ),
+                body: Statement(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 94,
+                    end: 119,
+                    line: 6,
+                    column: 13,
+                  ),
+                  kind: Block(
+                    statements: [
+                      Statement(
+                        span: Span(
+                          file_name: "conditionals.ta",
+                          start: 104,
+                          end: 113,
+                          line: 7,
+                          column: 8,
+                        ),
+                        kind: Return(
+                          value: Some(Expression(
+                            span: Span(
+                              file_name: "conditionals.ta",
+                              start: 111,
+                              end: 112,
+                              line: 7,
+                              column: 15,
+                            ),
+                            kind: Variable(
+                              name: "a",
+                            ),
+                          )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                else_branch: Some(Statement(
+                  span: Span(
+                    file_name: "conditionals.ta",
+                    start: 125,
+                    end: 190,
+                    line: 8,
+                    column: 11,
+                  ),
+                  kind: If(
+                    condition: Expression(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 128,
+                        end: 133,
+                        line: 8,
+                        column: 14,
+                      ),
+                      kind: BinaryOperation(
+                        left: Expression(
+                          span: Span(
+                            file_name: "conditionals.ta",
+                            start: 128,
+                            end: 129,
+                            line: 8,
+                            column: 14,
+                          ),
+                          kind: Variable(
+                            name: "b",
+                          ),
+                        ),
+                        operator: BinaryOperator(
+                          span: Span(
+                            file_name: "conditionals.ta",
+                            start: 130,
+                            end: 131,
+                            line: 8,
+                            column: 16,
+                          ),
+                          kind: GreaterThan,
+                        ),
+                        right: Expression(
+                          span: Span(
+                            file_name: "conditionals.ta",
+                            start: 132,
+                            end: 133,
+                            line: 8,
+                            column: 18,
+                          ),
+                          kind: Variable(
+                            name: "c",
+                          ),
+                        ),
+                      ),
+                    ),
+                    body: Statement(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 134,
+                        end: 159,
+                        line: 8,
+                        column: 20,
+                      ),
+                      kind: Block(
+                        statements: [
+                          Statement(
+                            span: Span(
+                              file_name: "conditionals.ta",
+                              start: 144,
+                              end: 153,
+                              line: 9,
+                              column: 8,
+                            ),
+                            kind: Return(
+                              value: Some(Expression(
+                                span: Span(
+                                  file_name: "conditionals.ta",
+                                  start: 151,
+                                  end: 152,
+                                  line: 9,
+                                  column: 15,
+                                ),
+                                kind: Variable(
+                                  name: "b",
+                                ),
+                              )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    else_branch: Some(Statement(
+                      span: Span(
+                        file_name: "conditionals.ta",
+                        start: 165,
+                        end: 190,
+                        line: 10,
+                        column: 11,
+                      ),
+                      kind: Block(
+                        statements: [
+                          Statement(
+                            span: Span(
+                              file_name: "conditionals.ta",
+                              start: 175,
+                              end: 184,
+                              line: 11,
+                              column: 8,
+                            ),
+                            kind: Return(
+                              value: Some(Expression(
+                                span: Span(
+                                  file_name: "conditionals.ta",
+                                  start: 182,
+                                  end: 183,
+                                  line: 11,
+                                  column: 15,
+                                ),
+                                kind: Variable(
+                                  name: "c",
+                                ),
+                              )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+                  ),
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ),
+])

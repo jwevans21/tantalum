@@ -1,0 +1,403 @@
+---
+source: tantalum_lexer/tests/snapshots.rs
+expression: tokens
+snapshot_kind: text
+---
+[
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 0,
+      end: 6,
+      line: 1,
+      column: 1,
+    ),
+    lexeme: "extern",
+    kind: KeywordExtern,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 7,
+      end: 9,
+      line: 1,
+      column: 8,
+    ),
+    lexeme: "fn",
+    kind: KeywordFn,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 10,
+      end: 16,
+      line: 1,
+      column: 11,
+    ),
+    lexeme: "printf",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 16,
+      end: 17,
+      line: 1,
+      column: 17,
+    ),
+    lexeme: "(",
+    kind: LeftParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 17,
+      end: 23,
+      line: 1,
+      column: 18,
+    ),
+    lexeme: "format",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 23,
+      end: 24,
+      line: 1,
+      column: 24,
+    ),
+    lexeme: ":",
+    kind: Colon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 25,
+      end: 26,
+      line: 1,
+      column: 26,
+    ),
+    lexeme: "*",
+    kind: Star,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 26,
+      end: 31,
+      line: 1,
+      column: 27,
+    ),
+    lexeme: "const",
+    kind: KeywordConst,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 32,
+      end: 34,
+      line: 1,
+      column: 33,
+    ),
+    lexeme: "u8",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 34,
+      end: 35,
+      line: 1,
+      column: 35,
+    ),
+    lexeme: ",",
+    kind: Comma,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 36,
+      end: 39,
+      line: 1,
+      column: 37,
+    ),
+    lexeme: "...",
+    kind: DotDotDot,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 39,
+      end: 40,
+      line: 1,
+      column: 40,
+    ),
+    lexeme: ")",
+    kind: RightParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 40,
+      end: 41,
+      line: 1,
+      column: 41,
+    ),
+    lexeme: ":",
+    kind: Colon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 42,
+      end: 45,
+      line: 1,
+      column: 43,
+    ),
+    lexeme: "i32",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 45,
+      end: 46,
+      line: 1,
+      column: 46,
+    ),
+    lexeme: ";",
+    kind: Semicolon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 48,
+      end: 50,
+      line: 3,
+      column: 0,
+    ),
+    lexeme: "fn",
+    kind: KeywordFn,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 51,
+      end: 55,
+      line: 3,
+      column: 3,
+    ),
+    lexeme: "main",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 55,
+      end: 56,
+      line: 3,
+      column: 7,
+    ),
+    lexeme: "(",
+    kind: LeftParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 56,
+      end: 57,
+      line: 3,
+      column: 8,
+    ),
+    lexeme: ")",
+    kind: RightParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 57,
+      end: 58,
+      line: 3,
+      column: 9,
+    ),
+    lexeme: ":",
+    kind: Colon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 59,
+      end: 62,
+      line: 3,
+      column: 11,
+    ),
+    lexeme: "i32",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 63,
+      end: 64,
+      line: 3,
+      column: 15,
+    ),
+    lexeme: "{",
+    kind: LeftBrace,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 69,
+      end: 75,
+      line: 4,
+      column: 4,
+    ),
+    lexeme: "printf",
+    kind: Identifier,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 75,
+      end: 76,
+      line: 4,
+      column: 10,
+    ),
+    lexeme: "(",
+    kind: LeftParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 76,
+      end: 93,
+      line: 4,
+      column: 11,
+    ),
+    lexeme: "\"Hello, World!\\n\"",
+    kind: StringLiteral,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 93,
+      end: 95,
+      line: 4,
+      column: 28,
+    ),
+    lexeme: ".&",
+    kind: DotAmpersand,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 95,
+      end: 96,
+      line: 4,
+      column: 30,
+    ),
+    lexeme: ")",
+    kind: RightParen,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 96,
+      end: 97,
+      line: 4,
+      column: 31,
+    ),
+    lexeme: ";",
+    kind: Semicolon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 103,
+      end: 109,
+      line: 6,
+      column: 4,
+    ),
+    lexeme: "return",
+    kind: KeywordReturn,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 110,
+      end: 111,
+      line: 6,
+      column: 11,
+    ),
+    lexeme: "3",
+    kind: DecimalIntegerLiteral,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 112,
+      end: 113,
+      line: 6,
+      column: 13,
+    ),
+    lexeme: "*",
+    kind: Star,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 114,
+      end: 115,
+      line: 6,
+      column: 15,
+    ),
+    lexeme: "7",
+    kind: DecimalIntegerLiteral,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 116,
+      end: 117,
+      line: 6,
+      column: 17,
+    ),
+    lexeme: "+",
+    kind: Plus,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 118,
+      end: 119,
+      line: 6,
+      column: 19,
+    ),
+    lexeme: "2",
+    kind: DecimalIntegerLiteral,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 119,
+      end: 120,
+      line: 6,
+      column: 20,
+    ),
+    lexeme: ";",
+    kind: Semicolon,
+  ),
+  Token(
+    span: Span(
+      file_name: "hello_world.ta",
+      start: 121,
+      end: 122,
+      line: 7,
+      column: 0,
+    ),
+    lexeme: "}",
+    kind: RightBrace,
+  ),
+]

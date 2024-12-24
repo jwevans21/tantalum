@@ -1,0 +1,885 @@
+---
+source: tantalum_parser/tests/snapshots.rs
+expression: ast
+snapshot_kind: text
+---
+Ok([
+  TopLevelExpression(
+    span: Span(
+      file_name: "loops.ta",
+      start: 0,
+      end: 46,
+      line: 1,
+      column: 1,
+    ),
+    kind: ExternalFunction(
+      name: "printf",
+      parameters: [
+        Parameter(
+          span: Span(
+            file_name: "loops.ta",
+            start: 17,
+            end: 34,
+            line: 1,
+            column: 18,
+          ),
+          kind: Named(
+            name: "format",
+            ty: Type(
+              span: Span(
+                file_name: "loops.ta",
+                start: 25,
+                end: 34,
+                line: 1,
+                column: 26,
+              ),
+              kind: Pointer(Type(
+                span: Span(
+                  file_name: "loops.ta",
+                  start: 26,
+                  end: 34,
+                  line: 1,
+                  column: 27,
+                ),
+                kind: Const(Type(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 32,
+                    end: 34,
+                    line: 1,
+                    column: 33,
+                  ),
+                  kind: Named("u8"),
+                )),
+              )),
+            ),
+          ),
+        ),
+      ],
+      return_type: Type(
+        span: Span(
+          file_name: "loops.ta",
+          start: 42,
+          end: 45,
+          line: 1,
+          column: 43,
+        ),
+        kind: Named("i32"),
+      ),
+      is_variadic: true,
+    ),
+  ),
+  TopLevelExpression(
+    span: Span(
+      file_name: "loops.ta",
+      start: 48,
+      end: 397,
+      line: 3,
+      column: 0,
+    ),
+    kind: FunctionDeclaration(
+      name: "main",
+      parameters: [],
+      return_type: Type(
+        span: Span(
+          file_name: "loops.ta",
+          start: 59,
+          end: 62,
+          line: 3,
+          column: 11,
+        ),
+        kind: Named("i32"),
+      ),
+      body: Statement(
+        span: Span(
+          file_name: "loops.ta",
+          start: 63,
+          end: 397,
+          line: 3,
+          column: 15,
+        ),
+        kind: Block(
+          statements: [
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 69,
+                end: 85,
+                line: 4,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "a",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 76,
+                    end: 79,
+                    line: 4,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 82,
+                    end: 84,
+                    line: 4,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "10",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 90,
+                end: 106,
+                line: 5,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "b",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 97,
+                    end: 100,
+                    line: 5,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 103,
+                    end: 105,
+                    line: 5,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "20",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 111,
+                end: 127,
+                line: 6,
+                column: 4,
+              ),
+              kind: VariableDeclaration(
+                name: "c",
+                ty: Some(Type(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 118,
+                    end: 121,
+                    line: 6,
+                    column: 11,
+                  ),
+                  kind: Named("i32"),
+                )),
+                value: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 124,
+                    end: 126,
+                    line: 6,
+                    column: 17,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "30",
+                    radix: 10,
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 133,
+                end: 225,
+                line: 8,
+                column: 4,
+              ),
+              kind: While(
+                condition: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 139,
+                    end: 144,
+                    line: 8,
+                    column: 10,
+                  ),
+                  kind: BinaryOperation(
+                    left: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 139,
+                        end: 140,
+                        line: 8,
+                        column: 10,
+                      ),
+                      kind: Variable(
+                        name: "b",
+                      ),
+                    ),
+                    operator: BinaryOperator(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 141,
+                        end: 142,
+                        line: 8,
+                        column: 12,
+                      ),
+                      kind: GreaterThan,
+                    ),
+                    right: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 143,
+                        end: 144,
+                        line: 8,
+                        column: 14,
+                      ),
+                      kind: Variable(
+                        name: "a",
+                      ),
+                    ),
+                  ),
+                ),
+                body: Statement(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 145,
+                    end: 225,
+                    line: 8,
+                    column: 16,
+                  ),
+                  kind: Block(
+                    statements: [
+                      Statement(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 155,
+                          end: 165,
+                          line: 9,
+                          column: 8,
+                        ),
+                        kind: Expression(
+                          expression: Expression(
+                            span: Span(
+                              file_name: "loops.ta",
+                              start: 155,
+                              end: 164,
+                              line: 9,
+                              column: 8,
+                            ),
+                            kind: BinaryOperation(
+                              left: Expression(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 155,
+                                  end: 156,
+                                  line: 9,
+                                  column: 8,
+                                ),
+                                kind: Variable(
+                                  name: "a",
+                                ),
+                              ),
+                              operator: BinaryOperator(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 157,
+                                  end: 158,
+                                  line: 9,
+                                  column: 10,
+                                ),
+                                kind: Assignment,
+                              ),
+                              right: Expression(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 159,
+                                  end: 164,
+                                  line: 9,
+                                  column: 12,
+                                ),
+                                kind: BinaryOperation(
+                                  left: Expression(
+                                    span: Span(
+                                      file_name: "loops.ta",
+                                      start: 159,
+                                      end: 160,
+                                      line: 9,
+                                      column: 12,
+                                    ),
+                                    kind: Variable(
+                                      name: "a",
+                                    ),
+                                  ),
+                                  operator: BinaryOperator(
+                                    span: Span(
+                                      file_name: "loops.ta",
+                                      start: 161,
+                                      end: 162,
+                                      line: 9,
+                                      column: 14,
+                                    ),
+                                    kind: Addition,
+                                  ),
+                                  right: Expression(
+                                    span: Span(
+                                      file_name: "loops.ta",
+                                      start: 163,
+                                      end: 164,
+                                      line: 9,
+                                      column: 16,
+                                    ),
+                                    kind: IntegerLiteral(
+                                      value: "1",
+                                      radix: 10,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Statement(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 175,
+                          end: 219,
+                          line: 11,
+                          column: 8,
+                        ),
+                        kind: If(
+                          condition: Expression(
+                            span: Span(
+                              file_name: "loops.ta",
+                              start: 178,
+                              end: 185,
+                              line: 11,
+                              column: 11,
+                            ),
+                            kind: BinaryOperation(
+                              left: Expression(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 178,
+                                  end: 179,
+                                  line: 11,
+                                  column: 11,
+                                ),
+                                kind: Variable(
+                                  name: "a",
+                                ),
+                              ),
+                              operator: BinaryOperator(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 180,
+                                  end: 182,
+                                  line: 11,
+                                  column: 13,
+                                ),
+                                kind: Equality,
+                              ),
+                              right: Expression(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 183,
+                                  end: 185,
+                                  line: 11,
+                                  column: 16,
+                                ),
+                                kind: IntegerLiteral(
+                                  value: "15",
+                                  radix: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                          body: Statement(
+                            span: Span(
+                              file_name: "loops.ta",
+                              start: 186,
+                              end: 219,
+                              line: 11,
+                              column: 19,
+                            ),
+                            kind: Block(
+                              statements: [
+                                Statement(
+                                  span: Span(
+                                    file_name: "loops.ta",
+                                    start: 200,
+                                    end: 209,
+                                    line: 12,
+                                    column: 12,
+                                  ),
+                                  kind: Continue,
+                                ),
+                              ],
+                            ),
+                          ),
+                          else_branch: None,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 231,
+                end: 252,
+                line: 16,
+                column: 4,
+              ),
+              kind: Expression(
+                expression: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 231,
+                    end: 251,
+                    line: 16,
+                    column: 4,
+                  ),
+                  kind: FunctionCall(
+                    source: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 231,
+                        end: 237,
+                        line: 16,
+                        column: 4,
+                      ),
+                      kind: Variable(
+                        name: "printf",
+                      ),
+                    ),
+                    arguments: [
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 238,
+                          end: 247,
+                          line: 16,
+                          column: 11,
+                        ),
+                        kind: StringLiteral(
+                          value: "\"a: %d\\n\"",
+                        ),
+                      ),
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 249,
+                          end: 250,
+                          line: 16,
+                          column: 22,
+                        ),
+                        kind: Variable(
+                          name: "a",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 258,
+                end: 333,
+                line: 18,
+                column: 4,
+              ),
+              kind: ForInitCondUpdate(
+                initialization: Statement(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 262,
+                    end: 277,
+                    line: 18,
+                    column: 8,
+                  ),
+                  kind: VariableDeclaration(
+                    name: "i",
+                    ty: Some(Type(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 269,
+                        end: 272,
+                        line: 18,
+                        column: 15,
+                      ),
+                      kind: Named("i32"),
+                    )),
+                    value: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 275,
+                        end: 276,
+                        line: 18,
+                        column: 21,
+                      ),
+                      kind: Variable(
+                        name: "a",
+                      ),
+                    ),
+                  ),
+                ),
+                condition: Statement(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 278,
+                    end: 284,
+                    line: 18,
+                    column: 24,
+                  ),
+                  kind: Expression(
+                    expression: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 278,
+                        end: 283,
+                        line: 18,
+                        column: 24,
+                      ),
+                      kind: BinaryOperation(
+                        left: Expression(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 278,
+                            end: 279,
+                            line: 18,
+                            column: 24,
+                          ),
+                          kind: Variable(
+                            name: "i",
+                          ),
+                        ),
+                        operator: BinaryOperator(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 280,
+                            end: 281,
+                            line: 18,
+                            column: 26,
+                          ),
+                          kind: LessThan,
+                        ),
+                        right: Expression(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 282,
+                            end: 283,
+                            line: 18,
+                            column: 28,
+                          ),
+                          kind: Variable(
+                            name: "c",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                update: Statement(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 285,
+                    end: 295,
+                    line: 18,
+                    column: 31,
+                  ),
+                  kind: Expression(
+                    expression: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 285,
+                        end: 294,
+                        line: 18,
+                        column: 31,
+                      ),
+                      kind: BinaryOperation(
+                        left: Expression(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 285,
+                            end: 286,
+                            line: 18,
+                            column: 31,
+                          ),
+                          kind: Variable(
+                            name: "i",
+                          ),
+                        ),
+                        operator: BinaryOperator(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 287,
+                            end: 288,
+                            line: 18,
+                            column: 33,
+                          ),
+                          kind: Assignment,
+                        ),
+                        right: Expression(
+                          span: Span(
+                            file_name: "loops.ta",
+                            start: 289,
+                            end: 294,
+                            line: 18,
+                            column: 35,
+                          ),
+                          kind: BinaryOperation(
+                            left: Expression(
+                              span: Span(
+                                file_name: "loops.ta",
+                                start: 289,
+                                end: 290,
+                                line: 18,
+                                column: 35,
+                              ),
+                              kind: Variable(
+                                name: "i",
+                              ),
+                            ),
+                            operator: BinaryOperator(
+                              span: Span(
+                                file_name: "loops.ta",
+                                start: 291,
+                                end: 292,
+                                line: 18,
+                                column: 37,
+                              ),
+                              kind: Addition,
+                            ),
+                            right: Expression(
+                              span: Span(
+                                file_name: "loops.ta",
+                                start: 293,
+                                end: 294,
+                                line: 18,
+                                column: 39,
+                              ),
+                              kind: IntegerLiteral(
+                                value: "1",
+                                radix: 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                body: Statement(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 296,
+                    end: 333,
+                    line: 18,
+                    column: 42,
+                  ),
+                  kind: Block(
+                    statements: [
+                      Statement(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 306,
+                          end: 327,
+                          line: 19,
+                          column: 8,
+                        ),
+                        kind: Expression(
+                          expression: Expression(
+                            span: Span(
+                              file_name: "loops.ta",
+                              start: 306,
+                              end: 326,
+                              line: 19,
+                              column: 8,
+                            ),
+                            kind: FunctionCall(
+                              source: Expression(
+                                span: Span(
+                                  file_name: "loops.ta",
+                                  start: 306,
+                                  end: 312,
+                                  line: 19,
+                                  column: 8,
+                                ),
+                                kind: Variable(
+                                  name: "printf",
+                                ),
+                              ),
+                              arguments: [
+                                Expression(
+                                  span: Span(
+                                    file_name: "loops.ta",
+                                    start: 313,
+                                    end: 322,
+                                    line: 19,
+                                    column: 15,
+                                  ),
+                                  kind: StringLiteral(
+                                    value: "\"i: %d\\n\"",
+                                  ),
+                                ),
+                                Expression(
+                                  span: Span(
+                                    file_name: "loops.ta",
+                                    start: 324,
+                                    end: 325,
+                                    line: 19,
+                                    column: 26,
+                                  ),
+                                  kind: Variable(
+                                    name: "i",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 339,
+                end: 380,
+                line: 22,
+                column: 4,
+              ),
+              kind: Expression(
+                expression: Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 339,
+                    end: 379,
+                    line: 22,
+                    column: 4,
+                  ),
+                  kind: FunctionCall(
+                    source: Expression(
+                      span: Span(
+                        file_name: "loops.ta",
+                        start: 339,
+                        end: 345,
+                        line: 22,
+                        column: 4,
+                      ),
+                      kind: Variable(
+                        name: "printf",
+                      ),
+                    ),
+                    arguments: [
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 346,
+                          end: 369,
+                          line: 22,
+                          column: 11,
+                        ),
+                        kind: StringLiteral(
+                          value: "\"a: %d, b: %d, c: %d\\n\"",
+                        ),
+                      ),
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 371,
+                          end: 372,
+                          line: 22,
+                          column: 36,
+                        ),
+                        kind: Variable(
+                          name: "a",
+                        ),
+                      ),
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 374,
+                          end: 375,
+                          line: 22,
+                          column: 39,
+                        ),
+                        kind: Variable(
+                          name: "b",
+                        ),
+                      ),
+                      Expression(
+                        span: Span(
+                          file_name: "loops.ta",
+                          start: 377,
+                          end: 378,
+                          line: 22,
+                          column: 42,
+                        ),
+                        kind: Variable(
+                          name: "c",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Statement(
+              span: Span(
+                file_name: "loops.ta",
+                start: 386,
+                end: 395,
+                line: 24,
+                column: 4,
+              ),
+              kind: Return(
+                value: Some(Expression(
+                  span: Span(
+                    file_name: "loops.ta",
+                    start: 393,
+                    end: 394,
+                    line: 24,
+                    column: 11,
+                  ),
+                  kind: IntegerLiteral(
+                    value: "0",
+                    radix: 10,
+                  ),
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ),
+])

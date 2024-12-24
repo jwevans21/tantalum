@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+members = ["tantalum_ast", "tantalum_lexer", "tantalum_parser", "tantalum_span"]
+
+[workspace.package]
+authors = ["Jacob Evans <jacob@evansj.dev>"]
+edition = "2021"
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/jwevans21/tantalum"
+publish = false
+
+[workspace.lints.clippy]
+correctness = { level = "deny", priority = -1 }
+suspicious = { level = "warn", priority = -1 }
+complexity = { level = "deny", priority = -1 }
+perf = { level = "deny", priority = -1 }
+style = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+restriction = { level = "allow", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+
+blanket_clippy_restriction_lints = "allow"
+needless_return = "allow"
+question_mark_used = "allow"
+pub_use = "allow"
+self_named_module_files = "allow"
+module_name_repetitions = "allow"
+
+[workspace.dependencies]
+serde = { version = "1.0.216", features = ["derive"] }
+insta = { version = "1.41.1", features = ["ron"] }
+pretty_assertions = "1.4.1"
+proptest = "1.5.0"
+rstest = "0.23.0"
