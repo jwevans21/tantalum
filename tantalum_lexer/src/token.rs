@@ -49,7 +49,8 @@ impl<'file_name, 'source> Token<'file_name, 'source> {
         return self.span;
     }
 
-    #[must_use] pub fn range(&self) -> Range<usize> {
+    #[must_use]
+    pub fn range(&self) -> Range<usize> {
         return self.span.range();
     }
 

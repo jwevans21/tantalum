@@ -108,10 +108,12 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 ));
             }
             Some(token) => match token.kind() {
-                TokenKind::KeywordFn => {
-                    self.parse_top_level_extern_function(extern_token)
-                }
-                _ => unimplemented!("Token {:?} is not in the set {:?}", token.kind(), Self::EXTERN_START),
+                TokenKind::KeywordFn => self.parse_top_level_extern_function(extern_token),
+                _ => unimplemented!(
+                    "Token {:?} is not in the set {:?}",
+                    token.kind(),
+                    Self::EXTERN_START
+                ),
             },
         }
     }
@@ -136,7 +138,6 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 break;
             }
 
-            
             let parameter_name = self.expect(TokenKind::Identifier)?;
             self.expect(TokenKind::Colon)?;
             let parameter_type = self.parse_type()?;

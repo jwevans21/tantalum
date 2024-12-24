@@ -1,4 +1,6 @@
-use tantalum_ast::{BinaryOperator, BinaryOperatorKind, Expression, ExpressionKind, Type, TypeKind};
+use tantalum_ast::{
+    BinaryOperator, BinaryOperatorKind, Expression, ExpressionKind, Type, TypeKind,
+};
 use tantalum_lexer::Lexer;
 use tantalum_span::Span;
 

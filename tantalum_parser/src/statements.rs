@@ -1,4 +1,3 @@
-
 use tantalum_ast::{Statement, StatementKind};
 use tantalum_lexer::token_kind::TokenKind;
 
@@ -104,11 +103,9 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         };
 
         Ok(Statement {
-            span: if_token.span().extend(
-                &else_branch
-                    .as_ref()
-                    .map_or(body.span, |branch| branch.span),
-            ),
+            span: if_token
+                .span()
+                .extend(&else_branch.as_ref().map_or(body.span, |branch| branch.span)),
             kind: StatementKind::If {
                 condition,
                 body: Box::new(body),
@@ -125,7 +122,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let initializer = self.parse_statement()?;
         let condition = self.parse_statement()?;
         let update = self.parse_statement()?;
-        
+
         let body = self.parse_statement()?;
 
         Ok(Statement {

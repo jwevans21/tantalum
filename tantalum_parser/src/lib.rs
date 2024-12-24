@@ -7,8 +7,8 @@ pub mod error;
 
 mod expressions;
 mod statements;
-mod types;
 mod top_level;
+mod types;
 
 #[cfg(test)]
 mod tests;
@@ -38,9 +38,9 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     }
 
     /// Parse the entire source file.
-    /// 
+    ///
     /// # Errors
-    /// 
+    ///
     /// Returns an error if the parser encounters an unexpected token or the end of the file.
     pub fn parse(
         &mut self,

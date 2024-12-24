@@ -23,7 +23,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }),
             TokenKind::LeftBracket => {
                 let element_type = self.parse_type()?;
-                
+
                 let r_bracket = self.expect_any(&[TokenKind::RightBracket])?;
 
                 Ok(Type {
