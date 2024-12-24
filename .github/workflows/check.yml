@@ -1,0 +1,18 @@
+name: Check Code
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check Code Style
+        run: cargo fmt -v --all --check
+      - name: Check Code
+        run: cargo check -vv --workspace --keep-going --locked
+      - name: Check Code with Clippy
+        run: cargo clippy -vv --workspace --keep-going --locked
