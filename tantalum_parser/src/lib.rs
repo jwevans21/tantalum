@@ -113,7 +113,6 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             .copied()
     }
 
-
     fn expect_any<'a>(
         &mut self,
         set: &'a [TokenKind],

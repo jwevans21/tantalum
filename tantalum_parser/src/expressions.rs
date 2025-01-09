@@ -78,19 +78,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         TokenKind::Equal,
     ];
 
-    fn prefix_binding_power(kind: &TokenKind) -> Option<((), u8)> {
+    fn prefix_binding_power(kind: TokenKind) -> Option<((), u8)> {
         match kind {
-            TokenKind::Minus => Some(((), 100)),
-            TokenKind::Exclamation => Some(((), 100)),
-            TokenKind::Tilde => Some(((), 100)),
-            _ if Self::PREFIX_START.contains(kind) => {
-                panic!("token contained in PREFIX_START, but does not have a binding power")
-            }
+            _ if Self::PREFIX_START.contains(&kind) => Some(((), 100)),
             _ => None,
         }
     }
 
-    fn infix_binding_power(kind: &TokenKind) -> Option<(u8, u8)> {
+    fn infix_binding_power(kind: TokenKind) -> Option<(u8, u8)> {
         match kind {
             TokenKind::Star | TokenKind::Slash | TokenKind::Percent => Some((80, 81)),
             TokenKind::Plus | TokenKind::Minus => Some((70, 71)),
@@ -106,25 +101,16 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             TokenKind::AmpersandAmpersand => Some((5, 6)),
             TokenKind::PipePipe => Some((3, 4)),
             TokenKind::Equal => Some((1, 2)),
-            _ if Self::BINARY_OPERATOR.contains(kind) => {
+            _ if Self::BINARY_OPERATOR.contains(&kind) => {
                 panic!("token contained in BINARY_OPERATOR, but does not have a binding power")
             }
             _ => None,
         }
     }
 
-    fn postfix_binding_power(kind: &TokenKind) -> Option<(u8, ())> {
+    fn postfix_binding_power(kind: TokenKind) -> Option<(u8, ())> {
         match kind {
-            TokenKind::LeftParen => Some((101, ())),
-            TokenKind::LeftBracket => Some((101, ())),
-            TokenKind::Dot => Some((101, ())),
-            TokenKind::DotAmpersand => Some((101, ())),
-            TokenKind::DotStar => Some((101, ())),
-            TokenKind::Colon => Some((101, ())),
-            TokenKind::ColonColon => Some((101, ())),
-            _ if Self::POSTFIX_START.contains(kind) => {
-                panic!("token contained in POSTFIX_START, but does not have a binding power")
-            }
+            _ if Self::POSTFIX_START.contains(&kind) => Some((101, ())),
             _ => None,
         }
     }
@@ -140,7 +126,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
         match self.peek() {
             Some(token) => {
-                if let Some(((), right_binding_power)) = Self::prefix_binding_power(&token.kind()) {
+                if let Some(((), right_binding_power)) = Self::prefix_binding_power(token.kind()) {
                     self.next();
 
                     let operand = self.parse_expression_binary(right_binding_power)?;
@@ -259,27 +245,23 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         Ok(expr)
     }
 
+    #[allow(clippy::too_many_lines)]
     fn parse_expression_binary(
         &mut self,
         minimum_binding_power: u8,
     ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
         let mut lhs = self.parse_expression_primary()?;
 
-        loop {
-            let operator = match self.peek() {
-                Some(token) => {
-                    if Self::infix_binding_power(&token.kind()).is_some()
-                        || Self::postfix_binding_power(&token.kind()).is_some()
-                    {
-                        token
-                    } else {
-                        break;
-                    }
-                }
-                None => break,
+        while let Some(token) = self.peek() {
+            let operator = if Self::infix_binding_power(token.kind()).is_some()
+                || Self::postfix_binding_power(token.kind()).is_some()
+            {
+                token
+            } else {
+                break;
             };
 
-            if let Some((left_binding_power, ())) = Self::postfix_binding_power(&operator.kind()) {
+            if let Some((left_binding_power, ())) = Self::postfix_binding_power(operator.kind()) {
                 if left_binding_power < minimum_binding_power {
                     break;
                 }
@@ -359,8 +341,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }
 
             let (left_binding_power, right_binding_power) =
-                Self::infix_binding_power(&operator.kind())
-                    .expect("token is not an infix operator");
+                Self::infix_binding_power(operator.kind()).expect("token is not an infix operator");
 
             if left_binding_power < minimum_binding_power {
                 break;
