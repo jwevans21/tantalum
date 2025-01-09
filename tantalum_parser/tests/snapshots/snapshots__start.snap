@@ -6,51 +6,86 @@ snapshot_kind: text
 Ok([
   TopLevelExpression(
     span: Span(
-      file_name: "start.ta",
-      start: 0,
-      end: 32,
-      line: 1,
-      column: 1,
+      start: Location(
+        file_name: "start.ta",
+        position: 0,
+        line: 1,
+        column: 1,
+      ),
+      end: Location(
+        file_name: "start.ta",
+        position: 32,
+        line: 3,
+        column: 2,
+      ),
     ),
     kind: FunctionDeclaration(
       name: "main",
       parameters: [],
       return_type: Type(
         span: Span(
-          file_name: "start.ta",
-          start: 11,
-          end: 14,
-          line: 1,
-          column: 12,
+          start: Location(
+            file_name: "start.ta",
+            position: 11,
+            line: 1,
+            column: 12,
+          ),
+          end: Location(
+            file_name: "start.ta",
+            position: 14,
+            line: 1,
+            column: 15,
+          ),
         ),
         kind: Named("i32"),
       ),
       body: Statement(
         span: Span(
-          file_name: "start.ta",
-          start: 15,
-          end: 32,
-          line: 1,
-          column: 16,
+          start: Location(
+            file_name: "start.ta",
+            position: 15,
+            line: 1,
+            column: 16,
+          ),
+          end: Location(
+            file_name: "start.ta",
+            position: 32,
+            line: 3,
+            column: 2,
+          ),
         ),
         kind: Block(
           statements: [
             Statement(
               span: Span(
-                file_name: "start.ta",
-                start: 21,
-                end: 30,
-                line: 2,
-                column: 4,
+                start: Location(
+                  file_name: "start.ta",
+                  position: 21,
+                  line: 2,
+                  column: 5,
+                ),
+                end: Location(
+                  file_name: "start.ta",
+                  position: 30,
+                  line: 2,
+                  column: 14,
+                ),
               ),
               kind: Return(
                 value: Some(Expression(
                   span: Span(
-                    file_name: "start.ta",
-                    start: 28,
-                    end: 29,
-                    line: 2,
-                    column: 11,
+                    start: Location(
+                      file_name: "start.ta",
+                      position: 28,
+                      line: 2,
+                      column: 12,
+                    ),
+                    end: Location(
+                      file_name: "start.ta",
+                      position: 29,
+                      line: 2,
+                      column: 13,
+                    ),
                   ),
                   kind: IntegerLiteral(
                     value: "0",

@@ -1,5 +1,6 @@
 use tantalum_ast::{Type, TypeKind};
 use tantalum_lexer::token_kind::TokenKind;
+use tantalum_span::Span;
 
 use crate::{error::ParseError, Parser};
 
@@ -27,7 +28,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 let r_bracket = self.expect_any(&[TokenKind::RightBracket])?;
 
                 Ok(Type {
-                    span: token.span().extend(&r_bracket.span()),
+                    span: Span::new(token.span().start(), r_bracket.span().end()),
                     kind: TypeKind::UnsizedArray(Box::new(element_type)),
                 })
             }
@@ -35,7 +36,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 let element_type = self.parse_type()?;
 
                 Ok(Type {
-                    span: token.span().extend(&element_type.span),
+                    span: Span::new(token.span().start(), element_type.span.end()),
                     kind: TypeKind::Pointer(Box::new(element_type)),
                 })
             }
@@ -43,7 +44,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 let element_type = self.parse_type()?;
 
                 Ok(Type {
-                    span: token.span().extend(&element_type.span),
+                    span: Span::new(token.span().start(), element_type.span.end()),
                     kind: TypeKind::Const(Box::new(element_type)),
                 })
             }

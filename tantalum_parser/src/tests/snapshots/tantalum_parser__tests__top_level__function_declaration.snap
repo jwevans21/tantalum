@@ -1,0 +1,61 @@
+---
+source: tantalum_parser/src/tests/top_level.rs
+expression: result
+snapshot_kind: text
+---
+Ok(TopLevelExpression(
+  span: Span(
+    start: Location(
+      file_name: "function_declaration",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "function_declaration",
+      position: 12,
+      line: 1,
+      column: 13,
+    ),
+  ),
+  kind: FunctionDeclaration(
+    name: "main",
+    parameters: [],
+    return_type: Type(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration",
+          position: 8,
+          line: 1,
+          column: 9,
+        ),
+        end: Location(
+          file_name: "function_declaration",
+          position: 9,
+          line: 1,
+          column: 10,
+        ),
+      ),
+      kind: Named("void"),
+    ),
+    body: Statement(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration",
+          position: 10,
+          line: 1,
+          column: 11,
+        ),
+        end: Location(
+          file_name: "function_declaration",
+          position: 12,
+          line: 1,
+          column: 13,
+        ),
+      ),
+      kind: Block(
+        statements: [],
+      ),
+    ),
+  ),
+))

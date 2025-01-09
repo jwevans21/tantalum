@@ -1,7 +1,7 @@
 use error::ParseError;
 use tantalum_ast::TopLevelExpression;
 use tantalum_lexer::{token::Token, token_kind::TokenKind, Lexer};
-use tantalum_span::Span;
+use tantalum_span::Location;
 
 pub mod error;
 
@@ -20,7 +20,7 @@ pub struct Parser<'file_name, 'source> {
     source: &'source str,
     file_name: &'file_name str,
     tokens: Vec<Token<'file_name, 'source>>,
-    eof: Span<'file_name>,
+    eof: Location<'file_name>,
     position: usize,
 }
 
@@ -32,7 +32,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             source: lexer.source(),
             file_name: lexer.file_name(),
             tokens: lexer.by_ref().collect(),
-            eof: lexer.span(),
+            eof: lexer.location(),
             position: 0,
         }
     }
@@ -89,7 +89,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         } else {
             Err(error::ParseError::unexpected_token_set(
                 self.source,
-                token.span(),
+                token.span().start(),
                 token.kind(),
                 &[kind],
             ))
@@ -134,7 +134,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         } else {
             Err(error::ParseError::unexpected_token_set(
                 self.source,
-                token.span(),
+                token.span().start(),
                 token.kind(),
                 set,
             ))

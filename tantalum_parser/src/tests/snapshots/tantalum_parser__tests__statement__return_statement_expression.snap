@@ -1,0 +1,98 @@
+---
+source: tantalum_parser/src/tests/statement.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Statement(
+  span: Span(
+    start: Location(
+      file_name: "return_statement",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "return_statement",
+      position: 15,
+      line: 1,
+      column: 16,
+    ),
+  ),
+  kind: Return(
+    value: Some(Expression(
+      span: Span(
+        start: Location(
+          file_name: "return_statement",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+        end: Location(
+          file_name: "return_statement",
+          position: 14,
+          line: 1,
+          column: 15,
+        ),
+      ),
+      kind: BinaryOperation(
+        left: Expression(
+          span: Span(
+            start: Location(
+              file_name: "return_statement",
+              position: 7,
+              line: 1,
+              column: 8,
+            ),
+            end: Location(
+              file_name: "return_statement",
+              position: 9,
+              line: 1,
+              column: 10,
+            ),
+          ),
+          kind: IntegerLiteral(
+            value: "42",
+            radix: 10,
+          ),
+        ),
+        operator: BinaryOperator(
+          span: Span(
+            start: Location(
+              file_name: "return_statement",
+              position: 10,
+              line: 1,
+              column: 11,
+            ),
+            end: Location(
+              file_name: "return_statement",
+              position: 11,
+              line: 1,
+              column: 12,
+            ),
+          ),
+          kind: Addition,
+        ),
+        right: Expression(
+          span: Span(
+            start: Location(
+              file_name: "return_statement",
+              position: 12,
+              line: 1,
+              column: 13,
+            ),
+            end: Location(
+              file_name: "return_statement",
+              position: 14,
+              line: 1,
+              column: 15,
+            ),
+          ),
+          kind: IntegerLiteral(
+            value: "42",
+            radix: 10,
+          ),
+        ),
+      ),
+    )),
+  ),
+))

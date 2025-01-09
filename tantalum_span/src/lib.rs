@@ -10,65 +10,51 @@ use core::{
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Span<'file_name> {
-    /// The name of the file that this span is in
+pub struct Location<'file_name> {
+    /// The name of the file that this location is in
     #[cfg_attr(feature = "serde", serde(borrow))]
     file_name: &'file_name str,
-    /// The start byte of the span in the file
-    start: Saturating<usize>,
-    /// The end byte of the span in the file
-    end: Saturating<usize>,
-    /// The line number of the span in the file
+    /// The byte of the location in the file
+    position: Saturating<usize>,
+    /// The line number of the location in the file
     line: Saturating<usize>,
-    /// The column number of the span in the file
+    /// The column number of the location in the file
     column: Saturating<usize>,
 }
 
-impl<'file_name> Span<'file_name> {
+impl<'file_name> Location<'file_name> {
     #[must_use]
     #[inline]
-    pub fn new(
-        file_name: &'file_name str,
-        start: usize,
-        end: usize,
-        line: usize,
-        column: usize,
-    ) -> Self {
+    pub fn new(file_name: &'file_name str) -> Self {
         return Self {
             file_name,
-            start: Saturating(start),
-            end: Saturating(end),
-            line: Saturating(line),
-            column: Saturating(column),
+            position: Saturating(0),
+            line: Saturating(1),
+            column: Saturating(1),
         };
     }
 
     #[must_use]
     #[inline]
-    pub fn extend(mut self, other: &Self) -> Self {
-        self.end = other.end;
-        return self;
+    pub fn new_at(file_name: &'file_name str, position: usize, line: usize, column: usize) -> Self {
+        return Self {
+            file_name,
+            position: Saturating(position),
+            line: Saturating(line),
+            column: Saturating(column),
+        };
     }
 
     #[inline]
     pub fn advance(&mut self, character: char) {
         if character == '\n' {
             self.line += 1;
-            self.column = Saturating(0);
+            self.column = Saturating(1);
         } else {
             self.column += 1;
         }
 
-        self.start += character.len_utf8();
-        self.end += character.len_utf8();
-    }
-
-    #[must_use]
-    #[inline]
-    pub fn contains(&self, other: &Self) -> bool {
-        return self.file_name == other.file_name
-            && self.start <= other.start
-            && self.end >= other.end;
+        self.position += character.len_utf8();
     }
 
     #[must_use]
@@ -79,8 +65,8 @@ impl<'file_name> Span<'file_name> {
 
     #[must_use]
     #[inline]
-    pub fn range(&self) -> Range<usize> {
-        return (self.start.0)..(self.end.0);
+    pub fn position(&self) -> usize {
+        return self.position.0;
     }
 
     #[must_use]
@@ -94,11 +80,71 @@ impl<'file_name> Span<'file_name> {
     pub fn column(&self) -> usize {
         return self.column.0;
     }
+
+    #[must_use]
+    #[inline]
+    pub fn range(&self, other: &Self) -> Range<usize> {
+        return (self.position())..(other.position());
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Span<'file_name> {
+    /// The starting location of the span
+    #[cfg_attr(feature = "serde", serde(borrow))]
+    start: Location<'file_name>,
+    /// The ending location of the span
+    end: Location<'file_name>,
+}
+
+impl<'file_name> Span<'file_name> {
+    #[must_use]
+    #[inline]
+    pub fn new(start: Location<'file_name>, end: Location<'file_name>) -> Self {
+        return Self { start, end };
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn file_name(&self) -> &'file_name str {
+        return self.start.file_name();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn range(&self) -> Range<usize> {
+        return self.start.range(&self.end);
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn start(&self) -> Location<'file_name> {
+        return self.start;
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn end(&self) -> Location<'file_name> {
+        return self.end;
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn line(&self) -> usize {
+        return self.start.line();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn column(&self) -> usize {
+        return self.start.column();
+    }
 }
 
 impl Display for Span<'_> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        return write!(f, "{}:{}:{}", self.file_name, self.line, self.column);
+        return write!(f, "{}..{}", self.start.position(), self.end.position());
     }
 }

@@ -1,5 +1,5 @@
 use tantalum_lexer::token_kind::TokenKind;
-use tantalum_span::Span;
+use tantalum_span::Location;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
@@ -7,31 +7,31 @@ use tantalum_span::Span;
 pub struct ParseError<'file_name, 'source> {
     pub source: &'source str,
     #[cfg_attr(feature = "serde", serde(borrow))]
-    pub location: Span<'file_name>,
+    pub location: Location<'file_name>,
     pub kind: ParseErrorKind,
 }
 
 impl<'file_name, 'source> ParseError<'file_name, 'source> {
     pub(crate) fn unexpected_eof(
         source: &'source str,
-        span: Span<'file_name>,
+        location: Location<'file_name>,
     ) -> ParseError<'file_name, 'source> {
         ParseError {
             source,
-            location: span,
+            location,
             kind: ParseErrorKind::UnexpectedEof,
         }
     }
 
     pub(crate) fn unexpected_token(
         source: &'source str,
-        span: Span<'file_name>,
+        location: Location<'file_name>,
         kind: TokenKind,
         token: TokenKind,
     ) -> ParseError<'file_name, 'source> {
         return Self {
             source,
-            location: span,
+            location,
             kind: ParseErrorKind::UnexpectedToken {
                 kind,
                 set: Box::from([token]),
@@ -41,13 +41,13 @@ impl<'file_name, 'source> ParseError<'file_name, 'source> {
 
     pub(crate) fn unexpected_token_set(
         source: &'source str,
-        span: Span<'file_name>,
+        location: Location<'file_name>,
         kind: TokenKind,
         set: &[TokenKind],
     ) -> ParseError<'file_name, 'source> {
         return Self {
             source,
-            location: span,
+            location,
             kind: ParseErrorKind::UnexpectedToken {
                 kind,
                 set: Box::from(set),

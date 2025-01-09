@@ -6,48 +6,83 @@ snapshot_kind: text
 Ok([
   TopLevelExpression(
     span: Span(
-      file_name: "hello_world.ta",
-      start: 0,
-      end: 46,
-      line: 1,
-      column: 1,
+      start: Location(
+        file_name: "hello_world.ta",
+        position: 0,
+        line: 1,
+        column: 1,
+      ),
+      end: Location(
+        file_name: "hello_world.ta",
+        position: 46,
+        line: 1,
+        column: 47,
+      ),
     ),
     kind: ExternalFunction(
       name: "printf",
       parameters: [
         Parameter(
           span: Span(
-            file_name: "hello_world.ta",
-            start: 17,
-            end: 34,
-            line: 1,
-            column: 18,
+            start: Location(
+              file_name: "hello_world.ta",
+              position: 17,
+              line: 1,
+              column: 18,
+            ),
+            end: Location(
+              file_name: "hello_world.ta",
+              position: 34,
+              line: 1,
+              column: 35,
+            ),
           ),
           kind: Named(
             name: "format",
             ty: Type(
               span: Span(
-                file_name: "hello_world.ta",
-                start: 25,
-                end: 34,
-                line: 1,
-                column: 26,
+                start: Location(
+                  file_name: "hello_world.ta",
+                  position: 25,
+                  line: 1,
+                  column: 26,
+                ),
+                end: Location(
+                  file_name: "hello_world.ta",
+                  position: 34,
+                  line: 1,
+                  column: 35,
+                ),
               ),
               kind: Pointer(Type(
                 span: Span(
-                  file_name: "hello_world.ta",
-                  start: 26,
-                  end: 34,
-                  line: 1,
-                  column: 27,
+                  start: Location(
+                    file_name: "hello_world.ta",
+                    position: 26,
+                    line: 1,
+                    column: 27,
+                  ),
+                  end: Location(
+                    file_name: "hello_world.ta",
+                    position: 34,
+                    line: 1,
+                    column: 35,
+                  ),
                 ),
                 kind: Const(Type(
                   span: Span(
-                    file_name: "hello_world.ta",
-                    start: 32,
-                    end: 34,
-                    line: 1,
-                    column: 33,
+                    start: Location(
+                      file_name: "hello_world.ta",
+                      position: 32,
+                      line: 1,
+                      column: 33,
+                    ),
+                    end: Location(
+                      file_name: "hello_world.ta",
+                      position: 34,
+                      line: 1,
+                      column: 35,
+                    ),
                   ),
                   kind: Named("u8"),
                 )),
@@ -58,11 +93,18 @@ Ok([
       ],
       return_type: Type(
         span: Span(
-          file_name: "hello_world.ta",
-          start: 42,
-          end: 45,
-          line: 1,
-          column: 43,
+          start: Location(
+            file_name: "hello_world.ta",
+            position: 42,
+            line: 1,
+            column: 43,
+          ),
+          end: Location(
+            file_name: "hello_world.ta",
+            position: 45,
+            line: 1,
+            column: 46,
+          ),
         ),
         kind: Named("i32"),
       ),
@@ -71,60 +113,102 @@ Ok([
   ),
   TopLevelExpression(
     span: Span(
-      file_name: "hello_world.ta",
-      start: 48,
-      end: 122,
-      line: 3,
-      column: 0,
+      start: Location(
+        file_name: "hello_world.ta",
+        position: 48,
+        line: 3,
+        column: 1,
+      ),
+      end: Location(
+        file_name: "hello_world.ta",
+        position: 122,
+        line: 7,
+        column: 2,
+      ),
     ),
     kind: FunctionDeclaration(
       name: "main",
       parameters: [],
       return_type: Type(
         span: Span(
-          file_name: "hello_world.ta",
-          start: 59,
-          end: 62,
-          line: 3,
-          column: 11,
+          start: Location(
+            file_name: "hello_world.ta",
+            position: 59,
+            line: 3,
+            column: 12,
+          ),
+          end: Location(
+            file_name: "hello_world.ta",
+            position: 62,
+            line: 3,
+            column: 15,
+          ),
         ),
         kind: Named("i32"),
       ),
       body: Statement(
         span: Span(
-          file_name: "hello_world.ta",
-          start: 63,
-          end: 122,
-          line: 3,
-          column: 15,
+          start: Location(
+            file_name: "hello_world.ta",
+            position: 63,
+            line: 3,
+            column: 16,
+          ),
+          end: Location(
+            file_name: "hello_world.ta",
+            position: 122,
+            line: 7,
+            column: 2,
+          ),
         ),
         kind: Block(
           statements: [
             Statement(
               span: Span(
-                file_name: "hello_world.ta",
-                start: 69,
-                end: 97,
-                line: 4,
-                column: 4,
+                start: Location(
+                  file_name: "hello_world.ta",
+                  position: 69,
+                  line: 4,
+                  column: 5,
+                ),
+                end: Location(
+                  file_name: "hello_world.ta",
+                  position: 97,
+                  line: 4,
+                  column: 33,
+                ),
               ),
               kind: Expression(
                 expression: Expression(
                   span: Span(
-                    file_name: "hello_world.ta",
-                    start: 69,
-                    end: 96,
-                    line: 4,
-                    column: 4,
+                    start: Location(
+                      file_name: "hello_world.ta",
+                      position: 69,
+                      line: 4,
+                      column: 5,
+                    ),
+                    end: Location(
+                      file_name: "hello_world.ta",
+                      position: 96,
+                      line: 4,
+                      column: 32,
+                    ),
                   ),
                   kind: FunctionCall(
                     source: Expression(
                       span: Span(
-                        file_name: "hello_world.ta",
-                        start: 69,
-                        end: 75,
-                        line: 4,
-                        column: 4,
+                        start: Location(
+                          file_name: "hello_world.ta",
+                          position: 69,
+                          line: 4,
+                          column: 5,
+                        ),
+                        end: Location(
+                          file_name: "hello_world.ta",
+                          position: 75,
+                          line: 4,
+                          column: 11,
+                        ),
                       ),
                       kind: Variable(
                         name: "printf",
@@ -133,30 +217,51 @@ Ok([
                     arguments: [
                       Expression(
                         span: Span(
-                          file_name: "hello_world.ta",
-                          start: 76,
-                          end: 95,
-                          line: 4,
-                          column: 11,
+                          start: Location(
+                            file_name: "hello_world.ta",
+                            position: 76,
+                            line: 4,
+                            column: 12,
+                          ),
+                          end: Location(
+                            file_name: "hello_world.ta",
+                            position: 95,
+                            line: 4,
+                            column: 31,
+                          ),
                         ),
                         kind: UnaryOperation(
                           operator: UnaryOperator(
                             span: Span(
-                              file_name: "hello_world.ta",
-                              start: 93,
-                              end: 95,
-                              line: 4,
-                              column: 28,
+                              start: Location(
+                                file_name: "hello_world.ta",
+                                position: 93,
+                                line: 4,
+                                column: 29,
+                              ),
+                              end: Location(
+                                file_name: "hello_world.ta",
+                                position: 95,
+                                line: 4,
+                                column: 31,
+                              ),
                             ),
                             kind: AddressOf,
                           ),
                           operand: Expression(
                             span: Span(
-                              file_name: "hello_world.ta",
-                              start: 76,
-                              end: 93,
-                              line: 4,
-                              column: 11,
+                              start: Location(
+                                file_name: "hello_world.ta",
+                                position: 76,
+                                line: 4,
+                                column: 12,
+                              ),
+                              end: Location(
+                                file_name: "hello_world.ta",
+                                position: 93,
+                                line: 4,
+                                column: 29,
+                              ),
                             ),
                             kind: StringLiteral(
                               value: "\"Hello, World!\\n\"",
@@ -171,38 +276,66 @@ Ok([
             ),
             Statement(
               span: Span(
-                file_name: "hello_world.ta",
-                start: 103,
-                end: 120,
-                line: 6,
-                column: 4,
+                start: Location(
+                  file_name: "hello_world.ta",
+                  position: 103,
+                  line: 6,
+                  column: 5,
+                ),
+                end: Location(
+                  file_name: "hello_world.ta",
+                  position: 120,
+                  line: 6,
+                  column: 22,
+                ),
               ),
               kind: Return(
                 value: Some(Expression(
                   span: Span(
-                    file_name: "hello_world.ta",
-                    start: 110,
-                    end: 119,
-                    line: 6,
-                    column: 11,
+                    start: Location(
+                      file_name: "hello_world.ta",
+                      position: 110,
+                      line: 6,
+                      column: 12,
+                    ),
+                    end: Location(
+                      file_name: "hello_world.ta",
+                      position: 119,
+                      line: 6,
+                      column: 21,
+                    ),
                   ),
                   kind: BinaryOperation(
                     left: Expression(
                       span: Span(
-                        file_name: "hello_world.ta",
-                        start: 110,
-                        end: 115,
-                        line: 6,
-                        column: 11,
+                        start: Location(
+                          file_name: "hello_world.ta",
+                          position: 110,
+                          line: 6,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "hello_world.ta",
+                          position: 115,
+                          line: 6,
+                          column: 17,
+                        ),
                       ),
                       kind: BinaryOperation(
                         left: Expression(
                           span: Span(
-                            file_name: "hello_world.ta",
-                            start: 110,
-                            end: 111,
-                            line: 6,
-                            column: 11,
+                            start: Location(
+                              file_name: "hello_world.ta",
+                              position: 110,
+                              line: 6,
+                              column: 12,
+                            ),
+                            end: Location(
+                              file_name: "hello_world.ta",
+                              position: 111,
+                              line: 6,
+                              column: 13,
+                            ),
                           ),
                           kind: IntegerLiteral(
                             value: "3",
@@ -211,21 +344,35 @@ Ok([
                         ),
                         operator: BinaryOperator(
                           span: Span(
-                            file_name: "hello_world.ta",
-                            start: 112,
-                            end: 113,
-                            line: 6,
-                            column: 13,
+                            start: Location(
+                              file_name: "hello_world.ta",
+                              position: 112,
+                              line: 6,
+                              column: 14,
+                            ),
+                            end: Location(
+                              file_name: "hello_world.ta",
+                              position: 113,
+                              line: 6,
+                              column: 15,
+                            ),
                           ),
                           kind: Multiplication,
                         ),
                         right: Expression(
                           span: Span(
-                            file_name: "hello_world.ta",
-                            start: 114,
-                            end: 115,
-                            line: 6,
-                            column: 15,
+                            start: Location(
+                              file_name: "hello_world.ta",
+                              position: 114,
+                              line: 6,
+                              column: 16,
+                            ),
+                            end: Location(
+                              file_name: "hello_world.ta",
+                              position: 115,
+                              line: 6,
+                              column: 17,
+                            ),
                           ),
                           kind: IntegerLiteral(
                             value: "7",
@@ -236,21 +383,35 @@ Ok([
                     ),
                     operator: BinaryOperator(
                       span: Span(
-                        file_name: "hello_world.ta",
-                        start: 116,
-                        end: 117,
-                        line: 6,
-                        column: 17,
+                        start: Location(
+                          file_name: "hello_world.ta",
+                          position: 116,
+                          line: 6,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "hello_world.ta",
+                          position: 117,
+                          line: 6,
+                          column: 19,
+                        ),
                       ),
                       kind: Addition,
                     ),
                     right: Expression(
                       span: Span(
-                        file_name: "hello_world.ta",
-                        start: 118,
-                        end: 119,
-                        line: 6,
-                        column: 19,
+                        start: Location(
+                          file_name: "hello_world.ta",
+                          position: 118,
+                          line: 6,
+                          column: 20,
+                        ),
+                        end: Location(
+                          file_name: "hello_world.ta",
+                          position: 119,
+                          line: 6,
+                          column: 21,
+                        ),
                       ),
                       kind: IntegerLiteral(
                         value: "2",

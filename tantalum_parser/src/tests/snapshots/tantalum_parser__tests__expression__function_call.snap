@@ -1,0 +1,43 @@
+---
+source: tantalum_parser/src/tests/expression.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Expression(
+  span: Span(
+    start: Location(
+      file_name: "function_call",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "function_call",
+      position: 5,
+      line: 1,
+      column: 6,
+    ),
+  ),
+  kind: FunctionCall(
+    source: Expression(
+      span: Span(
+        start: Location(
+          file_name: "function_call",
+          position: 0,
+          line: 1,
+          column: 1,
+        ),
+        end: Location(
+          file_name: "function_call",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+      ),
+      kind: Variable(
+        name: "foo",
+      ),
+    ),
+    arguments: [],
+  ),
+))

@@ -1,0 +1,115 @@
+---
+source: tantalum_parser/src/tests/expression.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Expression(
+  span: Span(
+    start: Location(
+      file_name: "type_cast_with_binary_expression",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "type_cast_with_binary_expression",
+      position: 8,
+      line: 1,
+      column: 9,
+    ),
+  ),
+  kind: BinaryOperation(
+    left: Expression(
+      span: Span(
+        start: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 0,
+          line: 1,
+          column: 1,
+        ),
+        end: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 1,
+          line: 1,
+          column: 2,
+        ),
+      ),
+      kind: IntegerLiteral(
+        value: "1",
+        radix: 10,
+      ),
+    ),
+    operator: BinaryOperator(
+      span: Span(
+        start: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 2,
+          line: 1,
+          column: 3,
+        ),
+        end: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+      ),
+      kind: Addition,
+    ),
+    right: Expression(
+      span: Span(
+        start: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 4,
+          line: 1,
+          column: 5,
+        ),
+        end: Location(
+          file_name: "type_cast_with_binary_expression",
+          position: 8,
+          line: 1,
+          column: 9,
+        ),
+      ),
+      kind: TypeCast(
+        ty: Type(
+          span: Span(
+            start: Location(
+              file_name: "type_cast_with_binary_expression",
+              position: 6,
+              line: 1,
+              column: 7,
+            ),
+            end: Location(
+              file_name: "type_cast_with_binary_expression",
+              position: 8,
+              line: 1,
+              column: 9,
+            ),
+          ),
+          kind: Named("u8"),
+        ),
+        expression: Expression(
+          span: Span(
+            start: Location(
+              file_name: "type_cast_with_binary_expression",
+              position: 4,
+              line: 1,
+              column: 5,
+            ),
+            end: Location(
+              file_name: "type_cast_with_binary_expression",
+              position: 5,
+              line: 1,
+              column: 6,
+            ),
+          ),
+          kind: IntegerLiteral(
+            value: "2",
+            radix: 10,
+          ),
+        ),
+      ),
+    ),
+  ),
+))

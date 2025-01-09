@@ -45,7 +45,7 @@ fn next_characters(#[case] source: &str, #[case] count: usize, #[case] expected:
     assert_eq!(lexer.next_characters(count), expected);
 
     assert_eq!(
-        lexer.span.range().end,
+        lexer.location.position(),
         if count > source.len() { 0 } else { count }
     );
 }
@@ -64,7 +64,10 @@ macro_rules! single_token_test_case {
                 pretty_assertions::assert_eq!(
                     token,
                     Some($crate::token::Token::new(
-                        tantalum_span::Span::new("main.ta", ($span).start, ($span).end, $lines, $columns),
+                        tantalum_span::Span::new(
+                            tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
+                            tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
+                        ),
                         $lexeme,
                         $crate::token_kind::TokenKind::$kind
                     ))
@@ -101,7 +104,10 @@ macro_rules! multi_token_test_case {
                         pretty_assertions::assert_eq!(
                             token,
                             Some($crate::token::Token::new(
-                                tantalum_span::Span::new("main.ta", ($span).start, ($span).end, $lines, $columns),
+                                tantalum_span::Span::new(
+                                    tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
+                                    tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
+                                ),
                                 $lexeme,
                                 $crate::token_kind::TokenKind::$kind
                             ))
@@ -122,7 +128,10 @@ macro_rules! multi_token_test_case {
                             pretty_assertions::assert_eq!(
                                 token,
                                 Some($crate::token::Token::new(
-                                    tantalum_span::Span::new("main.ta", ($span2).start, ($span2).end, $lines2, $columns2),
+                                    tantalum_span::Span::new(
+                                        tantalum_span::Location::new_at("main.ta", ($span2).start, $lines2, $columns2),
+                                        tantalum_span::Location::new_at("main.ta", ($span2).end, $lines2, $columns2 + $lexeme2.len()),
+                                    ),
                                     $lexeme2,
                                     $crate::token_kind::TokenKind::$kind2
                                 ))

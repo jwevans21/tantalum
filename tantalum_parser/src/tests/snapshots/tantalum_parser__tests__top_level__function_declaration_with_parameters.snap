@@ -1,0 +1,182 @@
+---
+source: tantalum_parser/src/tests/top_level.rs
+expression: result
+snapshot_kind: text
+---
+Ok(TopLevelExpression(
+  span: Span(
+    start: Location(
+      file_name: "function_declaration_with_parameters",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "function_declaration_with_parameters",
+      position: 40,
+      line: 1,
+      column: 41,
+    ),
+  ),
+  kind: FunctionDeclaration(
+    name: "main",
+    parameters: [
+      Parameter(
+        span: Span(
+          start: Location(
+            file_name: "function_declaration_with_parameters",
+            position: 8,
+            line: 1,
+            column: 9,
+          ),
+          end: Location(
+            file_name: "function_declaration_with_parameters",
+            position: 17,
+            line: 1,
+            column: 18,
+          ),
+        ),
+        kind: Named(
+          name: "argc",
+          ty: Type(
+            span: Span(
+              start: Location(
+                file_name: "function_declaration_with_parameters",
+                position: 14,
+                line: 1,
+                column: 15,
+              ),
+              end: Location(
+                file_name: "function_declaration_with_parameters",
+                position: 17,
+                line: 1,
+                column: 18,
+              ),
+            ),
+            kind: Named("i32"),
+          ),
+        ),
+      ),
+      Parameter(
+        span: Span(
+          start: Location(
+            file_name: "function_declaration_with_parameters",
+            position: 19,
+            line: 1,
+            column: 20,
+          ),
+          end: Location(
+            file_name: "function_declaration_with_parameters",
+            position: 36,
+            line: 1,
+            column: 37,
+          ),
+        ),
+        kind: Named(
+          name: "argv",
+          ty: Type(
+            span: Span(
+              start: Location(
+                file_name: "function_declaration_with_parameters",
+                position: 25,
+                line: 1,
+                column: 26,
+              ),
+              end: Location(
+                file_name: "function_declaration_with_parameters",
+                position: 36,
+                line: 1,
+                column: 37,
+              ),
+            ),
+            kind: UnsizedArray(Type(
+              span: Span(
+                start: Location(
+                  file_name: "function_declaration_with_parameters",
+                  position: 26,
+                  line: 1,
+                  column: 27,
+                ),
+                end: Location(
+                  file_name: "function_declaration_with_parameters",
+                  position: 35,
+                  line: 1,
+                  column: 36,
+                ),
+              ),
+              kind: Pointer(Type(
+                span: Span(
+                  start: Location(
+                    file_name: "function_declaration_with_parameters",
+                    position: 27,
+                    line: 1,
+                    column: 28,
+                  ),
+                  end: Location(
+                    file_name: "function_declaration_with_parameters",
+                    position: 35,
+                    line: 1,
+                    column: 36,
+                  ),
+                ),
+                kind: Const(Type(
+                  span: Span(
+                    start: Location(
+                      file_name: "function_declaration_with_parameters",
+                      position: 33,
+                      line: 1,
+                      column: 34,
+                    ),
+                    end: Location(
+                      file_name: "function_declaration_with_parameters",
+                      position: 35,
+                      line: 1,
+                      column: 36,
+                    ),
+                  ),
+                  kind: Named("u8"),
+                )),
+              )),
+            )),
+          ),
+        ),
+      ),
+    ],
+    return_type: Type(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_parameters",
+          position: 36,
+          line: 1,
+          column: 37,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_parameters",
+          position: 37,
+          line: 1,
+          column: 38,
+        ),
+      ),
+      kind: Named("void"),
+    ),
+    body: Statement(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_parameters",
+          position: 38,
+          line: 1,
+          column: 39,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_parameters",
+          position: 40,
+          line: 1,
+          column: 41,
+        ),
+      ),
+      kind: Block(
+        statements: [],
+      ),
+    ),
+  ),
+))

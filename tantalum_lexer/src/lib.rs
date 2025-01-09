@@ -9,7 +9,7 @@ mod tests;
 pub mod token;
 pub mod token_kind;
 
-use tantalum_span::Span;
+use tantalum_span::{Location, Span};
 
 use crate::token::Token;
 use crate::token_kind::TokenKind;
@@ -19,8 +19,8 @@ use crate::token_kind::TokenKind;
 /// fashion, where tokens are consumed as they are needed.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Lexer<'file_name, 'source> {
-    /// The span of the source code that was lexed
-    span: Span<'file_name>,
+    /// The current location of the lexer
+    location: Location<'file_name>,
     /// The source code to lexed into tokens
     source: &'source str,
 }
@@ -42,15 +42,15 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     #[inline]
     pub fn new(file_name: &'file_name str, source: &'source str) -> Self {
         return Self {
-            span: Span::new(file_name, 0, 0, 1, 1),
+            location: Location::new(file_name),
             source,
         };
     }
 
     #[must_use]
     #[inline]
-    pub fn span(&self) -> Span<'file_name> {
-        return self.span;
+    pub fn location(&self) -> Location<'file_name> {
+        return self.location;
     }
 
     #[must_use]
@@ -62,7 +62,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     #[must_use]
     #[inline]
     pub fn file_name(&self) -> &'file_name str {
-        return self.span.file_name();
+        return self.location.file_name();
     }
 
     #[must_use]
@@ -71,7 +71,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     pub fn next_token(&mut self) -> Option<Token<'file_name, 'source>> {
         self.skip_whitespace();
 
-        let start = self.span;
+        let start = self.location;
 
         /// Produce a Token based on a type and length
         macro_rules! lex {
@@ -165,7 +165,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
                     }
                 }
 
-                match self.source.get(start.extend(&self.span).range())? {
+                match self.source.get(start.range(&self.location))? {
                     "fn" => lex!(TokenKind::KeywordFn, 0),
                     "extern" => lex!(TokenKind::KeywordExtern, 0),
                     "let" => lex!(TokenKind::KeywordLet, 0),
@@ -345,9 +345,9 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     fn create_token(
         &self,
         token_kind: TokenKind,
-        start: Span<'file_name>,
+        start: Location<'file_name>,
     ) -> Option<Token<'file_name, 'source>> {
-        let span = start.extend(&self.span);
+        let span = Span::new(start, self.location);
         return Some(Token::new(span, self.source.get(span.range())?, token_kind));
     }
 
@@ -371,7 +371,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     #[must_use]
     #[inline]
     fn peek_characters(&self, count: usize) -> Option<char> {
-        let next = self.source.get(self.span.range().start..)?;
+        let next = self.source.get(self.location.position()..)?;
 
         if next.len() < count {
             return None;
@@ -390,7 +390,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     #[must_use]
     #[inline]
     fn next_characters(&mut self, count: usize) -> Option<char> {
-        let next = self.source.get(self.span.range().start..)?;
+        let next = self.source.get(self.location.position()..)?;
 
         if next.len() < count {
             return None;
@@ -400,7 +400,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
             .chars()
             .take(count)
             .inspect(|character| {
-                self.span.advance(*character);
+                self.location.advance(*character);
             })
             .last();
     }

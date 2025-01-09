@@ -21,7 +21,6 @@ serde = ["dep:serde"]
 
 [dev-dependencies]
 insta = { workspace = true}
-pretty_assertions = { workspace = true }
 
 [lints]
 workspace = true

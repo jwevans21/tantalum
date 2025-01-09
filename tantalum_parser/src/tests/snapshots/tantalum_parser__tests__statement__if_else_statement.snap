@@ -1,0 +1,158 @@
+---
+source: tantalum_parser/src/tests/statement.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Statement(
+  span: Span(
+    start: Location(
+      file_name: "if_else_statement",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "if_else_statement",
+      position: 41,
+      line: 1,
+      column: 42,
+    ),
+  ),
+  kind: If(
+    condition: Expression(
+      span: Span(
+        start: Location(
+          file_name: "if_else_statement",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+        end: Location(
+          file_name: "if_else_statement",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      kind: BooleanLiteral(
+        value: true,
+      ),
+    ),
+    body: Statement(
+      span: Span(
+        start: Location(
+          file_name: "if_else_statement",
+          position: 8,
+          line: 1,
+          column: 9,
+        ),
+        end: Location(
+          file_name: "if_else_statement",
+          position: 22,
+          line: 1,
+          column: 23,
+        ),
+      ),
+      kind: Block(
+        statements: [
+          Statement(
+            span: Span(
+              start: Location(
+                file_name: "if_else_statement",
+                position: 10,
+                line: 1,
+                column: 11,
+              ),
+              end: Location(
+                file_name: "if_else_statement",
+                position: 20,
+                line: 1,
+                column: 21,
+              ),
+            ),
+            kind: Return(
+              value: Some(Expression(
+                span: Span(
+                  start: Location(
+                    file_name: "if_else_statement",
+                    position: 17,
+                    line: 1,
+                    column: 18,
+                  ),
+                  end: Location(
+                    file_name: "if_else_statement",
+                    position: 19,
+                    line: 1,
+                    column: 20,
+                  ),
+                ),
+                kind: IntegerLiteral(
+                  value: "42",
+                  radix: 10,
+                ),
+              )),
+            ),
+          ),
+        ],
+      ),
+    ),
+    else_branch: Some(Statement(
+      span: Span(
+        start: Location(
+          file_name: "if_else_statement",
+          position: 28,
+          line: 1,
+          column: 29,
+        ),
+        end: Location(
+          file_name: "if_else_statement",
+          position: 41,
+          line: 1,
+          column: 42,
+        ),
+      ),
+      kind: Block(
+        statements: [
+          Statement(
+            span: Span(
+              start: Location(
+                file_name: "if_else_statement",
+                position: 30,
+                line: 1,
+                column: 31,
+              ),
+              end: Location(
+                file_name: "if_else_statement",
+                position: 39,
+                line: 1,
+                column: 40,
+              ),
+            ),
+            kind: Return(
+              value: Some(Expression(
+                span: Span(
+                  start: Location(
+                    file_name: "if_else_statement",
+                    position: 37,
+                    line: 1,
+                    column: 38,
+                  ),
+                  end: Location(
+                    file_name: "if_else_statement",
+                    position: 38,
+                    line: 1,
+                    column: 39,
+                  ),
+                ),
+                kind: IntegerLiteral(
+                  value: "0",
+                  radix: 10,
+                ),
+              )),
+            ),
+          ),
+        ],
+      ),
+    )),
+  ),
+))

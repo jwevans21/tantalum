@@ -1,0 +1,22 @@
+---
+source: tantalum_parser/src/tests/statement.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Statement(
+  span: Span(
+    start: Location(
+      file_name: "continue_statement",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "continue_statement",
+      position: 9,
+      line: 1,
+      column: 10,
+    ),
+  ),
+  kind: Continue,
+))

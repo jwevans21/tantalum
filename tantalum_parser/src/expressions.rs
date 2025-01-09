@@ -3,6 +3,7 @@ use tantalum_ast::{
     UnaryOperatorKind,
 };
 use tantalum_lexer::{token::Token, token_kind::TokenKind};
+use tantalum_span::Span;
 
 use crate::{ParseError, Parser};
 
@@ -93,7 +94,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let operand = self.parse_expression_unary()?;
 
         Ok(Expression {
-            span: token.span().extend(&operand.span),
+            span: Span::new(token.span().start(), operand.span.end()),
             kind: ExpressionKind::UnaryOperation {
                 operator: Self::unary_operator_from_token(token),
                 operand: Box::from(operand),
@@ -192,7 +193,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             match token.kind() {
                 TokenKind::DotAmpersand | TokenKind::DotStar => {
                     lhs = Expression {
-                        span: lhs.span.extend(&token.span()),
+                        span: Span::new(lhs.span.start(), token.span().end()),
                         kind: ExpressionKind::UnaryOperation {
                             operator: Self::unary_operator_from_token(token),
                             operand: Box::from(lhs),
@@ -215,7 +216,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     let close = self.expect(TokenKind::RightParen)?;
 
                     lhs = Expression {
-                        span: lhs.span.extend(&close.span()),
+                        span: Span::new(lhs.span.start(), close.span().end()),
                         kind: ExpressionKind::FunctionCall {
                             source: Box::from(lhs),
                             arguments,
@@ -227,7 +228,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     let close = self.expect(TokenKind::RightBracket)?;
 
                     lhs = Expression {
-                        span: lhs.span.extend(&close.span()),
+                        span: Span::new(lhs.span.start(), close.span().end()),
                         kind: ExpressionKind::ArrayAccess {
                             source: Box::from(lhs),
                             index: Box::from(index),
@@ -235,13 +236,13 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     };
                 }
                 TokenKind::Dot => {
-                    let field = self.expect(TokenKind::Identifier)?;
+                    let member = self.expect(TokenKind::Identifier)?;
 
                     lhs = Expression {
-                        span: lhs.span.extend(&field.span()),
+                        span: Span::new(lhs.span.start(), member.span().end()),
                         kind: ExpressionKind::MemberAccess {
                             source: Box::from(lhs),
-                            member: field.lexeme(),
+                            member: member.lexeme(),
                         },
                     };
                 }
@@ -249,7 +250,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     let ty = self.parse_type()?;
 
                     lhs = Expression {
-                        span: lhs.span.extend(&ty.span),
+                        span: Span::new(lhs.span.start(), ty.span.end()),
                         kind: ExpressionKind::TypeCast {
                             ty,
                             expression: Box::from(lhs),
@@ -298,7 +299,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }
 
             lhs = Expression {
-                span: lhs.span.extend(&rhs.span),
+                span: Span::new(lhs.span.start(), rhs.span.end()),
                 kind: ExpressionKind::BinaryOperation {
                     left: Box::from(lhs),
                     operator,

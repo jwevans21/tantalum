@@ -1,0 +1,61 @@
+---
+source: tantalum_parser/src/tests/top_level.rs
+expression: result
+snapshot_kind: text
+---
+Ok(TopLevelExpression(
+  span: Span(
+    start: Location(
+      file_name: "function_declaration_with_return_type",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "function_declaration_with_return_type",
+      position: 17,
+      line: 1,
+      column: 18,
+    ),
+  ),
+  kind: FunctionDeclaration(
+    name: "main",
+    parameters: [],
+    return_type: Type(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 11,
+          line: 1,
+          column: 12,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 14,
+          line: 1,
+          column: 15,
+        ),
+      ),
+      kind: Named("i32"),
+    ),
+    body: Statement(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 15,
+          line: 1,
+          column: 16,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 17,
+          line: 1,
+          column: 18,
+        ),
+      ),
+      kind: Block(
+        statements: [],
+      ),
+    ),
+  ),
+))

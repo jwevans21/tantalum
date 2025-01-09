@@ -1,0 +1,101 @@
+---
+source: tantalum_parser/src/tests/statement.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Statement(
+  span: Span(
+    start: Location(
+      file_name: "if_statement",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "if_statement",
+      position: 22,
+      line: 1,
+      column: 23,
+    ),
+  ),
+  kind: If(
+    condition: Expression(
+      span: Span(
+        start: Location(
+          file_name: "if_statement",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+        end: Location(
+          file_name: "if_statement",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      kind: BooleanLiteral(
+        value: true,
+      ),
+    ),
+    body: Statement(
+      span: Span(
+        start: Location(
+          file_name: "if_statement",
+          position: 8,
+          line: 1,
+          column: 9,
+        ),
+        end: Location(
+          file_name: "if_statement",
+          position: 22,
+          line: 1,
+          column: 23,
+        ),
+      ),
+      kind: Block(
+        statements: [
+          Statement(
+            span: Span(
+              start: Location(
+                file_name: "if_statement",
+                position: 10,
+                line: 1,
+                column: 11,
+              ),
+              end: Location(
+                file_name: "if_statement",
+                position: 20,
+                line: 1,
+                column: 21,
+              ),
+            ),
+            kind: Return(
+              value: Some(Expression(
+                span: Span(
+                  start: Location(
+                    file_name: "if_statement",
+                    position: 17,
+                    line: 1,
+                    column: 18,
+                  ),
+                  end: Location(
+                    file_name: "if_statement",
+                    position: 19,
+                    line: 1,
+                    column: 20,
+                  ),
+                ),
+                kind: IntegerLiteral(
+                  value: "42",
+                  radix: 10,
+                ),
+              )),
+            ),
+          ),
+        ],
+      ),
+    ),
+    else_branch: None,
+  ),
+))

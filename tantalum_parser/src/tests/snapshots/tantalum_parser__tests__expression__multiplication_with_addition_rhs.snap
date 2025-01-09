@@ -1,0 +1,135 @@
+---
+source: tantalum_parser/src/tests/expression.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Expression(
+  span: Span(
+    start: Location(
+      file_name: "multiplication_with_addition_rhs",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "multiplication_with_addition_rhs",
+      position: 9,
+      line: 1,
+      column: 10,
+    ),
+  ),
+  kind: BinaryOperation(
+    left: Expression(
+      span: Span(
+        start: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 0,
+          line: 1,
+          column: 1,
+        ),
+        end: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 5,
+          line: 1,
+          column: 6,
+        ),
+      ),
+      kind: BinaryOperation(
+        left: Expression(
+          span: Span(
+            start: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 0,
+              line: 1,
+              column: 1,
+            ),
+            end: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 1,
+              line: 1,
+              column: 2,
+            ),
+          ),
+          kind: IntegerLiteral(
+            value: "1",
+            radix: 10,
+          ),
+        ),
+        operator: BinaryOperator(
+          span: Span(
+            start: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 2,
+              line: 1,
+              column: 3,
+            ),
+            end: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 3,
+              line: 1,
+              column: 4,
+            ),
+          ),
+          kind: Multiplication,
+        ),
+        right: Expression(
+          span: Span(
+            start: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 4,
+              line: 1,
+              column: 5,
+            ),
+            end: Location(
+              file_name: "multiplication_with_addition_rhs",
+              position: 5,
+              line: 1,
+              column: 6,
+            ),
+          ),
+          kind: IntegerLiteral(
+            value: "2",
+            radix: 10,
+          ),
+        ),
+      ),
+    ),
+    operator: BinaryOperator(
+      span: Span(
+        start: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 6,
+          line: 1,
+          column: 7,
+        ),
+        end: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      kind: Addition,
+    ),
+    right: Expression(
+      span: Span(
+        start: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 8,
+          line: 1,
+          column: 9,
+        ),
+        end: Location(
+          file_name: "multiplication_with_addition_rhs",
+          position: 9,
+          line: 1,
+          column: 10,
+        ),
+      ),
+      kind: IntegerLiteral(
+        value: "3",
+        radix: 10,
+      ),
+    ),
+  ),
+))

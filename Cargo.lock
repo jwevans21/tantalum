@@ -430,7 +430,6 @@ name = "tantalum_parser"
 version = "0.1.0"
 dependencies = [
  "insta",
- "pretty_assertions",
  "serde",
  "tantalum_ast",
  "tantalum_lexer",

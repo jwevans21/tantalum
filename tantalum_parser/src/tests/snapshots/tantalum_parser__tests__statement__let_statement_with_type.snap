@@ -1,0 +1,76 @@
+---
+source: tantalum_parser/src/tests/statement.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Statement(
+  span: Span(
+    start: Location(
+      file_name: "let_statement",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "let_statement",
+      position: 29,
+      line: 1,
+      column: 30,
+    ),
+  ),
+  kind: VariableDeclaration(
+    name: "x",
+    ty: Some(Type(
+      span: Span(
+        start: Location(
+          file_name: "let_statement",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+        end: Location(
+          file_name: "let_statement",
+          position: 10,
+          line: 1,
+          column: 11,
+        ),
+      ),
+      kind: Pointer(Type(
+        span: Span(
+          start: Location(
+            file_name: "let_statement",
+            position: 8,
+            line: 1,
+            column: 9,
+          ),
+          end: Location(
+            file_name: "let_statement",
+            position: 10,
+            line: 1,
+            column: 11,
+          ),
+        ),
+        kind: Named("u8"),
+      )),
+    )),
+    value: Expression(
+      span: Span(
+        start: Location(
+          file_name: "let_statement",
+          position: 13,
+          line: 1,
+          column: 14,
+        ),
+        end: Location(
+          file_name: "let_statement",
+          position: 28,
+          line: 1,
+          column: 29,
+        ),
+      ),
+      kind: StringLiteral(
+        value: "\"Hello, World!\"",
+      ),
+    ),
+  ),
+))

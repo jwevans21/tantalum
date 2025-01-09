@@ -1,0 +1,84 @@
+---
+source: tantalum_parser/src/tests/expression.rs
+expression: result
+snapshot_kind: text
+---
+Ok(Expression(
+  span: Span(
+    start: Location(
+      file_name: "function_call_with_arguments",
+      position: 0,
+      line: 1,
+      column: 1,
+    ),
+    end: Location(
+      file_name: "function_call_with_arguments",
+      position: 9,
+      line: 1,
+      column: 10,
+    ),
+  ),
+  kind: FunctionCall(
+    source: Expression(
+      span: Span(
+        start: Location(
+          file_name: "function_call_with_arguments",
+          position: 0,
+          line: 1,
+          column: 1,
+        ),
+        end: Location(
+          file_name: "function_call_with_arguments",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+      ),
+      kind: Variable(
+        name: "foo",
+      ),
+    ),
+    arguments: [
+      Expression(
+        span: Span(
+          start: Location(
+            file_name: "function_call_with_arguments",
+            position: 4,
+            line: 1,
+            column: 5,
+          ),
+          end: Location(
+            file_name: "function_call_with_arguments",
+            position: 5,
+            line: 1,
+            column: 6,
+          ),
+        ),
+        kind: IntegerLiteral(
+          value: "1",
+          radix: 10,
+        ),
+      ),
+      Expression(
+        span: Span(
+          start: Location(
+            file_name: "function_call_with_arguments",
+            position: 7,
+            line: 1,
+            column: 8,
+          ),
+          end: Location(
+            file_name: "function_call_with_arguments",
+            position: 8,
+            line: 1,
+            column: 9,
+          ),
+        ),
+        kind: IntegerLiteral(
+          value: "2",
+          radix: 10,
+        ),
+      ),
+    ],
+  ),
+))
