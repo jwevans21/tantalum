@@ -4,7 +4,7 @@ expression: tokens
 snapshot_kind: text
 ---
 [
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -19,10 +19,12 @@ snapshot_kind: text
         column: 3,
       ),
     ),
-    lexeme: "fn",
-    kind: KeywordFn,
+    data: Token(
+      lexeme: "fn",
+      kind: KeywordFn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -37,10 +39,12 @@ snapshot_kind: text
         column: 8,
       ),
     ),
-    lexeme: "main",
-    kind: Identifier,
+    data: Token(
+      lexeme: "main",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -55,10 +59,12 @@ snapshot_kind: text
         column: 9,
       ),
     ),
-    lexeme: "(",
-    kind: LeftParen,
+    data: Token(
+      lexeme: "(",
+      kind: LeftParen,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -73,10 +79,12 @@ snapshot_kind: text
         column: 10,
       ),
     ),
-    lexeme: ")",
-    kind: RightParen,
+    data: Token(
+      lexeme: ")",
+      kind: RightParen,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -91,10 +99,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ":",
-    kind: Colon,
+    data: Token(
+      lexeme: ":",
+      kind: Colon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -109,10 +119,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "i32",
-    kind: Identifier,
+    data: Token(
+      lexeme: "i32",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -127,10 +139,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "{",
-    kind: LeftBrace,
+    data: Token(
+      lexeme: "{",
+      kind: LeftBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -145,10 +159,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: "return",
-    kind: KeywordReturn,
+    data: Token(
+      lexeme: "return",
+      kind: KeywordReturn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -163,10 +179,12 @@ snapshot_kind: text
         column: 13,
       ),
     ),
-    lexeme: "0",
-    kind: DecimalIntegerLiteral,
+    data: Token(
+      lexeme: "0",
+      kind: DecimalIntegerLiteral,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -181,10 +199,12 @@ snapshot_kind: text
         column: 14,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -199,7 +219,9 @@ snapshot_kind: text
         column: 2,
       ),
     ),
-    lexeme: "}",
-    kind: RightBrace,
+    data: Token(
+      lexeme: "}",
+      kind: RightBrace,
+    ),
   ),
 ]

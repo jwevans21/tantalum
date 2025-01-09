@@ -9,7 +9,7 @@ mod tests;
 pub mod token;
 pub mod token_kind;
 
-use tantalum_span::{Location, Span};
+use tantalum_span::{Location, Span, Spanned};
 
 use crate::token::Token;
 use crate::token_kind::TokenKind;
@@ -68,7 +68,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
     #[must_use]
     #[inline]
     #[expect(clippy::too_many_lines, reason = "Long match statement")]
-    pub fn next_token(&mut self) -> Option<Token<'file_name, 'source>> {
+    pub fn next_token(&mut self) -> Option<Spanned<'file_name, Token<'source>>> {
         self.skip_whitespace();
 
         let start = self.location;
@@ -346,9 +346,12 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
         &self,
         token_kind: TokenKind,
         start: Location<'file_name>,
-    ) -> Option<Token<'file_name, 'source>> {
+    ) -> Option<Spanned<'file_name, Token<'source>>> {
         let span = Span::new(start, self.location);
-        return Some(Token::new(span, self.source.get(span.range())?, token_kind));
+        return Some(Spanned::new(
+            span,
+            Token::new(self.source.get(span.range())?, token_kind),
+        ));
     }
 
     /// Skip any whitespace characters in the source code
@@ -407,7 +410,7 @@ impl<'file_name, 'source> Lexer<'file_name, 'source> {
 }
 
 impl<'file_name, 'source> Iterator for Lexer<'file_name, 'source> {
-    type Item = Token<'file_name, 'source>;
+    type Item = Spanned<'file_name, Token<'source>>;
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {

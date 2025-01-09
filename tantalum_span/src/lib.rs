@@ -3,9 +3,9 @@
 //! Provides a span to locate the positions and ranges of tokens in a file.
 
 use core::{
-    fmt::{Display, Formatter, Result as FmtResult},
+    fmt::{Debug, Display, Formatter, Result as FmtResult},
     num::Saturating,
-    ops::Range,
+    ops::{Deref, Range},
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -146,5 +146,126 @@ impl Display for Span<'_> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         return write!(f, "{}..{}", self.start.position(), self.end.position());
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Spanned<'file_name, T: Debug + Clone + PartialEq + Eq> {
+    #[cfg_attr(feature = "serde", serde(borrow))]
+    span: Span<'file_name>,
+    data: T,
+}
+
+impl<'file_name, T> Spanned<'file_name, T>
+where
+    T: Debug + Clone + PartialEq + Eq,
+{
+    #[must_use]
+    #[inline]
+    pub fn new(span: Span<'file_name>, data: T) -> Self {
+        return Self { span, data };
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn spanning(start: Location<'file_name>, end: Location<'file_name>, data: T) -> Self {
+        return Self::new(Span::new(start, end), data);
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn join_spans(start: Span<'file_name>, end: Span<'file_name>, data: T) -> Self {
+        return Self::new(Span::new(start.start, end.end), data);
+    }
+
+    pub fn map<U, F>(self, f: F) -> Spanned<'file_name, U>
+    where
+        U: Debug + Clone + PartialEq + Eq,
+        F: FnOnce(T) -> U,
+    {
+        return Spanned::new(self.span, f(self.data));
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn start(&self) -> Location<'file_name> {
+        return self.span.start();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn end(&self) -> Location<'file_name> {
+        return self.span.end();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn data(&self) -> &T {
+        return &self.data;
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn span(&self) -> Span<'file_name> {
+        return self.span;
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn range(&self) -> Range<usize> {
+        return self.span.range();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn line(&self) -> usize {
+        return self.span.line();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn column(&self) -> usize {
+        return self.span.column();
+    }
+
+    #[must_use]
+    #[inline]
+    pub fn file_name(&self) -> &'file_name str {
+        return self.span.file_name();
+    }
+}
+
+impl<T> Copy for Spanned<'_, T> where T: Copy + Debug + Clone + PartialEq + Eq {}
+
+impl<T> AsRef<T> for Spanned<'_, T>
+where
+    T: Debug + Clone + PartialEq + Eq,
+{
+    #[inline]
+    fn as_ref(&self) -> &T {
+        return &self.data;
+    }
+}
+
+impl<T> Deref for Spanned<'_, T>
+where
+    T: Debug + Clone + PartialEq + Eq,
+{
+    type Target = T;
+
+    #[inline]
+    fn deref(&self) -> &Self::Target {
+        return &self.data;
+    }
+}
+
+impl<T> Display for Spanned<'_, T>
+where
+    T: Display + Debug + Clone + PartialEq + Eq,
+{
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        return write!(f, "{} @ {}", self.data, self.span);
     }
 }

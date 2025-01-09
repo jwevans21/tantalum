@@ -3,7 +3,7 @@ use tantalum_ast::{
     UnaryOperatorKind,
 };
 use tantalum_lexer::{token::Token, token_kind::TokenKind};
-use tantalum_span::Span;
+use tantalum_span::{Span, Spanned};
 
 use crate::{ParseError, Parser};
 
@@ -365,7 +365,9 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         Ok(lhs)
     }
 
-    fn unary_operator_from_token(token: Token<'file_name, 'source>) -> UnaryOperator<'file_name> {
+    fn unary_operator_from_token(
+        token: Spanned<'file_name, Token<'source>>,
+    ) -> UnaryOperator<'file_name> {
         match token.kind() {
             TokenKind::Minus => UnaryOperator {
                 span: token.span(),
@@ -391,7 +393,9 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         }
     }
 
-    fn binary_operator_from_token(token: Token<'file_name, 'source>) -> BinaryOperator<'file_name> {
+    fn binary_operator_from_token(
+        token: Spanned<'file_name, Token<'source>>,
+    ) -> BinaryOperator<'file_name> {
         match token.kind() {
             TokenKind::Equal => BinaryOperator {
                 span: token.span(),

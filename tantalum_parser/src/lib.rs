@@ -1,7 +1,7 @@
 use error::ParseError;
 use tantalum_ast::TopLevelExpression;
 use tantalum_lexer::{token::Token, token_kind::TokenKind, Lexer};
-use tantalum_span::Location;
+use tantalum_span::{Location, Spanned};
 
 pub mod error;
 
@@ -19,7 +19,7 @@ pub struct Parser<'file_name, 'source> {
     // lexer: Lexer<'file_name, 'source>,
     source: &'source str,
     file_name: &'file_name str,
-    tokens: Vec<Token<'file_name, 'source>>,
+    tokens: Vec<Spanned<'file_name, Token<'source>>>,
     eof: Location<'file_name>,
     position: usize,
 }
@@ -59,14 +59,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         self.position >= self.tokens.len()
     }
 
-    fn is_at(&self, kind: TokenKind) -> Option<Token<'file_name, 'source>> {
+    fn is_at(&self, kind: TokenKind) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens
             .get(self.position)
             .filter(|token| token.kind() == kind)
             .copied()
     }
 
-    fn advance_if(&mut self, kind: TokenKind) -> Option<Token<'file_name, 'source>> {
+    fn advance_if(&mut self, kind: TokenKind) -> Option<Spanned<'file_name, Token<'source>>> {
         if let Some(token) = self.is_at(kind) {
             self.position += 1;
             Some(token)
@@ -78,7 +78,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     fn expect(
         &mut self,
         kind: TokenKind,
-    ) -> Result<Token<'file_name, 'source>, error::ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Token<'source>>, error::ParseError<'file_name, 'source>> {
         let Some(token) = self.tokens.get(self.position) else {
             return Err(error::ParseError::unexpected_eof(self.source, self.eof));
         };
@@ -96,17 +96,17 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         }
     }
 
-    fn peek(&self) -> Option<Token<'file_name, 'source>> {
+    fn peek(&self) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens.get(self.position).copied()
     }
 
-    fn next(&mut self) -> Option<Token<'file_name, 'source>> {
+    fn next(&mut self) -> Option<Spanned<'file_name, Token<'source>>> {
         let token = self.tokens.get(self.position).copied();
         self.position += 1;
         token
     }
 
-    fn is_at_any<'a>(&self, set: &'a [TokenKind]) -> Option<Token<'file_name, 'source>> {
+    fn is_at_any<'a>(&self, set: &'a [TokenKind]) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens
             .get(self.position)
             .filter(|token| set.contains(&token.kind()))
@@ -116,7 +116,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     fn expect_any<'a>(
         &mut self,
         set: &'a [TokenKind],
-    ) -> Result<Token<'file_name, 'source>, error::ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Token<'source>>, error::ParseError<'file_name, 'source>> {
         let Some(token) = self.tokens.get(self.position) else {
             return Err(error::ParseError::unexpected_eof(self.source, self.eof));
         };
@@ -134,7 +134,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         }
     }
 
-    fn nth(&self, n: usize) -> Option<Token<'file_name, 'source>> {
+    fn nth(&self, n: usize) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens.get(self.position + n).copied()
     }
 }

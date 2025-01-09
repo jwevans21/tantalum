@@ -2,7 +2,7 @@ use tantalum_ast::{
     Parameter, ParameterKind, TopLevelExpression, TopLevelExpressionKind, Type, TypeKind,
 };
 use tantalum_lexer::{token::Token, token_kind::TokenKind};
-use tantalum_span::Span;
+use tantalum_span::{Span, Spanned};
 
 use crate::{error::ParseError, Parser};
 
@@ -30,7 +30,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     fn parse_top_level_function(
         &mut self,
-        fn_token: Token<'file_name, 'source>,
+        fn_token: Spanned<'file_name, Token<'source>>,
     ) -> Result<TopLevelExpression<'file_name, 'source>, ParseError<'file_name, 'source>> {
         let name = self.expect(TokenKind::Identifier)?;
 
@@ -42,7 +42,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             let parameter_type = self.parse_type()?;
 
             parameters.push(Parameter {
-                span: Span::new(parameter_name.span().start(), parameter_type.span.end()),
+                span: Span::new(parameter_name.start(), parameter_type.span.end()),
                 kind: ParameterKind::Named {
                     name: parameter_name.lexeme(),
                     ty: parameter_type,
@@ -57,7 +57,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 Some(token) => {
                     return Err(ParseError::unexpected_token(
                         self.source,
-                        token.span().start(),
+                        token.start(),
                         token.kind(),
                         TokenKind::Comma,
                     ));
@@ -79,7 +79,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let body = self.parse_statement()?;
 
         Ok(TopLevelExpression {
-            span: Span::new(fn_token.span().start(), body.span.end()),
+            span: Span::new(fn_token.start(), body.span.end()),
             kind: TopLevelExpressionKind::FunctionDeclaration {
                 name: name.lexeme(),
                 parameters,
@@ -97,13 +97,13 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     fn parse_top_level_extern(
         &mut self,
-        extern_token: Token<'file_name, 'source>,
+        extern_token: Spanned<'file_name, Token<'source>>,
     ) -> Result<TopLevelExpression<'file_name, 'source>, ParseError<'file_name, 'source>> {
         match self.is_at_any(Self::EXTERN_START) {
             None => {
                 return Err(ParseError::unexpected_token(
                     self.source,
-                    extern_token.span().start(),
+                    extern_token.start(),
                     extern_token.kind(),
                     TokenKind::KeywordFn,
                 ));
@@ -121,7 +121,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     fn parse_top_level_extern_function(
         &mut self,
-        extern_token: Token<'file_name, 'source>,
+        extern_token: Spanned<'file_name, Token<'source>>,
     ) -> Result<TopLevelExpression<'file_name, 'source>, ParseError<'file_name, 'source>> {
         self.expect(TokenKind::KeywordFn)?;
 
@@ -144,7 +144,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             let parameter_type = self.parse_type()?;
 
             parameters.push(Parameter {
-                span: Span::new(parameter_name.span().start(), parameter_type.span.end()),
+                span: Span::new(parameter_name.start(), parameter_type.span.end()),
                 kind: ParameterKind::Named {
                     name: parameter_name.lexeme(),
                     ty: parameter_type,
@@ -159,7 +159,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 Some(token) => {
                     return Err(ParseError::unexpected_token(
                         self.source,
-                        token.span().start(),
+                        token.start(),
                         token.kind(),
                         TokenKind::Comma,
                     ));
@@ -182,7 +182,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let semicolon = self.expect(TokenKind::Semicolon)?;
 
         Ok(TopLevelExpression {
-            span: Span::new(extern_token.span().start(), semicolon.span().end()),
+            span: Span::new(extern_token.start(), semicolon.span().end()),
             kind: TopLevelExpressionKind::ExternalFunction {
                 name: name.lexeme(),
                 parameters,

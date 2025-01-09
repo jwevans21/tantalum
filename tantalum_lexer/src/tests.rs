@@ -63,14 +63,18 @@ macro_rules! single_token_test_case {
 
                 pretty_assertions::assert_eq!(
                     token,
-                    Some($crate::token::Token::new(
-                        tantalum_span::Span::new(
-                            tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
-                            tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
-                        ),
-                        $lexeme,
-                        $crate::token_kind::TokenKind::$kind
-                    ))
+                    Some(
+                        tantalum_span::Spanned::new(
+                            tantalum_span::Span::new(
+                                tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
+                                tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
+                            ),
+                            $crate::token::Token::new(
+                                $lexeme,
+                                $crate::token_kind::TokenKind::$kind
+                            )
+                        )
+                    )
                 );
 
                 pretty_assertions::assert_eq!(lexer.next_token(), None);
@@ -103,14 +107,18 @@ macro_rules! multi_token_test_case {
 
                         pretty_assertions::assert_eq!(
                             token,
-                            Some($crate::token::Token::new(
-                                tantalum_span::Span::new(
-                                    tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
-                                    tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
-                                ),
-                                $lexeme,
-                                $crate::token_kind::TokenKind::$kind
-                            ))
+                            Some(
+                                tantalum_span::Spanned::new(
+                                    tantalum_span::Span::new(
+                                        tantalum_span::Location::new_at("main.ta", ($span).start, $lines, $columns),
+                                        tantalum_span::Location::new_at("main.ta", ($span).end, $lines, $columns + $lexeme.len()),
+                                    ),
+                                    $crate::token::Token::new(
+                                        $lexeme,
+                                        $crate::token_kind::TokenKind::$kind
+                                    )
+                                )
+                            )
                         );
 
                         // pretty_assertions::assert_eq!(lexer.next_token(), None);
@@ -127,14 +135,18 @@ macro_rules! multi_token_test_case {
 
                             pretty_assertions::assert_eq!(
                                 token,
-                                Some($crate::token::Token::new(
-                                    tantalum_span::Span::new(
-                                        tantalum_span::Location::new_at("main.ta", ($span2).start, $lines2, $columns2),
-                                        tantalum_span::Location::new_at("main.ta", ($span2).end, $lines2, $columns2 + $lexeme2.len()),
-                                    ),
-                                    $lexeme2,
-                                    $crate::token_kind::TokenKind::$kind2
-                                ))
+                                Some(
+                                    tantalum_span::Spanned::new(
+                                        tantalum_span::Span::new(
+                                            tantalum_span::Location::new_at("main.ta", ($span2).start, $lines2, $columns2),
+                                            tantalum_span::Location::new_at("main.ta", ($span2).end, $lines2, $columns2 + $lexeme2.len()),
+                                        ),
+                                        $crate::token::Token::new(
+                                            $lexeme2,
+                                            $crate::token_kind::TokenKind::$kind2
+                                        )
+                                    )
+                                )
                             );
 
                             // pretty_assertions::assert_eq!(lexer.next_token(), None);

@@ -4,7 +4,7 @@ expression: tokens
 snapshot_kind: text
 ---
 [
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -19,10 +19,12 @@ snapshot_kind: text
         column: 3,
       ),
     ),
-    lexeme: "fn",
-    kind: KeywordFn,
+    data: Token(
+      lexeme: "fn",
+      kind: KeywordFn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -37,10 +39,12 @@ snapshot_kind: text
         column: 8,
       ),
     ),
-    lexeme: "main",
-    kind: Identifier,
+    data: Token(
+      lexeme: "main",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -55,10 +59,12 @@ snapshot_kind: text
         column: 9,
       ),
     ),
-    lexeme: "(",
-    kind: LeftParen,
+    data: Token(
+      lexeme: "(",
+      kind: LeftParen,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -73,10 +79,12 @@ snapshot_kind: text
         column: 10,
       ),
     ),
-    lexeme: ")",
-    kind: RightParen,
+    data: Token(
+      lexeme: ")",
+      kind: RightParen,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -91,10 +99,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ":",
-    kind: Colon,
+    data: Token(
+      lexeme: ":",
+      kind: Colon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -109,10 +119,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "i32",
-    kind: Identifier,
+    data: Token(
+      lexeme: "i32",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -127,10 +139,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "{",
-    kind: LeftBrace,
+    data: Token(
+      lexeme: "{",
+      kind: LeftBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -145,10 +159,12 @@ snapshot_kind: text
         column: 8,
       ),
     ),
-    lexeme: "let",
-    kind: KeywordLet,
+    data: Token(
+      lexeme: "let",
+      kind: KeywordLet,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -163,10 +179,12 @@ snapshot_kind: text
         column: 10,
       ),
     ),
-    lexeme: "a",
-    kind: Identifier,
+    data: Token(
+      lexeme: "a",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -181,10 +199,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ":",
-    kind: Colon,
+    data: Token(
+      lexeme: ":",
+      kind: Colon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -199,10 +219,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "i32",
-    kind: Identifier,
+    data: Token(
+      lexeme: "i32",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -217,10 +239,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "=",
-    kind: Equal,
+    data: Token(
+      lexeme: "=",
+      kind: Equal,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -235,10 +259,12 @@ snapshot_kind: text
         column: 20,
       ),
     ),
-    lexeme: "10",
-    kind: DecimalIntegerLiteral,
+    data: Token(
+      lexeme: "10",
+      kind: DecimalIntegerLiteral,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -253,10 +279,12 @@ snapshot_kind: text
         column: 21,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -271,10 +299,12 @@ snapshot_kind: text
         column: 8,
       ),
     ),
-    lexeme: "let",
-    kind: KeywordLet,
+    data: Token(
+      lexeme: "let",
+      kind: KeywordLet,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -289,10 +319,12 @@ snapshot_kind: text
         column: 10,
       ),
     ),
-    lexeme: "b",
-    kind: Identifier,
+    data: Token(
+      lexeme: "b",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -307,10 +339,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ":",
-    kind: Colon,
+    data: Token(
+      lexeme: ":",
+      kind: Colon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -325,10 +359,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "i32",
-    kind: Identifier,
+    data: Token(
+      lexeme: "i32",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -343,10 +379,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "=",
-    kind: Equal,
+    data: Token(
+      lexeme: "=",
+      kind: Equal,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -361,10 +399,12 @@ snapshot_kind: text
         column: 20,
       ),
     ),
-    lexeme: "20",
-    kind: DecimalIntegerLiteral,
+    data: Token(
+      lexeme: "20",
+      kind: DecimalIntegerLiteral,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -379,10 +419,12 @@ snapshot_kind: text
         column: 21,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -397,10 +439,12 @@ snapshot_kind: text
         column: 8,
       ),
     ),
-    lexeme: "let",
-    kind: KeywordLet,
+    data: Token(
+      lexeme: "let",
+      kind: KeywordLet,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -415,10 +459,12 @@ snapshot_kind: text
         column: 10,
       ),
     ),
-    lexeme: "c",
-    kind: Identifier,
+    data: Token(
+      lexeme: "c",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -433,10 +479,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ":",
-    kind: Colon,
+    data: Token(
+      lexeme: ":",
+      kind: Colon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -451,10 +499,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "i32",
-    kind: Identifier,
+    data: Token(
+      lexeme: "i32",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -469,10 +519,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "=",
-    kind: Equal,
+    data: Token(
+      lexeme: "=",
+      kind: Equal,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -487,10 +539,12 @@ snapshot_kind: text
         column: 20,
       ),
     ),
-    lexeme: "30",
-    kind: DecimalIntegerLiteral,
+    data: Token(
+      lexeme: "30",
+      kind: DecimalIntegerLiteral,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -505,10 +559,12 @@ snapshot_kind: text
         column: 21,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -523,10 +579,12 @@ snapshot_kind: text
         column: 7,
       ),
     ),
-    lexeme: "if",
-    kind: KeywordIf,
+    data: Token(
+      lexeme: "if",
+      kind: KeywordIf,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -541,10 +599,12 @@ snapshot_kind: text
         column: 9,
       ),
     ),
-    lexeme: "a",
-    kind: Identifier,
+    data: Token(
+      lexeme: "a",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -559,10 +619,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: ">",
-    kind: RightAngle,
+    data: Token(
+      lexeme: ">",
+      kind: RightAngle,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -577,10 +639,12 @@ snapshot_kind: text
         column: 13,
       ),
     ),
-    lexeme: "b",
-    kind: Identifier,
+    data: Token(
+      lexeme: "b",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -595,10 +659,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "{",
-    kind: LeftBrace,
+    data: Token(
+      lexeme: "{",
+      kind: LeftBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -613,10 +679,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "return",
-    kind: KeywordReturn,
+    data: Token(
+      lexeme: "return",
+      kind: KeywordReturn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -631,10 +699,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "a",
-    kind: Identifier,
+    data: Token(
+      lexeme: "a",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -649,10 +719,12 @@ snapshot_kind: text
         column: 18,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -667,10 +739,12 @@ snapshot_kind: text
         column: 6,
       ),
     ),
-    lexeme: "}",
-    kind: RightBrace,
+    data: Token(
+      lexeme: "}",
+      kind: RightBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -685,10 +759,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: "else",
-    kind: KeywordElse,
+    data: Token(
+      lexeme: "else",
+      kind: KeywordElse,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -703,10 +779,12 @@ snapshot_kind: text
         column: 14,
       ),
     ),
-    lexeme: "if",
-    kind: KeywordIf,
+    data: Token(
+      lexeme: "if",
+      kind: KeywordIf,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -721,10 +799,12 @@ snapshot_kind: text
         column: 16,
       ),
     ),
-    lexeme: "b",
-    kind: Identifier,
+    data: Token(
+      lexeme: "b",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -739,10 +819,12 @@ snapshot_kind: text
         column: 18,
       ),
     ),
-    lexeme: ">",
-    kind: RightAngle,
+    data: Token(
+      lexeme: ">",
+      kind: RightAngle,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -757,10 +839,12 @@ snapshot_kind: text
         column: 20,
       ),
     ),
-    lexeme: "c",
-    kind: Identifier,
+    data: Token(
+      lexeme: "c",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -775,10 +859,12 @@ snapshot_kind: text
         column: 22,
       ),
     ),
-    lexeme: "{",
-    kind: LeftBrace,
+    data: Token(
+      lexeme: "{",
+      kind: LeftBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -793,10 +879,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "return",
-    kind: KeywordReturn,
+    data: Token(
+      lexeme: "return",
+      kind: KeywordReturn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -811,10 +899,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "b",
-    kind: Identifier,
+    data: Token(
+      lexeme: "b",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -829,10 +919,12 @@ snapshot_kind: text
         column: 18,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -847,10 +939,12 @@ snapshot_kind: text
         column: 6,
       ),
     ),
-    lexeme: "}",
-    kind: RightBrace,
+    data: Token(
+      lexeme: "}",
+      kind: RightBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -865,10 +959,12 @@ snapshot_kind: text
         column: 11,
       ),
     ),
-    lexeme: "else",
-    kind: KeywordElse,
+    data: Token(
+      lexeme: "else",
+      kind: KeywordElse,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -883,10 +979,12 @@ snapshot_kind: text
         column: 13,
       ),
     ),
-    lexeme: "{",
-    kind: LeftBrace,
+    data: Token(
+      lexeme: "{",
+      kind: LeftBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -901,10 +999,12 @@ snapshot_kind: text
         column: 15,
       ),
     ),
-    lexeme: "return",
-    kind: KeywordReturn,
+    data: Token(
+      lexeme: "return",
+      kind: KeywordReturn,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -919,10 +1019,12 @@ snapshot_kind: text
         column: 17,
       ),
     ),
-    lexeme: "c",
-    kind: Identifier,
+    data: Token(
+      lexeme: "c",
+      kind: Identifier,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -937,10 +1039,12 @@ snapshot_kind: text
         column: 18,
       ),
     ),
-    lexeme: ";",
-    kind: Semicolon,
+    data: Token(
+      lexeme: ";",
+      kind: Semicolon,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -955,10 +1059,12 @@ snapshot_kind: text
         column: 6,
       ),
     ),
-    lexeme: "}",
-    kind: RightBrace,
+    data: Token(
+      lexeme: "}",
+      kind: RightBrace,
+    ),
   ),
-  Token(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -973,7 +1079,9 @@ snapshot_kind: text
         column: 2,
       ),
     ),
-    lexeme: "}",
-    kind: RightBrace,
+    data: Token(
+      lexeme: "}",
+      kind: RightBrace,
+    ),
   ),
 ]
