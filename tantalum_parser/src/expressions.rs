@@ -7,6 +7,8 @@ use tantalum_span::Span;
 
 use crate::{ParseError, Parser};
 
+// This expression parsing code is based on the Pratt Parsing walkthrough
+// here: https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
 impl<'file_name, 'source> Parser<'file_name, 'source> {
     pub const EXPRESSION_START: &'static [TokenKind] = &[
         // Primary Expression Start
@@ -27,7 +29,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         TokenKind::Tilde,
     ];
 
-    const UNARY_START: &'static [TokenKind] =
+    const PREFIX_START: &'static [TokenKind] =
         &[TokenKind::Minus, TokenKind::Exclamation, TokenKind::Tilde];
 
     const PRIMARY_START: &'static [TokenKind] = &[
@@ -76,39 +78,96 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         TokenKind::Equal,
     ];
 
+    fn prefix_binding_power(kind: &TokenKind) -> Option<((), u8)> {
+        match kind {
+            TokenKind::Minus => Some(((), 100)),
+            TokenKind::Exclamation => Some(((), 100)),
+            TokenKind::Tilde => Some(((), 100)),
+            _ if Self::PREFIX_START.contains(kind) => {
+                panic!("token contained in PREFIX_START, but does not have a binding power")
+            }
+            _ => None,
+        }
+    }
+
+    fn infix_binding_power(kind: &TokenKind) -> Option<(u8, u8)> {
+        match kind {
+            TokenKind::Star | TokenKind::Slash | TokenKind::Percent => Some((80, 81)),
+            TokenKind::Plus | TokenKind::Minus => Some((70, 71)),
+            TokenKind::LeftAngleLeftAngle | TokenKind::RightAngleRightAngle => Some((60, 61)),
+            TokenKind::LeftAngle
+            | TokenKind::LeftAngleEqual
+            | TokenKind::RightAngle
+            | TokenKind::RightAngleEqual => Some((50, 51)),
+            TokenKind::EqualEqual | TokenKind::ExclamationEqual => Some((40, 41)),
+            TokenKind::Ampersand => Some((30, 31)),
+            TokenKind::Caret => Some((20, 21)),
+            TokenKind::Pipe => Some((10, 11)),
+            TokenKind::AmpersandAmpersand => Some((5, 6)),
+            TokenKind::PipePipe => Some((3, 4)),
+            TokenKind::Equal => Some((1, 2)),
+            _ if Self::BINARY_OPERATOR.contains(kind) => {
+                panic!("token contained in BINARY_OPERATOR, but does not have a binding power")
+            }
+            _ => None,
+        }
+    }
+
+    fn postfix_binding_power(kind: &TokenKind) -> Option<(u8, ())> {
+        match kind {
+            TokenKind::LeftParen => Some((101, ())),
+            TokenKind::LeftBracket => Some((101, ())),
+            TokenKind::Dot => Some((101, ())),
+            TokenKind::DotAmpersand => Some((101, ())),
+            TokenKind::DotStar => Some((101, ())),
+            TokenKind::Colon => Some((101, ())),
+            TokenKind::ColonColon => Some((101, ())),
+            _ if Self::POSTFIX_START.contains(kind) => {
+                panic!("token contained in POSTFIX_START, but does not have a binding power")
+            }
+            _ => None,
+        }
+    }
+
     pub(crate) fn parse_expression(
         &mut self,
     ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
-        let lhs = self.parse_expression_unary()?;
-
-        self.parse_expression_binary(0, lhs)
-    }
-
-    fn parse_expression_unary(
-        &mut self,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
-        let Some(token) = self.advance_if_any(Self::UNARY_START) else {
-            return self.parse_expression_primary();
-        };
-
-        let operand = self.parse_expression_unary()?;
-
-        Ok(Expression {
-            span: Span::new(token.span().start(), operand.span.end()),
-            kind: ExpressionKind::UnaryOperation {
-                operator: Self::unary_operator_from_token(token),
-                operand: Box::from(operand),
-            },
-        })
+        self.parse_expression_binary(0)
     }
 
     fn parse_expression_primary(
         &mut self,
     ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
-        let Some(token) = self.advance_if_any(Self::PRIMARY_START) else {
-            return Err(ParseError::unexpected_eof(self.source, self.eof));
-        };
+        match self.peek() {
+            Some(token) => {
+                if let Some(((), right_binding_power)) = Self::prefix_binding_power(&token.kind()) {
+                    self.next();
 
+                    let operand = self.parse_expression_binary(right_binding_power)?;
+
+                    Ok(Expression {
+                        span: Span::new(token.span().start(), operand.span.end()),
+                        kind: ExpressionKind::UnaryOperation {
+                            operator: Self::unary_operator_from_token(token),
+                            operand: Box::from(operand),
+                        },
+                    })
+                } else {
+                    self.parse_expression_primary_start()
+                }
+            }
+            None => Err(ParseError::unexpected_eof(self.source, self.eof)),
+        }
+    }
+
+    fn parse_expression_primary_start(
+        &mut self,
+    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
+        let token = self.expect_any(
+            [Self::PRIMARY_START, Self::TYPE_START_SET]
+                .concat()
+                .as_slice(),
+        )?;
         let expr = match token.kind() {
             TokenKind::Identifier => Expression {
                 span: token.span(),
@@ -176,137 +235,153 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
                 expr
             }
+            kind if Self::TYPE_START_SET.contains(&kind) => {
+                let ty = self.parse_type()?;
+                self.expect(TokenKind::LeftParen)?;
+
+                let expr = self.parse_expression()?;
+                self.expect(TokenKind::RightParen)?;
+
+                Expression {
+                    span: Span::new(ty.span.start(), expr.span.end()),
+                    kind: ExpressionKind::TypeCast {
+                        ty,
+                        expression: Box::from(expr),
+                    },
+                }
+            }
             _ => unreachable!(
                 "Already expected in set of primary expression starts ({:?})",
                 Self::PRIMARY_START
             ),
         };
 
-        self.parse_expression_postfix(expr)
-    }
-
-    fn parse_expression_postfix(
-        &mut self,
-        mut lhs: Expression<'file_name, 'source>,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
-        while let Some(token) = self.advance_if_any(Self::POSTFIX_START) {
-            match token.kind() {
-                TokenKind::DotAmpersand | TokenKind::DotStar => {
-                    lhs = Expression {
-                        span: Span::new(lhs.span.start(), token.span().end()),
-                        kind: ExpressionKind::UnaryOperation {
-                            operator: Self::unary_operator_from_token(token),
-                            operand: Box::from(lhs),
-                        },
-                    };
-                }
-                TokenKind::LeftParen => {
-                    let mut arguments = Vec::new();
-
-                    if self.is_at(TokenKind::RightParen).is_none() {
-                        loop {
-                            arguments.push(self.parse_expression()?);
-
-                            if self.advance_if(TokenKind::Comma).is_none() {
-                                break;
-                            }
-                        }
-                    }
-
-                    let close = self.expect(TokenKind::RightParen)?;
-
-                    lhs = Expression {
-                        span: Span::new(lhs.span.start(), close.span().end()),
-                        kind: ExpressionKind::FunctionCall {
-                            source: Box::from(lhs),
-                            arguments,
-                        },
-                    };
-                }
-                TokenKind::LeftBracket => {
-                    let index = self.parse_expression()?;
-                    let close = self.expect(TokenKind::RightBracket)?;
-
-                    lhs = Expression {
-                        span: Span::new(lhs.span.start(), close.span().end()),
-                        kind: ExpressionKind::ArrayAccess {
-                            source: Box::from(lhs),
-                            index: Box::from(index),
-                        },
-                    };
-                }
-                TokenKind::Dot => {
-                    let member = self.expect(TokenKind::Identifier)?;
-
-                    lhs = Expression {
-                        span: Span::new(lhs.span.start(), member.span().end()),
-                        kind: ExpressionKind::MemberAccess {
-                            source: Box::from(lhs),
-                            member: member.lexeme(),
-                        },
-                    };
-                }
-                TokenKind::Colon => {
-                    let ty = self.parse_type()?;
-
-                    lhs = Expression {
-                        span: Span::new(lhs.span.start(), ty.span.end()),
-                        kind: ExpressionKind::TypeCast {
-                            ty,
-                            expression: Box::from(lhs),
-                        },
-                    };
-                }
-                TokenKind::ColonColon => todo!("Parse Path Expression"),
-                _ => unimplemented!(
-                    "The Postfix Token: {:?} Is Not In The Set {:?}",
-                    token,
-                    Self::POSTFIX_START
-                ),
-            }
-        }
-
-        Ok(lhs)
+        Ok(expr)
     }
 
     fn parse_expression_binary(
         &mut self,
-        current_precedence: u8,
-        mut lhs: Expression<'file_name, 'source>,
+        minimum_binding_power: u8,
     ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
+        let mut lhs = self.parse_expression_primary()?;
+
         loop {
-            let Some(token) = self.advance_if_any(Self::BINARY_OPERATOR) else {
-                return Ok(lhs);
+            let operator = match self.peek() {
+                Some(token) => {
+                    if Self::infix_binding_power(&token.kind()).is_some()
+                        || Self::postfix_binding_power(&token.kind()).is_some()
+                    {
+                        token
+                    } else {
+                        break;
+                    }
+                }
+                None => break,
             };
 
-            let operator = Self::binary_operator_from_token(token);
-            let precedence = Self::precedence_of_operator(&operator.kind);
-
-            if precedence < current_precedence {
-                self.put_back(1);
-                return Ok(lhs);
-            }
-
-            let mut rhs = self.parse_expression_unary()?;
-
-            if let Some(next_token) = self.is_at_any(Self::BINARY_OPERATOR) {
-                let next_operator = Self::binary_operator_from_token(next_token);
-                let next_precedence = Self::precedence_of_operator(&next_operator.kind);
-
-                if precedence < next_precedence {
-                    rhs = self.parse_expression_binary(precedence + 1, rhs)?;
+            if let Some((left_binding_power, ())) = Self::postfix_binding_power(&operator.kind()) {
+                if left_binding_power < minimum_binding_power {
+                    break;
                 }
+                self.next();
+
+                match operator.kind() {
+                    TokenKind::LeftParen => {
+                        let mut arguments = Vec::new();
+
+                        if self.is_at(TokenKind::RightParen).is_none() {
+                            loop {
+                                arguments.push(self.parse_expression()?);
+
+                                if self.advance_if(TokenKind::Comma).is_none() {
+                                    break;
+                                }
+                            }
+                        }
+
+                        let close = self.expect(TokenKind::RightParen)?;
+
+                        lhs = Expression {
+                            span: Span::new(lhs.span.start(), close.span().end()),
+                            kind: ExpressionKind::FunctionCall {
+                                source: Box::from(lhs),
+                                arguments,
+                            },
+                        };
+                    }
+                    TokenKind::LeftBracket => {
+                        let index = self.parse_expression()?;
+                        let close = self.expect(TokenKind::RightBracket)?;
+
+                        lhs = Expression {
+                            span: Span::new(lhs.span.start(), close.span().end()),
+                            kind: ExpressionKind::ArrayAccess {
+                                source: Box::from(lhs),
+                                index: Box::from(index),
+                            },
+                        };
+                    }
+                    TokenKind::Dot => {
+                        let member = self.expect(TokenKind::Identifier)?;
+
+                        lhs = Expression {
+                            span: Span::new(lhs.span.start(), member.span().end()),
+                            kind: ExpressionKind::MemberAccess {
+                                source: Box::from(lhs),
+                                member: member.lexeme(),
+                            },
+                        };
+                    }
+                    TokenKind::Colon => {
+                        let ty = self.parse_type()?;
+
+                        lhs = Expression {
+                            span: Span::new(lhs.span.start(), ty.span.end()),
+                            kind: ExpressionKind::TypeCast {
+                                ty,
+                                expression: Box::from(lhs),
+                            },
+                        };
+                    }
+                    TokenKind::ColonColon => todo!("Parse Path Expression"),
+                    _ => {
+                        lhs = Expression {
+                            span: Span::new(lhs.span.start(), operator.span().end()),
+                            kind: ExpressionKind::UnaryOperation {
+                                operator: Self::unary_operator_from_token(operator),
+                                operand: Box::from(lhs),
+                            },
+                        };
+                    }
+                }
+
+                continue;
             }
+
+            let (left_binding_power, right_binding_power) =
+                Self::infix_binding_power(&operator.kind())
+                    .expect("token is not an infix operator");
+
+            if left_binding_power < minimum_binding_power {
+                break;
+            }
+
+            self.next();
+
+            let rhs = self.parse_expression_binary(right_binding_power)?;
 
             lhs = Expression {
                 span: Span::new(lhs.span.start(), rhs.span.end()),
                 kind: ExpressionKind::BinaryOperation {
                     left: Box::from(lhs),
-                    operator,
+                    operator: Self::binary_operator_from_token(operator),
                     right: Box::from(rhs),
                 },
             };
         }
+        dbg!(&lhs);
+
+        Ok(lhs)
     }
 
     fn unary_operator_from_token(token: Token<'file_name, 'source>) -> UnaryOperator<'file_name> {
@@ -422,57 +497,5 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             },
             _ => unimplemented!("No Known Binary Operator for Token: {:?}", token),
         }
-    }
-
-    fn precedence_of_operator(operator: &BinaryOperatorKind) -> u8 {
-        [
-            // Assignment Operators
-            [BinaryOperatorKind::Assignment].as_slice(),
-            // Logical Operators
-            [
-                BinaryOperatorKind::LogicalAnd,
-                BinaryOperatorKind::LogicalOr,
-            ]
-            .as_slice(),
-            // Bitwise Operators
-            [
-                BinaryOperatorKind::BitwiseAnd,
-                BinaryOperatorKind::BitwiseOr,
-                BinaryOperatorKind::BitwiseXor,
-            ]
-            .as_slice(),
-            // Equality Operators
-            [BinaryOperatorKind::Equality, BinaryOperatorKind::NotEqual].as_slice(),
-            // Relational Operators
-            [
-                BinaryOperatorKind::LessThan,
-                BinaryOperatorKind::LessThanOrEqual,
-                BinaryOperatorKind::GreaterThan,
-                BinaryOperatorKind::GreaterThanOrEqual,
-            ]
-            .as_slice(),
-            // Shift Operators
-            [
-                BinaryOperatorKind::ShiftLeft,
-                BinaryOperatorKind::ShiftRight,
-            ]
-            .as_slice(),
-            // Additive Operators
-            [
-                BinaryOperatorKind::Addition,
-                BinaryOperatorKind::Subtraction,
-            ]
-            .as_slice(),
-            // Multiplicative Operators
-            [
-                BinaryOperatorKind::Multiplication,
-                BinaryOperatorKind::Division,
-                BinaryOperatorKind::Modulus,
-            ]
-            .as_slice(),
-        ]
-        .iter()
-        .position(|set| set.contains(operator))
-        .map_or(0, |index| (u8::try_from(index).unwrap_or(u8::MAX) + 1) * 10)
     }
 }

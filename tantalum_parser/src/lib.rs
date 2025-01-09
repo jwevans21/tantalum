@@ -96,12 +96,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         }
     }
 
-    #[allow(unused)]
-    fn next_is(&self, kind: TokenKind) -> Option<Token<'file_name, 'source>> {
-        self.tokens
-            .get(self.position + 1)
-            .filter(|token| token.kind() == kind)
-            .copied()
+    fn peek(&self) -> Option<Token<'file_name, 'source>> {
+        self.tokens.get(self.position).copied()
+    }
+
+    fn next(&mut self) -> Option<Token<'file_name, 'source>> {
+        let token = self.tokens.get(self.position).copied();
+        self.position += 1;
+        token
     }
 
     fn is_at_any<'a>(&self, set: &'a [TokenKind]) -> Option<Token<'file_name, 'source>> {
@@ -111,14 +113,6 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             .copied()
     }
 
-    fn advance_if_any<'a>(&mut self, set: &'a [TokenKind]) -> Option<Token<'file_name, 'source>> {
-        if let Some(token) = self.is_at_any(set) {
-            self.position += 1;
-            Some(token)
-        } else {
-            None
-        }
-    }
 
     fn expect_any<'a>(
         &mut self,
@@ -141,19 +135,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         }
     }
 
-    #[allow(unused)]
-    fn next_is_any<'a>(&self, set: &'a [TokenKind]) -> Option<Token<'file_name, 'source>> {
-        self.tokens
-            .get(self.position + 1)
-            .filter(|token| set.contains(&token.kind()))
-            .copied()
-    }
-
     fn nth(&self, n: usize) -> Option<Token<'file_name, 'source>> {
         self.tokens.get(self.position + n).copied()
-    }
-
-    fn put_back(&mut self, n: usize) {
-        self.position -= n;
     }
 }
