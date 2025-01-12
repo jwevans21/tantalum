@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "for_loop_statement",
@@ -18,8 +18,8 @@ Ok(Statement(
       column: 48,
     ),
   ),
-  kind: ForInitCondUpdate(
-    initialization: Statement(
+  data: ForInitCondUpdate(ForInitCondUpdate(
+    init: Spanned(
       span: Span(
         start: Location(
           file_name: "for_loop_statement",
@@ -34,10 +34,26 @@ Ok(Statement(
           column: 15,
         ),
       ),
-      kind: VariableDeclaration(
-        name: "i",
+      data: VariableDeclaration(VariableDeclaration(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "for_loop_statement",
+              position: 8,
+              line: 1,
+              column: 9,
+            ),
+            end: Location(
+              file_name: "for_loop_statement",
+              position: 9,
+              line: 1,
+              column: 10,
+            ),
+          ),
+          data: "i",
+        ),
         ty: None,
-        value: Expression(
+        value: Spanned(
           span: Span(
             start: Location(
               file_name: "for_loop_statement",
@@ -52,14 +68,30 @@ Ok(Statement(
               column: 14,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "0",
+          data: Literal(Integer(Integer(
+            value: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "for_loop_statement",
+                  position: 12,
+                  line: 1,
+                  column: 13,
+                ),
+                end: Location(
+                  file_name: "for_loop_statement",
+                  position: 13,
+                  line: 1,
+                  column: 14,
+                ),
+              ),
+              data: "0",
+            ),
             radix: 10,
-          ),
+          ))),
         ),
-      ),
+      )),
     ),
-    condition: Statement(
+    condition: Spanned(
       span: Span(
         start: Location(
           file_name: "for_loop_statement",
@@ -74,8 +106,8 @@ Ok(Statement(
           column: 23,
         ),
       ),
-      kind: Expression(
-        expression: Expression(
+      data: Expression(BinaryOperation(BinaryOperation(
+        left: Spanned(
           span: Span(
             start: Location(
               file_name: "for_loop_statement",
@@ -85,13 +117,13 @@ Ok(Statement(
             ),
             end: Location(
               file_name: "for_loop_statement",
-              position: 21,
+              position: 16,
               line: 1,
-              column: 22,
+              column: 17,
             ),
           ),
-          kind: BinaryOperation(
-            left: Expression(
+          data: Variable(Variable(
+            name: Spanned(
               span: Span(
                 start: Location(
                   file_name: "for_loop_statement",
@@ -106,28 +138,44 @@ Ok(Statement(
                   column: 17,
                 ),
               ),
-              kind: Variable(
-                name: "i",
-              ),
+              data: "i",
             ),
-            operator: BinaryOperator(
-              span: Span(
-                start: Location(
-                  file_name: "for_loop_statement",
-                  position: 17,
-                  line: 1,
-                  column: 18,
-                ),
-                end: Location(
-                  file_name: "for_loop_statement",
-                  position: 18,
-                  line: 1,
-                  column: 19,
-                ),
-              ),
-              kind: LessThan,
+          )),
+        ),
+        operator: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "for_loop_statement",
+              position: 17,
+              line: 1,
+              column: 18,
             ),
-            right: Expression(
+            end: Location(
+              file_name: "for_loop_statement",
+              position: 18,
+              line: 1,
+              column: 19,
+            ),
+          ),
+          data: LessThan,
+        ),
+        right: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "for_loop_statement",
+              position: 19,
+              line: 1,
+              column: 20,
+            ),
+            end: Location(
+              file_name: "for_loop_statement",
+              position: 21,
+              line: 1,
+              column: 22,
+            ),
+          ),
+          data: Literal(Integer(Integer(
+            value: Spanned(
               span: Span(
                 start: Location(
                   file_name: "for_loop_statement",
@@ -142,16 +190,14 @@ Ok(Statement(
                   column: 22,
                 ),
               ),
-              kind: IntegerLiteral(
-                value: "10",
-                radix: 10,
-              ),
+              data: "10",
             ),
-          ),
+            radix: 10,
+          ))),
         ),
-      ),
+      ))),
     ),
-    update: Statement(
+    update: Spanned(
       span: Span(
         start: Location(
           file_name: "for_loop_statement",
@@ -166,8 +212,8 @@ Ok(Statement(
           column: 34,
         ),
       ),
-      kind: Expression(
-        expression: Expression(
+      data: Expression(BinaryOperation(BinaryOperation(
+        left: Spanned(
           span: Span(
             start: Location(
               file_name: "for_loop_statement",
@@ -177,13 +223,13 @@ Ok(Statement(
             ),
             end: Location(
               file_name: "for_loop_statement",
-              position: 32,
+              position: 24,
               line: 1,
-              column: 33,
+              column: 25,
             ),
           ),
-          kind: BinaryOperation(
-            left: Expression(
+          data: Variable(Variable(
+            name: Spanned(
               span: Span(
                 start: Location(
                   file_name: "for_loop_statement",
@@ -198,28 +244,44 @@ Ok(Statement(
                   column: 25,
                 ),
               ),
-              kind: Variable(
-                name: "i",
-              ),
+              data: "i",
             ),
-            operator: BinaryOperator(
-              span: Span(
-                start: Location(
-                  file_name: "for_loop_statement",
-                  position: 25,
-                  line: 1,
-                  column: 26,
-                ),
-                end: Location(
-                  file_name: "for_loop_statement",
-                  position: 26,
-                  line: 1,
-                  column: 27,
-                ),
-              ),
-              kind: Assignment,
+          )),
+        ),
+        operator: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "for_loop_statement",
+              position: 25,
+              line: 1,
+              column: 26,
             ),
-            right: Expression(
+            end: Location(
+              file_name: "for_loop_statement",
+              position: 26,
+              line: 1,
+              column: 27,
+            ),
+          ),
+          data: Assignment,
+        ),
+        right: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "for_loop_statement",
+              position: 27,
+              line: 1,
+              column: 28,
+            ),
+            end: Location(
+              file_name: "for_loop_statement",
+              position: 32,
+              line: 1,
+              column: 33,
+            ),
+          ),
+          data: BinaryOperation(BinaryOperation(
+            left: Spanned(
               span: Span(
                 start: Location(
                   file_name: "for_loop_statement",
@@ -229,13 +291,13 @@ Ok(Statement(
                 ),
                 end: Location(
                   file_name: "for_loop_statement",
-                  position: 32,
+                  position: 28,
                   line: 1,
-                  column: 33,
+                  column: 29,
                 ),
               ),
-              kind: BinaryOperation(
-                left: Expression(
+              data: Variable(Variable(
+                name: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "for_loop_statement",
@@ -250,28 +312,44 @@ Ok(Statement(
                       column: 29,
                     ),
                   ),
-                  kind: Variable(
-                    name: "i",
-                  ),
+                  data: "i",
                 ),
-                operator: BinaryOperator(
-                  span: Span(
-                    start: Location(
-                      file_name: "for_loop_statement",
-                      position: 29,
-                      line: 1,
-                      column: 30,
-                    ),
-                    end: Location(
-                      file_name: "for_loop_statement",
-                      position: 30,
-                      line: 1,
-                      column: 31,
-                    ),
-                  ),
-                  kind: Addition,
+              )),
+            ),
+            operator: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "for_loop_statement",
+                  position: 29,
+                  line: 1,
+                  column: 30,
                 ),
-                right: Expression(
+                end: Location(
+                  file_name: "for_loop_statement",
+                  position: 30,
+                  line: 1,
+                  column: 31,
+                ),
+              ),
+              data: Addition,
+            ),
+            right: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "for_loop_statement",
+                  position: 31,
+                  line: 1,
+                  column: 32,
+                ),
+                end: Location(
+                  file_name: "for_loop_statement",
+                  position: 32,
+                  line: 1,
+                  column: 33,
+                ),
+              ),
+              data: Literal(Integer(Integer(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "for_loop_statement",
@@ -286,18 +364,16 @@ Ok(Statement(
                       column: 33,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "1",
-                    radix: 10,
-                  ),
+                  data: "1",
                 ),
-              ),
+                radix: 10,
+              ))),
             ),
-          ),
+          )),
         ),
-      ),
+      ))),
     ),
-    body: Statement(
+    body: Spanned(
       span: Span(
         start: Location(
           file_name: "for_loop_statement",
@@ -312,9 +388,9 @@ Ok(Statement(
           column: 48,
         ),
       ),
-      kind: Block(
+      data: Block(Block(
         statements: [
-          Statement(
+          Spanned(
             span: Span(
               start: Location(
                 file_name: "for_loop_statement",
@@ -329,8 +405,8 @@ Ok(Statement(
                 column: 46,
               ),
             ),
-            kind: Return(
-              value: Some(Expression(
+            data: Return(Return(
+              value: Some(Spanned(
                 span: Span(
                   start: Location(
                     file_name: "for_loop_statement",
@@ -345,14 +421,30 @@ Ok(Statement(
                     column: 45,
                   ),
                 ),
-                kind: Variable(
-                  name: "i",
-                ),
+                data: Variable(Variable(
+                  name: Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "for_loop_statement",
+                        position: 43,
+                        line: 1,
+                        column: 44,
+                      ),
+                      end: Location(
+                        file_name: "for_loop_statement",
+                        position: 44,
+                        line: 1,
+                        column: 45,
+                      ),
+                    ),
+                    data: "i",
+                  ),
+                )),
               )),
-            ),
+            )),
           ),
         ],
-      ),
+      )),
     ),
-  ),
+  )),
 ))

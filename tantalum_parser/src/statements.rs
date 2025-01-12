@@ -1,6 +1,6 @@
-use tantalum_ast::{Statement, StatementKind};
+use tantalum_ast::{Block, ForInitCondUpdate, If, Return, Statement, VariableDeclaration, While};
 use tantalum_lexer::token_kind::TokenKind;
-use tantalum_span::Span;
+use tantalum_span::Spanned;
 
 use crate::{ParseError, Parser};
 
@@ -18,17 +18,31 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     pub(crate) fn parse_statement(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Statement<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         match self.is_at_any(Self::STATEMENT_START) {
             Some(token) => match token.kind() {
-                TokenKind::KeywordLet => self.parse_statement_let(),
-                TokenKind::KeywordIf => self.parse_statement_if(),
-                TokenKind::KeywordFor => self.parse_statement_for(),
-                TokenKind::KeywordWhile => self.parse_statement_while(),
-                TokenKind::KeywordReturn => self.parse_statement_return(),
+                TokenKind::KeywordLet => {
+                    let variable_declaration = self.parse_statement_let()?;
+                    Ok(variable_declaration.map(Statement::VariableDeclaration))
+                }
+                TokenKind::KeywordIf => self
+                    .parse_statement_if()
+                    .map(|statement| statement.map(Statement::If)),
+                TokenKind::KeywordFor => self
+                    .parse_statement_for()
+                    .map(|statement| statement.map(Statement::ForInitCondUpdate)),
+                TokenKind::KeywordWhile => self
+                    .parse_statement_while()
+                    .map(|statement| statement.map(Statement::While)),
+                TokenKind::KeywordReturn => self
+                    .parse_statement_return()
+                    .map(|statement| statement.map(Statement::Return)),
                 TokenKind::KeywordBreak => self.parse_statement_break(),
                 TokenKind::KeywordContinue => self.parse_statement_continue(),
-                TokenKind::LeftBrace => self.parse_statement_block(),
+                TokenKind::LeftBrace => self
+                    .parse_statement_block()
+                    .map(|statement| statement.map(Statement::Block)),
                 _ => unimplemented!(
                     "Statement parsing not yet implemented for {:?}",
                     token.kind()
@@ -39,10 +53,11 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     let expression = self.parse_expression()?;
                     let semicolon = self.expect(TokenKind::Semicolon)?;
 
-                    Ok(Statement {
-                        span: Span::new(expression.span.start(), semicolon.span().end()),
-                        kind: StatementKind::Expression { expression },
-                    })
+                    Ok(Spanned::join_spans(
+                        expression.span(),
+                        semicolon.span(),
+                        expression.map(Statement::Expression).data().to_owned(),
+                    ))
                 }
                 None => match self.nth(0) {
                     Some(token) => {
@@ -63,7 +78,10 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     fn parse_statement_let(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<
+        Spanned<'file_name, VariableDeclaration<'file_name, 'source>>,
+        ParseError<'file_name, 'source>,
+    > {
         let let_token = self.expect(TokenKind::KeywordLet)?;
 
         let name = self.expect(TokenKind::Identifier)?;
@@ -79,23 +97,24 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let value = self.parse_expression()?;
         let semicolon = self.expect(TokenKind::Semicolon)?;
 
-        Ok(Statement {
-            span: Span::new(let_token.span().start(), semicolon.span().end()),
-            kind: StatementKind::VariableDeclaration {
-                name: name.lexeme(),
+        Ok(Spanned::join_spans(
+            let_token.span(),
+            semicolon.span(),
+            VariableDeclaration {
+                name: name.map(|name| name.lexeme()),
                 ty,
                 value,
             },
-        })
+        ))
     }
 
     fn parse_statement_if(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, If<'file_name, 'source>>, ParseError<'file_name, 'source>> {
         let if_token = self.expect(TokenKind::KeywordIf)?;
 
         let condition = self.parse_expression()?;
-        let body = self.parse_statement_block()?;
+        let body = self.parse_statement()?;
 
         let else_branch = if self.advance_if(TokenKind::KeywordElse).is_some() {
             Some(Box::new(self.parse_statement()?))
@@ -103,25 +122,25 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             None
         };
 
-        Ok(Statement {
-            span: Span::new(
-                if_token.span().start(),
-                else_branch
-                    .as_ref()
-                    .map_or(body.span, |branch| branch.span)
-                    .end(),
-            ),
-            kind: StatementKind::If {
+        Ok(Spanned::join_spans(
+            if_token.span(),
+            else_branch
+                .as_ref()
+                .map_or(body.span(), |branch| branch.span()),
+            If {
                 condition,
                 body: Box::new(body),
                 else_branch,
             },
-        })
+        ))
     }
 
     fn parse_statement_for(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<
+        Spanned<'file_name, ForInitCondUpdate<'file_name, 'source>>,
+        ParseError<'file_name, 'source>,
+    > {
         let for_token = self.expect(TokenKind::KeywordFor)?;
 
         let initializer = self.parse_statement()?;
@@ -130,37 +149,41 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
         let body = self.parse_statement()?;
 
-        Ok(Statement {
-            span: Span::new(for_token.span().start(), body.span.end()),
-            kind: StatementKind::ForInitCondUpdate {
-                initialization: Box::new(initializer),
+        Ok(Spanned::join_spans(
+            for_token.span(),
+            body.span(),
+            ForInitCondUpdate {
+                init: Box::new(initializer),
                 condition: Box::new(condition),
                 update: Box::new(update),
                 body: Box::new(body),
             },
-        })
+        ))
     }
 
     fn parse_statement_while(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, While<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let while_token = self.expect(TokenKind::KeywordWhile)?;
 
         let condition = self.parse_expression()?;
-        let body = self.parse_statement_block()?;
+        let body = self.parse_statement()?;
 
-        Ok(Statement {
-            span: Span::new(while_token.span().start(), body.span.end()),
-            kind: StatementKind::While {
+        Ok(Spanned::join_spans(
+            while_token.span(),
+            body.span(),
+            While {
                 condition,
                 body: Box::new(body),
             },
-        })
+        ))
     }
 
     fn parse_statement_return(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Return<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let return_token = self.expect(TokenKind::KeywordReturn)?;
 
         let value = if self.is_at(TokenKind::Semicolon).is_some() {
@@ -171,39 +194,45 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
         let semicolon = self.expect(TokenKind::Semicolon)?;
 
-        Ok(Statement {
-            span: Span::new(return_token.span().start(), semicolon.span().end()),
-            kind: StatementKind::Return { value },
-        })
+        Ok(Spanned::join_spans(
+            return_token.span(),
+            semicolon.span(),
+            Return { value },
+        ))
     }
 
     fn parse_statement_break(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Statement<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let break_token = self.expect(TokenKind::KeywordBreak)?;
         let semicolon = self.expect(TokenKind::Semicolon)?;
 
-        Ok(Statement {
-            span: Span::new(break_token.span().start(), semicolon.span().end()),
-            kind: StatementKind::Break,
-        })
+        Ok(Spanned::join_spans(
+            break_token.span(),
+            semicolon.span(),
+            Statement::Break,
+        ))
     }
 
     fn parse_statement_continue(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Statement<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let continue_token = self.expect(TokenKind::KeywordContinue)?;
         let semicolon = self.expect(TokenKind::Semicolon)?;
 
-        Ok(Statement {
-            span: Span::new(continue_token.span().start(), semicolon.span().end()),
-            kind: StatementKind::Continue,
-        })
+        Ok(Spanned::join_spans(
+            continue_token.span(),
+            semicolon.span(),
+            Statement::Continue,
+        ))
     }
 
     fn parse_statement_block(
         &mut self,
-    ) -> Result<Statement<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Block<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let left_brace = self.expect(TokenKind::LeftBrace)?;
 
         let mut statements = Vec::new();
@@ -213,9 +242,10 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
         let right_brace = self.expect(TokenKind::RightBrace)?;
 
-        Ok(Statement {
-            span: Span::new(left_brace.span().start(), right_brace.span().end()),
-            kind: StatementKind::Block { statements },
-        })
+        Ok(Spanned::join_spans(
+            left_brace.span(),
+            right_brace.span(),
+            Block { statements },
+        ))
     }
 }

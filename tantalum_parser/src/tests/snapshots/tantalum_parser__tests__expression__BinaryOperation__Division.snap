@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/expression.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Expression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "Division",
@@ -18,8 +18,8 @@ Ok(Expression(
       column: 6,
     ),
   ),
-  kind: BinaryOperation(
-    left: Expression(
+  data: BinaryOperation(BinaryOperation(
+    left: Spanned(
       span: Span(
         start: Location(
           file_name: "Division",
@@ -34,12 +34,28 @@ Ok(Expression(
           column: 2,
         ),
       ),
-      kind: IntegerLiteral(
-        value: "1",
+      data: Literal(Integer(Integer(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "Division",
+              position: 0,
+              line: 1,
+              column: 1,
+            ),
+            end: Location(
+              file_name: "Division",
+              position: 1,
+              line: 1,
+              column: 2,
+            ),
+          ),
+          data: "1",
+        ),
         radix: 10,
-      ),
+      ))),
     ),
-    operator: BinaryOperator(
+    operator: Spanned(
       span: Span(
         start: Location(
           file_name: "Division",
@@ -54,9 +70,9 @@ Ok(Expression(
           column: 4,
         ),
       ),
-      kind: Division,
+      data: Division,
     ),
-    right: Expression(
+    right: Spanned(
       span: Span(
         start: Location(
           file_name: "Division",
@@ -71,10 +87,26 @@ Ok(Expression(
           column: 6,
         ),
       ),
-      kind: IntegerLiteral(
-        value: "2",
+      data: Literal(Integer(Integer(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "Division",
+              position: 4,
+              line: 1,
+              column: 5,
+            ),
+            end: Location(
+              file_name: "Division",
+              position: 5,
+              line: 1,
+              column: 6,
+            ),
+          ),
+          data: "2",
+        ),
         radix: 10,
-      ),
+      ))),
     ),
-  ),
+  )),
 ))

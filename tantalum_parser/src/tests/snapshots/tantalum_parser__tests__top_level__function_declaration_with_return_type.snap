@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/top_level.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(TopLevelExpression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "function_declaration_with_return_type",
@@ -18,10 +18,42 @@ Ok(TopLevelExpression(
       column: 18,
     ),
   ),
-  kind: FunctionDeclaration(
-    name: "main",
-    parameters: [],
-    return_type: Type(
+  data: Function(Function(
+    name: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 3,
+          line: 1,
+          column: 4,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      data: "main",
+    ),
+    parameters: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+        end: Location(
+          file_name: "function_declaration_with_return_type",
+          position: 9,
+          line: 1,
+          column: 10,
+        ),
+      ),
+      data: [],
+    ),
+    return_type: Some(Spanned(
       span: Span(
         start: Location(
           file_name: "function_declaration_with_return_type",
@@ -36,9 +68,27 @@ Ok(TopLevelExpression(
           column: 15,
         ),
       ),
-      kind: Named("i32"),
-    ),
-    body: Statement(
+      data: Named(NamedType(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "function_declaration_with_return_type",
+              position: 11,
+              line: 1,
+              column: 12,
+            ),
+            end: Location(
+              file_name: "function_declaration_with_return_type",
+              position: 14,
+              line: 1,
+              column: 15,
+            ),
+          ),
+          data: "i32",
+        ),
+      )),
+    )),
+    body: Spanned(
       span: Span(
         start: Location(
           file_name: "function_declaration_with_return_type",
@@ -53,9 +103,9 @@ Ok(TopLevelExpression(
           column: 18,
         ),
       ),
-      kind: Block(
+      data: Block(Block(
         statements: [],
-      ),
+      )),
     ),
-  ),
+  )),
 ))

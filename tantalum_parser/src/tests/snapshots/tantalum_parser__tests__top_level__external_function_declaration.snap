@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/top_level.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(TopLevelExpression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "external_function_declaration",
@@ -18,48 +18,80 @@ Ok(TopLevelExpression(
       column: 35,
     ),
   ),
-  kind: ExternalFunction(
-    name: "puts",
-    parameters: [
-      Parameter(
-        span: Span(
-          start: Location(
-            file_name: "external_function_declaration",
-            position: 15,
-            line: 1,
-            column: 16,
-          ),
-          end: Location(
-            file_name: "external_function_declaration",
-            position: 27,
-            line: 1,
-            column: 28,
-          ),
+  data: ExternalFunction(ExternalFunction(
+    name: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "external_function_declaration",
+          position: 10,
+          line: 1,
+          column: 11,
         ),
-        kind: Named(
-          name: "s",
-          ty: Type(
-            span: Span(
-              start: Location(
-                file_name: "external_function_declaration",
-                position: 18,
-                line: 1,
-                column: 19,
-              ),
-              end: Location(
-                file_name: "external_function_declaration",
-                position: 27,
-                line: 1,
-                column: 28,
-              ),
+        end: Location(
+          file_name: "external_function_declaration",
+          position: 14,
+          line: 1,
+          column: 15,
+        ),
+      ),
+      data: "puts",
+    ),
+    parameters: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "external_function_declaration",
+          position: 14,
+          line: 1,
+          column: 15,
+        ),
+        end: Location(
+          file_name: "external_function_declaration",
+          position: 28,
+          line: 1,
+          column: 29,
+        ),
+      ),
+      data: [
+        Spanned(
+          span: Span(
+            start: Location(
+              file_name: "external_function_declaration",
+              position: 15,
+              line: 1,
+              column: 16,
             ),
-            kind: Pointer(Type(
+            end: Location(
+              file_name: "external_function_declaration",
+              position: 27,
+              line: 1,
+              column: 28,
+            ),
+          ),
+          data: Named(NamedParameter(
+            name: Spanned(
               span: Span(
                 start: Location(
                   file_name: "external_function_declaration",
-                  position: 19,
+                  position: 15,
                   line: 1,
-                  column: 20,
+                  column: 16,
+                ),
+                end: Location(
+                  file_name: "external_function_declaration",
+                  position: 16,
+                  line: 1,
+                  column: 17,
+                ),
+              ),
+              data: "s",
+            ),
+            ty: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "external_function_declaration",
+                  position: 18,
+                  line: 1,
+                  column: 19,
                 ),
                 end: Location(
                   file_name: "external_function_declaration",
@@ -68,29 +100,67 @@ Ok(TopLevelExpression(
                   column: 28,
                 ),
               ),
-              kind: Const(Type(
-                span: Span(
-                  start: Location(
-                    file_name: "external_function_declaration",
-                    position: 25,
-                    line: 1,
-                    column: 26,
+              data: Pointer(PointerType(
+                ty: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "external_function_declaration",
+                      position: 19,
+                      line: 1,
+                      column: 20,
+                    ),
+                    end: Location(
+                      file_name: "external_function_declaration",
+                      position: 27,
+                      line: 1,
+                      column: 28,
+                    ),
                   ),
-                  end: Location(
-                    file_name: "external_function_declaration",
-                    position: 27,
-                    line: 1,
-                    column: 28,
-                  ),
+                  data: Const(ConstType(
+                    ty: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "external_function_declaration",
+                          position: 25,
+                          line: 1,
+                          column: 26,
+                        ),
+                        end: Location(
+                          file_name: "external_function_declaration",
+                          position: 27,
+                          line: 1,
+                          column: 28,
+                        ),
+                      ),
+                      data: Named(NamedType(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "external_function_declaration",
+                              position: 25,
+                              line: 1,
+                              column: 26,
+                            ),
+                            end: Location(
+                              file_name: "external_function_declaration",
+                              position: 27,
+                              line: 1,
+                              column: 28,
+                            ),
+                          ),
+                          data: "u8",
+                        ),
+                      )),
+                    ),
+                  )),
                 ),
-                kind: Named("u8"),
               )),
-            )),
-          ),
+            ),
+          )),
         ),
-      ),
-    ],
-    return_type: Type(
+      ],
+    ),
+    return_type: Some(Spanned(
       span: Span(
         start: Location(
           file_name: "external_function_declaration",
@@ -105,8 +175,25 @@ Ok(TopLevelExpression(
           column: 34,
         ),
       ),
-      kind: Named("i32"),
-    ),
-    is_variadic: false,
-  ),
+      data: Named(NamedType(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "external_function_declaration",
+              position: 30,
+              line: 1,
+              column: 31,
+            ),
+            end: Location(
+              file_name: "external_function_declaration",
+              position: 33,
+              line: 1,
+              column: 34,
+            ),
+          ),
+          data: "i32",
+        ),
+      )),
+    )),
+  )),
 ))

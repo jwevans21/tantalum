@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/expression.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Expression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "function_call_with_arguments",
@@ -18,8 +18,8 @@ Ok(Expression(
       column: 10,
     ),
   ),
-  kind: FunctionCall(
-    source: Expression(
+  data: FunctionCall(FunctionCall(
+    function: Spanned(
       span: Span(
         start: Location(
           file_name: "function_call_with_arguments",
@@ -34,12 +34,28 @@ Ok(Expression(
           column: 4,
         ),
       ),
-      kind: Variable(
-        name: "foo",
-      ),
+      data: Variable(Variable(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "function_call_with_arguments",
+              position: 0,
+              line: 1,
+              column: 1,
+            ),
+            end: Location(
+              file_name: "function_call_with_arguments",
+              position: 3,
+              line: 1,
+              column: 4,
+            ),
+          ),
+          data: "foo",
+        ),
+      )),
     ),
     arguments: [
-      Expression(
+      Spanned(
         span: Span(
           start: Location(
             file_name: "function_call_with_arguments",
@@ -54,12 +70,28 @@ Ok(Expression(
             column: 6,
           ),
         ),
-        kind: IntegerLiteral(
-          value: "1",
+        data: Literal(Integer(Integer(
+          value: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "function_call_with_arguments",
+                position: 4,
+                line: 1,
+                column: 5,
+              ),
+              end: Location(
+                file_name: "function_call_with_arguments",
+                position: 5,
+                line: 1,
+                column: 6,
+              ),
+            ),
+            data: "1",
+          ),
           radix: 10,
-        ),
+        ))),
       ),
-      Expression(
+      Spanned(
         span: Span(
           start: Location(
             file_name: "function_call_with_arguments",
@@ -74,11 +106,27 @@ Ok(Expression(
             column: 9,
           ),
         ),
-        kind: IntegerLiteral(
-          value: "2",
+        data: Literal(Integer(Integer(
+          value: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "function_call_with_arguments",
+                position: 7,
+                line: 1,
+                column: 8,
+              ),
+              end: Location(
+                file_name: "function_call_with_arguments",
+                position: 8,
+                line: 1,
+                column: 9,
+              ),
+            ),
+            data: "2",
+          ),
           radix: 10,
-        ),
+        ))),
       ),
     ],
-  ),
+  )),
 ))

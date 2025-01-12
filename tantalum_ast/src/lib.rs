@@ -2,8 +2,172 @@
 //!
 //! Provides the abstract syntax tree for the Tantalum language.
 
-use tantalum_span::Span;
+mod expressions;
+mod items;
+mod literals;
+mod statements;
+mod types;
 
+pub use expressions::*;
+pub use items::*;
+pub use literals::*;
+pub use statements::*;
+use tantalum_span::Spanned;
+pub use types::*;
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct AST<'file_name, 'source>(
+    #[cfg_attr(feature = "serde", serde(borrow))]
+    pub  Vec<Spanned<'file_name, Item<'file_name, 'source>>>,
+);
+
+pub trait ASTVisitor<'file_name, 'source> {
+    fn visit_ast(&mut self, ast: &AST<'file_name, 'source>) {
+        for item in &ast.0 {
+            self.visit_item(item);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Items
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_item(&mut self, item: &Item<'file_name, 'source>) {
+        match item {
+            Item::Function(function) => self.visit_function(function),
+            Item::ExternalFunction(external_function) => {
+                self.visit_external_function(external_function);
+            }
+        }
+    }
+
+    fn visit_function(&mut self, function: &Function<'file_name, 'source>);
+    fn visit_external_function(
+        &mut self,
+        external_function: &ExternalFunction<'file_name, 'source>,
+    );
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Parameters
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_parameter(&mut self, parameter: &Parameter<'file_name, 'source>) {
+        match parameter {
+            Parameter::Named(named) => self.visit_named_parameter(named),
+            Parameter::Variadic => self.visit_variadic_parameter(),
+        }
+    }
+
+    fn visit_named_parameter(&mut self, named: &NamedParameter<'file_name, 'source>);
+    fn visit_variadic_parameter(&mut self);
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Types
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_type(&mut self, ty: &Type<'file_name, 'source>) {
+        match ty {
+            Type::Named(named) => self.visit_named_type(named),
+            Type::Function(function) => self.visit_function_type(function),
+            Type::Pointer(pointer) => self.visit_pointer_type(pointer),
+            Type::SizedArray(array) => self.visit_sized_array_type(array),
+            Type::UnsizedArray(array) => self.visit_unsized_array_type(array),
+            Type::Const(constant) => self.visit_const_type(constant),
+        }
+    }
+
+    fn visit_named_type(&mut self, named: &NamedType<'file_name, 'source>);
+    fn visit_function_type(&mut self, function: &FunctionType<'file_name, 'source>);
+    fn visit_pointer_type(&mut self, pointer: &PointerType<'file_name, 'source>);
+    fn visit_sized_array_type(&mut self, array: &SizedArrayType<'file_name, 'source>);
+    fn visit_unsized_array_type(&mut self, array: &UnsizedArrayType<'file_name, 'source>);
+    fn visit_const_type(&mut self, constant: &ConstType<'file_name, 'source>);
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Statements
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_statement(&mut self, statement: &Statement<'file_name, 'source>) {
+        match statement {
+            Statement::Block(block) => self.visit_block(block),
+            Statement::VariableDeclaration(declaration) => {
+                self.visit_variable_declaration(declaration);
+            }
+            Statement::If(if_statement) => self.visit_if(if_statement),
+            Statement::While(while_statement) => self.visit_while(while_statement),
+            Statement::ForInitCondUpdate(for_statement) => {
+                self.visit_for_init_cond_update(for_statement);
+            }
+            Statement::Break => self.visit_break(),
+            Statement::Continue => self.visit_continue(),
+            Statement::Return(return_statement) => self.visit_return(return_statement),
+            Statement::Expression(expression) => self.visit_expression(expression),
+        }
+    }
+
+    fn visit_block(&mut self, block: &Block<'file_name, 'source>);
+    fn visit_variable_declaration(
+        &mut self,
+        declaration: &VariableDeclaration<'file_name, 'source>,
+    );
+    fn visit_if(&mut self, if_statement: &If<'file_name, 'source>);
+    fn visit_while(&mut self, while_statement: &While<'file_name, 'source>);
+    fn visit_for_init_cond_update(
+        &mut self,
+        for_statement: &ForInitCondUpdate<'file_name, 'source>,
+    );
+    fn visit_break(&mut self);
+    fn visit_continue(&mut self);
+    fn visit_return(&mut self, return_statement: &Return<'file_name, 'source>);
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Expressions
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_expression(&mut self, expression: &Expression<'file_name, 'source>) {
+        match expression {
+            Expression::Variable(variable) => self.visit_variable(variable),
+            Expression::Literal(literal) => self.visit_literal(literal),
+            Expression::FunctionCall(call) => self.visit_function_call(call),
+            Expression::MemberAccess(access) => self.visit_member_access(access),
+            Expression::Index(index) => self.visit_array_access(index),
+            Expression::UnaryOperation(unary) => self.visit_unary_operation(unary),
+            Expression::BinaryOperation(binary) => self.visit_binary_operation(binary),
+            Expression::TypeCast(cast) => self.visit_type_cast(cast),
+        }
+    }
+
+    fn visit_variable(&mut self, variable: &Variable<'file_name, 'source>);
+    fn visit_function_call(&mut self, call: &FunctionCall<'file_name, 'source>);
+    fn visit_member_access(&mut self, access: &MemberAccess<'file_name, 'source>);
+    fn visit_array_access(&mut self, index: &Index<'file_name, 'source>);
+    fn visit_unary_operation(&mut self, unary: &UnaryOperation<'file_name, 'source>);
+    fn visit_binary_operation(&mut self, binary: &BinaryOperation<'file_name, 'source>);
+    fn visit_type_cast(&mut self, cast: &TypeCast<'file_name, 'source>);
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Literals
+    ////////////////////////////////////////////////////////////////////////////
+
+    fn visit_literal(&mut self, literal: &Literal<'file_name, 'source>) {
+        match literal {
+            Literal::Integer(integer) => self.visit_integer_literal(integer),
+            Literal::Float(float) => self.visit_float_literal(float),
+            Literal::Boolean(boolean) => self.visit_boolean_literal(boolean),
+            Literal::Character(character) => self.visit_character_literal(character),
+            Literal::String(string) => self.visit_string_literal(string),
+        }
+    }
+
+    fn visit_integer_literal(&mut self, integer: &Integer<'file_name, 'source>);
+    fn visit_float_literal(&mut self, float: &Float<'file_name, 'source>);
+    fn visit_boolean_literal(&mut self, boolean: &Boolean<'file_name, 'source>);
+    fn visit_character_literal(&mut self, character: &Character<'file_name, 'source>);
+    fn visit_string_literal(&mut self, string: &String<'file_name, 'source>);
+}
+
+/*
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Expression<'file_name, 'source> {
@@ -436,3 +600,4 @@ pub enum TypeKind<'file_name, 'source> {
     /// ```
     Named(&'source str),
 }
+*/

@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "break_statement",
@@ -18,5 +18,5 @@ Ok(Statement(
       column: 7,
     ),
   ),
-  kind: Break,
+  data: Break,
 ))

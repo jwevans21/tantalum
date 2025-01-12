@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "block_statement",
@@ -18,9 +18,9 @@ Ok(Statement(
       column: 16,
     ),
   ),
-  kind: Block(
+  data: Block(Block(
     statements: [
-      Statement(
+      Spanned(
         span: Span(
           start: Location(
             file_name: "block_statement",
@@ -35,10 +35,26 @@ Ok(Statement(
             column: 14,
           ),
         ),
-        kind: VariableDeclaration(
-          name: "x",
+        data: VariableDeclaration(VariableDeclaration(
+          name: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "block_statement",
+                position: 6,
+                line: 1,
+                column: 7,
+              ),
+              end: Location(
+                file_name: "block_statement",
+                position: 7,
+                line: 1,
+                column: 8,
+              ),
+            ),
+            data: "x",
+          ),
           ty: None,
-          value: Expression(
+          value: Spanned(
             span: Span(
               start: Location(
                 file_name: "block_statement",
@@ -53,13 +69,29 @@ Ok(Statement(
                 column: 13,
               ),
             ),
-            kind: IntegerLiteral(
-              value: "42",
+            data: Literal(Integer(Integer(
+              value: Spanned(
+                span: Span(
+                  start: Location(
+                    file_name: "block_statement",
+                    position: 10,
+                    line: 1,
+                    column: 11,
+                  ),
+                  end: Location(
+                    file_name: "block_statement",
+                    position: 12,
+                    line: 1,
+                    column: 13,
+                  ),
+                ),
+                data: "42",
+              ),
               radix: 10,
-            ),
+            ))),
           ),
-        ),
+        )),
       ),
     ],
-  ),
+  )),
 ))

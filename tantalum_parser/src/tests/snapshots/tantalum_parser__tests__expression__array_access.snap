@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/expression.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Expression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "array_access",
@@ -18,8 +18,8 @@ Ok(Expression(
       column: 7,
     ),
   ),
-  kind: ArrayAccess(
-    source: Expression(
+  data: Index(Index(
+    object: Spanned(
       span: Span(
         start: Location(
           file_name: "array_access",
@@ -34,11 +34,27 @@ Ok(Expression(
           column: 4,
         ),
       ),
-      kind: Variable(
-        name: "foo",
-      ),
+      data: Variable(Variable(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "array_access",
+              position: 0,
+              line: 1,
+              column: 1,
+            ),
+            end: Location(
+              file_name: "array_access",
+              position: 3,
+              line: 1,
+              column: 4,
+            ),
+          ),
+          data: "foo",
+        ),
+      )),
     ),
-    index: Expression(
+    index: Spanned(
       span: Span(
         start: Location(
           file_name: "array_access",
@@ -53,10 +69,26 @@ Ok(Expression(
           column: 6,
         ),
       ),
-      kind: IntegerLiteral(
-        value: "1",
+      data: Literal(Integer(Integer(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "array_access",
+              position: 4,
+              line: 1,
+              column: 5,
+            ),
+            end: Location(
+              file_name: "array_access",
+              position: 5,
+              line: 1,
+              column: 6,
+            ),
+          ),
+          data: "1",
+        ),
         radix: 10,
-      ),
+      ))),
     ),
-  ),
+  )),
 ))

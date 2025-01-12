@@ -1,13 +1,14 @@
 use error::ParseError;
-use tantalum_ast::TopLevelExpression;
+use tantalum_ast::AST;
 use tantalum_lexer::{token::Token, token_kind::TokenKind, Lexer};
 use tantalum_span::{Location, Spanned};
 
 pub mod error;
 
 mod expressions;
+mod items;
+mod literals;
 mod statements;
-mod top_level;
 mod types;
 
 #[cfg(test)]
@@ -42,17 +43,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     /// # Errors
     ///
     /// Returns an error if the parser encounters an unexpected token or the end of the file.
-    pub fn parse(
-        &mut self,
-    ) -> Result<Vec<TopLevelExpression<'file_name, 'source>>, error::ParseError<'file_name, 'source>>
-    {
-        let mut top_levels = Vec::new();
+    pub fn parse(&mut self) -> Result<AST, error::ParseError<'file_name, 'source>> {
+        let mut items = Vec::new();
 
         while !self.is_eof() {
-            top_levels.push(self.parse_top_level()?);
+            items.push(self.parse_item()?);
         }
 
-        Ok(top_levels)
+        Ok(AST(items))
     }
 
     fn is_eof(&self) -> bool {

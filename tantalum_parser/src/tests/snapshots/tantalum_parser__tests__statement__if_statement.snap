@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "if_statement",
@@ -18,8 +18,8 @@ Ok(Statement(
       column: 23,
     ),
   ),
-  kind: If(
-    condition: Expression(
+  data: If(If(
+    condition: Spanned(
       span: Span(
         start: Location(
           file_name: "if_statement",
@@ -34,11 +34,27 @@ Ok(Statement(
           column: 8,
         ),
       ),
-      kind: BooleanLiteral(
-        value: true,
-      ),
+      data: Literal(Boolean(Boolean(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "if_statement",
+              position: 3,
+              line: 1,
+              column: 4,
+            ),
+            end: Location(
+              file_name: "if_statement",
+              position: 7,
+              line: 1,
+              column: 8,
+            ),
+          ),
+          data: "true",
+        ),
+      ))),
     ),
-    body: Statement(
+    body: Spanned(
       span: Span(
         start: Location(
           file_name: "if_statement",
@@ -53,9 +69,9 @@ Ok(Statement(
           column: 23,
         ),
       ),
-      kind: Block(
+      data: Block(Block(
         statements: [
-          Statement(
+          Spanned(
             span: Span(
               start: Location(
                 file_name: "if_statement",
@@ -70,8 +86,8 @@ Ok(Statement(
                 column: 21,
               ),
             ),
-            kind: Return(
-              value: Some(Expression(
+            data: Return(Return(
+              value: Some(Spanned(
                 span: Span(
                   start: Location(
                     file_name: "if_statement",
@@ -86,16 +102,32 @@ Ok(Statement(
                     column: 20,
                   ),
                 ),
-                kind: IntegerLiteral(
-                  value: "42",
+                data: Literal(Integer(Integer(
+                  value: Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "if_statement",
+                        position: 17,
+                        line: 1,
+                        column: 18,
+                      ),
+                      end: Location(
+                        file_name: "if_statement",
+                        position: 19,
+                        line: 1,
+                        column: 20,
+                      ),
+                    ),
+                    data: "42",
+                  ),
                   radix: 10,
-                ),
+                ))),
               )),
-            ),
+            )),
           ),
         ],
-      ),
+      )),
     ),
     else_branch: None,
-  ),
+  )),
 ))

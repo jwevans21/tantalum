@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/expression.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Expression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "AddressOf",
@@ -18,8 +18,8 @@ Ok(Expression(
       column: 4,
     ),
   ),
-  kind: UnaryOperation(
-    operator: UnaryOperator(
+  data: UnaryOperation(UnaryOperation(
+    operator: Spanned(
       span: Span(
         start: Location(
           file_name: "AddressOf",
@@ -34,9 +34,9 @@ Ok(Expression(
           column: 4,
         ),
       ),
-      kind: AddressOf,
+      data: Ref,
     ),
-    operand: Expression(
+    operand: Spanned(
       span: Span(
         start: Location(
           file_name: "AddressOf",
@@ -51,10 +51,26 @@ Ok(Expression(
           column: 2,
         ),
       ),
-      kind: IntegerLiteral(
-        value: "1",
+      data: Literal(Integer(Integer(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "AddressOf",
+              position: 0,
+              line: 1,
+              column: 1,
+            ),
+            end: Location(
+              file_name: "AddressOf",
+              position: 1,
+              line: 1,
+              column: 2,
+            ),
+          ),
+          data: "1",
+        ),
         radix: 10,
-      ),
+      ))),
     ),
-  ),
+  )),
 ))

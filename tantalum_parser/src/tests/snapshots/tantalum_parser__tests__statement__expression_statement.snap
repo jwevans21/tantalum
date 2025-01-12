@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "expression_statement",
@@ -18,8 +18,8 @@ Ok(Statement(
       column: 9,
     ),
   ),
-  kind: Expression(
-    expression: Expression(
+  data: Expression(BinaryOperation(BinaryOperation(
+    left: Spanned(
       span: Span(
         start: Location(
           file_name: "expression_statement",
@@ -29,13 +29,13 @@ Ok(Statement(
         ),
         end: Location(
           file_name: "expression_statement",
-          position: 7,
+          position: 2,
           line: 1,
-          column: 8,
+          column: 3,
         ),
       ),
-      kind: BinaryOperation(
-        left: Expression(
+      data: Literal(Integer(Integer(
+        value: Spanned(
           span: Span(
             start: Location(
               file_name: "expression_statement",
@@ -50,29 +50,45 @@ Ok(Statement(
               column: 3,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "42",
-            radix: 10,
-          ),
+          data: "42",
         ),
-        operator: BinaryOperator(
-          span: Span(
-            start: Location(
-              file_name: "expression_statement",
-              position: 3,
-              line: 1,
-              column: 4,
-            ),
-            end: Location(
-              file_name: "expression_statement",
-              position: 4,
-              line: 1,
-              column: 5,
-            ),
-          ),
-          kind: Addition,
+        radix: 10,
+      ))),
+    ),
+    operator: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "expression_statement",
+          position: 3,
+          line: 1,
+          column: 4,
         ),
-        right: Expression(
+        end: Location(
+          file_name: "expression_statement",
+          position: 4,
+          line: 1,
+          column: 5,
+        ),
+      ),
+      data: Addition,
+    ),
+    right: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "expression_statement",
+          position: 5,
+          line: 1,
+          column: 6,
+        ),
+        end: Location(
+          file_name: "expression_statement",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      data: Literal(Integer(Integer(
+        value: Spanned(
           span: Span(
             start: Location(
               file_name: "expression_statement",
@@ -87,12 +103,10 @@ Ok(Statement(
               column: 8,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "42",
-            radix: 10,
-          ),
+          data: "42",
         ),
-      ),
+        radix: 10,
+      ))),
     ),
-  ),
+  ))),
 ))

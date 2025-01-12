@@ -3,8 +3,8 @@ source: tantalum_parser/tests/snapshots.rs
 expression: ast
 snapshot_kind: text
 ---
-Ok([
-  TopLevelExpression(
+Ok(AST([
+  Spanned(
     span: Span(
       start: Location(
         file_name: "start.ta",
@@ -19,10 +19,42 @@ Ok([
         column: 2,
       ),
     ),
-    kind: FunctionDeclaration(
-      name: "main",
-      parameters: [],
-      return_type: Type(
+    data: Function(Function(
+      name: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "start.ta",
+            position: 3,
+            line: 1,
+            column: 4,
+          ),
+          end: Location(
+            file_name: "start.ta",
+            position: 7,
+            line: 1,
+            column: 8,
+          ),
+        ),
+        data: "main",
+      ),
+      parameters: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "start.ta",
+            position: 7,
+            line: 1,
+            column: 8,
+          ),
+          end: Location(
+            file_name: "start.ta",
+            position: 9,
+            line: 1,
+            column: 10,
+          ),
+        ),
+        data: [],
+      ),
+      return_type: Some(Spanned(
         span: Span(
           start: Location(
             file_name: "start.ta",
@@ -37,9 +69,27 @@ Ok([
             column: 15,
           ),
         ),
-        kind: Named("i32"),
-      ),
-      body: Statement(
+        data: Named(NamedType(
+          name: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "start.ta",
+                position: 11,
+                line: 1,
+                column: 12,
+              ),
+              end: Location(
+                file_name: "start.ta",
+                position: 14,
+                line: 1,
+                column: 15,
+              ),
+            ),
+            data: "i32",
+          ),
+        )),
+      )),
+      body: Spanned(
         span: Span(
           start: Location(
             file_name: "start.ta",
@@ -54,9 +104,9 @@ Ok([
             column: 2,
           ),
         ),
-        kind: Block(
+        data: Block(Block(
           statements: [
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "start.ta",
@@ -71,8 +121,8 @@ Ok([
                   column: 14,
                 ),
               ),
-              kind: Return(
-                value: Some(Expression(
+              data: Return(Return(
+                value: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "start.ta",
@@ -87,16 +137,32 @@ Ok([
                       column: 13,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "0",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "start.ta",
+                          position: 28,
+                          line: 2,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "start.ta",
+                          position: 29,
+                          line: 2,
+                          column: 13,
+                        ),
+                      ),
+                      data: "0",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 )),
-              ),
+              )),
             ),
           ],
-        ),
+        )),
       ),
-    ),
+    )),
   ),
-])
+]))
