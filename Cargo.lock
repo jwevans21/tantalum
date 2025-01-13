@@ -415,6 +415,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "tantalum_ast_lowering"
+version = "0.1.0"
+dependencies = [
+ "insta",
+ "tantalum_ast",
+ "tantalum_hlir",
+ "tantalum_lexer",
+ "tantalum_parser",
+]
+
+[[package]]
+name = "tantalum_hlir"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "tantalum_lexer"
 version = "0.1.0"
 dependencies = [

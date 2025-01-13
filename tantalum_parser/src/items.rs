@@ -15,7 +15,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     {
         let token = self.expect_any(Self::ITEM_START)?;
 
-        match token.kind() {
+        match token.data().kind() {
             TokenKind::KeywordFn => {
                 let function = self.parse_top_level_function(token)?;
                 Ok(function.map(Item::Function))
@@ -26,7 +26,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }
             _ => unimplemented!(
                 "Token {:?} is not in the set {:?}",
-                token.kind(),
+                token.data().kind(),
                 Self::ITEM_START
             ),
         }
@@ -56,15 +56,15 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             ));
 
             match self.nth(0) {
-                Some(token) if token.kind() == TokenKind::Comma => {
+                Some(token) if token.data().kind() == TokenKind::Comma => {
                     self.expect(TokenKind::Comma)?;
                 }
-                Some(token) if token.kind() == TokenKind::RightParen => break,
+                Some(token) if token.data().kind() == TokenKind::RightParen => break,
                 Some(token) => {
                     return Err(ParseError::unexpected_token(
                         self.source,
                         token.start(),
-                        token.kind(),
+                        token.data().kind(),
                         TokenKind::Comma,
                     ));
                 }
@@ -108,15 +108,15 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 return Err(ParseError::unexpected_token(
                     self.source,
                     extern_token.start(),
-                    extern_token.kind(),
+                    extern_token.data().kind(),
                     TokenKind::KeywordFn,
                 ));
             }
-            Some(token) => match token.kind() {
+            Some(token) => match token.data().kind() {
                 TokenKind::KeywordFn => self.parse_top_level_extern_function(extern_token),
                 _ => unimplemented!(
                     "Token {:?} is not in the set {:?}",
-                    token.kind(),
+                    token.data().kind(),
                     Self::EXTERN_START
                 ),
             },
@@ -160,15 +160,15 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             ));
 
             match self.nth(0) {
-                Some(token) if token.kind() == TokenKind::Comma => {
+                Some(token) if token.data().kind() == TokenKind::Comma => {
                     self.expect(TokenKind::Comma)?;
                 }
-                Some(token) if token.kind() == TokenKind::RightParen => break,
+                Some(token) if token.data().kind() == TokenKind::RightParen => break,
                 Some(token) => {
                     return Err(ParseError::unexpected_token(
                         self.source,
                         token.start(),
-                        token.kind(),
+                        token.data().kind(),
                         TokenKind::Comma,
                     ));
                 }

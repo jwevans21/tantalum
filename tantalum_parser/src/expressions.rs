@@ -128,7 +128,9 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     {
         match self.peek() {
             Some(token) => {
-                if let Some(((), right_binding_power)) = Self::prefix_binding_power(token.kind()) {
+                if let Some(((), right_binding_power)) =
+                    Self::prefix_binding_power(token.data().kind())
+                {
                     self.next();
 
                     let operand = self.parse_expression_binary(right_binding_power)?;
@@ -155,7 +157,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     {
         let token = self.expect_any(Self::PRIMARY_START)?;
 
-        let expr = match token.kind() {
+        let expr = match token.data().kind() {
             TokenKind::Identifier => token.map(|_| {
                 Expression::Variable(Variable {
                     name: token.map(|name| name.lexeme()),
@@ -194,21 +196,23 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         let mut lhs = self.parse_expression_primary()?;
 
         while let Some(token) = self.peek() {
-            let operator = if Self::infix_binding_power(token.kind()).is_some()
-                || Self::postfix_binding_power(token.kind()).is_some()
+            let operator = if Self::infix_binding_power(token.data().kind()).is_some()
+                || Self::postfix_binding_power(token.data().kind()).is_some()
             {
                 token
             } else {
                 break;
             };
 
-            if let Some((left_binding_power, ())) = Self::postfix_binding_power(operator.kind()) {
+            if let Some((left_binding_power, ())) =
+                Self::postfix_binding_power(operator.data().kind())
+            {
                 if left_binding_power < minimum_binding_power {
                     break;
                 }
                 self.next();
 
-                match operator.kind() {
+                match operator.data().kind() {
                     TokenKind::LeftParen => {
                         let mut arguments = Vec::new();
 
@@ -287,7 +291,8 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }
 
             let (left_binding_power, right_binding_power) =
-                Self::infix_binding_power(operator.kind()).expect("token is not an infix operator");
+                Self::infix_binding_power(operator.data().kind())
+                    .expect("token is not an infix operator");
 
             if left_binding_power < minimum_binding_power {
                 break;
@@ -307,7 +312,6 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 }),
             );
         }
-        dbg!(&lhs);
 
         Ok(lhs)
     }

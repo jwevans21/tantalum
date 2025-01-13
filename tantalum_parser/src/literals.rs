@@ -1,4 +1,4 @@
-use tantalum_ast::{Boolean, Character, Float, Integer, Literal};
+use tantalum_ast::{Boolean, Character, Float, Integer, Literal, String};
 use tantalum_lexer::{token::Token, token_kind::TokenKind};
 use tantalum_span::Spanned;
 
@@ -22,7 +22,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
         token: Spanned<'file_name, Token<'source>>,
     ) -> Result<Spanned<'file_name, Literal<'file_name, 'source>>, ParseError<'file_name, 'source>>
     {
-        let literal = match token.kind() {
+        let literal = match token.data().kind() {
             TokenKind::BinaryIntegerLiteral => token
                 .map(|_| Integer {
                     value: token.map(|token| token.lexeme()),
@@ -68,15 +68,15 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                 })
                 .map(Literal::Character),
             TokenKind::StringLiteral => token
-                .map(|_| Character {
+                .map(|_| String {
                     value: token.map(|token| token.lexeme()),
                 })
-                .map(Literal::Character),
+                .map(Literal::String),
             _ => {
                 return Err(ParseError::unexpected_token_set(
                     self.source,
                     token.start(),
-                    token.kind(),
+                    token.data().kind(),
                     Self::LITERAL_START,
                 ));
             }

@@ -21,7 +21,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     ) -> Result<Spanned<'file_name, Statement<'file_name, 'source>>, ParseError<'file_name, 'source>>
     {
         match self.is_at_any(Self::STATEMENT_START) {
-            Some(token) => match token.kind() {
+            Some(token) => match token.data().kind() {
                 TokenKind::KeywordLet => {
                     let variable_declaration = self.parse_statement_let()?;
                     Ok(variable_declaration.map(Statement::VariableDeclaration))
@@ -45,7 +45,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                     .map(|statement| statement.map(Statement::Block)),
                 _ => unimplemented!(
                     "Statement parsing not yet implemented for {:?}",
-                    token.kind()
+                    token.data().kind()
                 ),
             },
             None => match self.is_at_any(Self::EXPRESSION_START) {
@@ -64,7 +64,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
                         return Err(ParseError::unexpected_token_set(
                             self.source,
                             token.span().start(),
-                            token.kind(),
+                            token.data().kind(),
                             &[Self::STATEMENT_START, Self::EXPRESSION_START].concat(),
                         ));
                     }

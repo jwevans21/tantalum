@@ -25,7 +25,7 @@ pub struct AST<'file_name, 'source>(
 pub trait ASTVisitor<'file_name, 'source> {
     fn visit_ast(&mut self, ast: &AST<'file_name, 'source>) {
         for item in &ast.0 {
-            self.visit_item(item);
+            self.visit_item(item.data());
         }
     }
 
@@ -102,7 +102,7 @@ pub trait ASTVisitor<'file_name, 'source> {
             Statement::Break => self.visit_break(),
             Statement::Continue => self.visit_continue(),
             Statement::Return(return_statement) => self.visit_return(return_statement),
-            Statement::Expression(expression) => self.visit_expression(expression),
+            Statement::Expression(expression) => self.visit_expression_statement(expression),
         }
     }
 
@@ -120,6 +120,9 @@ pub trait ASTVisitor<'file_name, 'source> {
     fn visit_break(&mut self);
     fn visit_continue(&mut self);
     fn visit_return(&mut self, return_statement: &Return<'file_name, 'source>);
+    fn visit_expression_statement(&mut self, expression: &Expression<'file_name, 'source>) {
+        self.visit_expression(expression);
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Expressions

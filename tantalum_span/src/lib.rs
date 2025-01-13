@@ -6,7 +6,7 @@ use core::{
     fmt::{Debug, Display, Formatter, Result as FmtResult},
     hash::Hash,
     num::Saturating,
-    ops::{Deref, Range},
+    ops::Range,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -239,27 +239,27 @@ where
 
 impl<T> Copy for Spanned<'_, T> where T: Copy + Debug + Clone + PartialEq + Eq {}
 
-impl<T> AsRef<T> for Spanned<'_, T>
-where
-    T: Debug + Clone + PartialEq + Eq,
-{
-    #[inline]
-    fn as_ref(&self) -> &T {
-        return &self.data;
-    }
-}
+// impl<T> AsRef<T> for Spanned<'_, T>
+// where
+//     T: Debug + Clone + PartialEq + Eq,
+// {
+//     #[inline]
+//     fn as_ref(&self) -> &T {
+//         return &self.data;
+//     }
+// }
 
-impl<T> Deref for Spanned<'_, T>
-where
-    T: Debug + Clone + PartialEq + Eq + Hash,
-{
-    type Target = T;
+// impl<T> Deref for Spanned<'_, T>
+// where
+//     T: Debug + Clone + PartialEq + Eq + Hash,
+// {
+//     type Target = T;
 
-    #[inline]
-    fn deref(&self) -> &Self::Target {
-        return &self.data;
-    }
-}
+//     #[inline]
+//     fn deref(&self) -> &Self::Target {
+//         return &self.data;
+//     }
+// }
 
 impl<T> Display for Spanned<'_, T>
 where

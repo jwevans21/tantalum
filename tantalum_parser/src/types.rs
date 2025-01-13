@@ -18,7 +18,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     {
         let token = self.expect_any(Self::TYPE_START_SET)?;
 
-        match token.kind() {
+        match token.data().kind() {
             TokenKind::Identifier => Ok(token.map(|_| {
                 Type::Named(NamedType {
                     name: token.map(|name| name.lexeme()),

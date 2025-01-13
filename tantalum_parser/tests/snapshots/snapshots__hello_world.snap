@@ -417,7 +417,7 @@ Ok(AST([
                             column: 29,
                           ),
                         ),
-                        data: Literal(Character(Character(
+                        data: Literal(String(String(
                           value: Spanned(
                             span: Span(
                               start: Location(

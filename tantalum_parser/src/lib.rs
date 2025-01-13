@@ -60,7 +60,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     fn is_at(&self, kind: TokenKind) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens
             .get(self.position)
-            .filter(|token| token.kind() == kind)
+            .filter(|token| token.data().kind() == kind)
             .copied()
     }
 
@@ -81,14 +81,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             return Err(error::ParseError::unexpected_eof(self.source, self.eof));
         };
 
-        if token.kind() == kind {
+        if token.data().kind() == kind {
             self.position += 1;
             Ok(*token)
         } else {
             Err(error::ParseError::unexpected_token_set(
                 self.source,
                 token.span().start(),
-                token.kind(),
+                token.data().kind(),
                 &[kind],
             ))
         }
@@ -107,7 +107,7 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     fn is_at_any<'a>(&self, set: &'a [TokenKind]) -> Option<Spanned<'file_name, Token<'source>>> {
         self.tokens
             .get(self.position)
-            .filter(|token| set.contains(&token.kind()))
+            .filter(|token| set.contains(&token.data().kind()))
             .copied()
     }
 
@@ -119,14 +119,14 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             return Err(error::ParseError::unexpected_eof(self.source, self.eof));
         };
 
-        if set.contains(&token.kind()) {
+        if set.contains(&token.data().kind()) {
             self.position += 1;
             Ok(*token)
         } else {
             Err(error::ParseError::unexpected_token_set(
                 self.source,
                 token.span().start(),
-                token.kind(),
+                token.data().kind(),
                 set,
             ))
         }
