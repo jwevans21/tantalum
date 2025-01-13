@@ -3,8 +3,8 @@ source: tantalum_parser/tests/snapshots.rs
 expression: ast
 snapshot_kind: text
 ---
-Ok([
-  TopLevelExpression(
+Ok(AST([
+  Spanned(
     span: Span(
       start: Location(
         file_name: "loops.ta",
@@ -19,48 +19,80 @@ Ok([
         column: 47,
       ),
     ),
-    kind: ExternalFunction(
-      name: "printf",
-      parameters: [
-        Parameter(
-          span: Span(
-            start: Location(
-              file_name: "loops.ta",
-              position: 17,
-              line: 1,
-              column: 18,
-            ),
-            end: Location(
-              file_name: "loops.ta",
-              position: 34,
-              line: 1,
-              column: 35,
-            ),
+    data: ExternalFunction(ExternalFunction(
+      name: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "loops.ta",
+            position: 10,
+            line: 1,
+            column: 11,
           ),
-          kind: Named(
-            name: "format",
-            ty: Type(
-              span: Span(
-                start: Location(
-                  file_name: "loops.ta",
-                  position: 25,
-                  line: 1,
-                  column: 26,
-                ),
-                end: Location(
-                  file_name: "loops.ta",
-                  position: 34,
-                  line: 1,
-                  column: 35,
-                ),
+          end: Location(
+            file_name: "loops.ta",
+            position: 16,
+            line: 1,
+            column: 17,
+          ),
+        ),
+        data: "printf",
+      ),
+      parameters: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "loops.ta",
+            position: 16,
+            line: 1,
+            column: 17,
+          ),
+          end: Location(
+            file_name: "loops.ta",
+            position: 40,
+            line: 1,
+            column: 41,
+          ),
+        ),
+        data: [
+          Spanned(
+            span: Span(
+              start: Location(
+                file_name: "loops.ta",
+                position: 17,
+                line: 1,
+                column: 18,
               ),
-              kind: Pointer(Type(
+              end: Location(
+                file_name: "loops.ta",
+                position: 34,
+                line: 1,
+                column: 35,
+              ),
+            ),
+            data: Named(NamedParameter(
+              name: Spanned(
                 span: Span(
                   start: Location(
                     file_name: "loops.ta",
-                    position: 26,
+                    position: 17,
                     line: 1,
-                    column: 27,
+                    column: 18,
+                  ),
+                  end: Location(
+                    file_name: "loops.ta",
+                    position: 23,
+                    line: 1,
+                    column: 24,
+                  ),
+                ),
+                data: "format",
+              ),
+              ty: Spanned(
+                span: Span(
+                  start: Location(
+                    file_name: "loops.ta",
+                    position: 25,
+                    line: 1,
+                    column: 26,
                   ),
                   end: Location(
                     file_name: "loops.ta",
@@ -69,29 +101,84 @@ Ok([
                     column: 35,
                   ),
                 ),
-                kind: Const(Type(
-                  span: Span(
-                    start: Location(
-                      file_name: "loops.ta",
-                      position: 32,
-                      line: 1,
-                      column: 33,
+                data: Pointer(PointerType(
+                  ty: Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 26,
+                        line: 1,
+                        column: 27,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 34,
+                        line: 1,
+                        column: 35,
+                      ),
                     ),
-                    end: Location(
-                      file_name: "loops.ta",
-                      position: 34,
-                      line: 1,
-                      column: 35,
-                    ),
+                    data: Const(ConstType(
+                      ty: Spanned(
+                        span: Span(
+                          start: Location(
+                            file_name: "loops.ta",
+                            position: 32,
+                            line: 1,
+                            column: 33,
+                          ),
+                          end: Location(
+                            file_name: "loops.ta",
+                            position: 34,
+                            line: 1,
+                            column: 35,
+                          ),
+                        ),
+                        data: Named(NamedType(
+                          name: Spanned(
+                            span: Span(
+                              start: Location(
+                                file_name: "loops.ta",
+                                position: 32,
+                                line: 1,
+                                column: 33,
+                              ),
+                              end: Location(
+                                file_name: "loops.ta",
+                                position: 34,
+                                line: 1,
+                                column: 35,
+                              ),
+                            ),
+                            data: "u8",
+                          ),
+                        )),
+                      ),
+                    )),
                   ),
-                  kind: Named("u8"),
                 )),
-              )),
-            ),
+              ),
+            )),
           ),
-        ),
-      ],
-      return_type: Type(
+          Spanned(
+            span: Span(
+              start: Location(
+                file_name: "loops.ta",
+                position: 36,
+                line: 1,
+                column: 37,
+              ),
+              end: Location(
+                file_name: "loops.ta",
+                position: 39,
+                line: 1,
+                column: 40,
+              ),
+            ),
+            data: Variadic,
+          ),
+        ],
+      ),
+      return_type: Some(Spanned(
         span: Span(
           start: Location(
             file_name: "loops.ta",
@@ -106,12 +193,29 @@ Ok([
             column: 46,
           ),
         ),
-        kind: Named("i32"),
-      ),
-      is_variadic: true,
-    ),
+        data: Named(NamedType(
+          name: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "loops.ta",
+                position: 42,
+                line: 1,
+                column: 43,
+              ),
+              end: Location(
+                file_name: "loops.ta",
+                position: 45,
+                line: 1,
+                column: 46,
+              ),
+            ),
+            data: "i32",
+          ),
+        )),
+      )),
+    )),
   ),
-  TopLevelExpression(
+  Spanned(
     span: Span(
       start: Location(
         file_name: "loops.ta",
@@ -126,10 +230,42 @@ Ok([
         column: 2,
       ),
     ),
-    kind: FunctionDeclaration(
-      name: "main",
-      parameters: [],
-      return_type: Type(
+    data: Function(Function(
+      name: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "loops.ta",
+            position: 51,
+            line: 3,
+            column: 4,
+          ),
+          end: Location(
+            file_name: "loops.ta",
+            position: 55,
+            line: 3,
+            column: 8,
+          ),
+        ),
+        data: "main",
+      ),
+      parameters: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "loops.ta",
+            position: 55,
+            line: 3,
+            column: 8,
+          ),
+          end: Location(
+            file_name: "loops.ta",
+            position: 57,
+            line: 3,
+            column: 10,
+          ),
+        ),
+        data: [],
+      ),
+      return_type: Some(Spanned(
         span: Span(
           start: Location(
             file_name: "loops.ta",
@@ -144,9 +280,27 @@ Ok([
             column: 15,
           ),
         ),
-        kind: Named("i32"),
-      ),
-      body: Statement(
+        data: Named(NamedType(
+          name: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "loops.ta",
+                position: 59,
+                line: 3,
+                column: 12,
+              ),
+              end: Location(
+                file_name: "loops.ta",
+                position: 62,
+                line: 3,
+                column: 15,
+              ),
+            ),
+            data: "i32",
+          ),
+        )),
+      )),
+      body: Spanned(
         span: Span(
           start: Location(
             file_name: "loops.ta",
@@ -161,9 +315,9 @@ Ok([
             column: 2,
           ),
         ),
-        kind: Block(
+        data: Block(Block(
           statements: [
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -178,9 +332,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "a",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "loops.ta",
+                      position: 73,
+                      line: 4,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "loops.ta",
+                      position: 74,
+                      line: 4,
+                      column: 10,
+                    ),
+                  ),
+                  data: "a",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -195,9 +365,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 76,
+                          line: 4,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 79,
+                          line: 4,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -212,14 +400,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "10",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 82,
+                          line: 4,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 84,
+                          line: 4,
+                          column: 20,
+                        ),
+                      ),
+                      data: "10",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -234,9 +438,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "b",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "loops.ta",
+                      position: 94,
+                      line: 5,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "loops.ta",
+                      position: 95,
+                      line: 5,
+                      column: 10,
+                    ),
+                  ),
+                  data: "b",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -251,9 +471,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 97,
+                          line: 5,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 100,
+                          line: 5,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -268,14 +506,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "20",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 103,
+                          line: 5,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 105,
+                          line: 5,
+                          column: 20,
+                        ),
+                      ),
+                      data: "20",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -290,9 +544,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "c",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "loops.ta",
+                      position: 115,
+                      line: 6,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "loops.ta",
+                      position: 116,
+                      line: 6,
+                      column: 10,
+                    ),
+                  ),
+                  data: "c",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -307,9 +577,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 118,
+                          line: 6,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 121,
+                          line: 6,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -324,14 +612,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "30",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 124,
+                          line: 6,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 126,
+                          line: 6,
+                          column: 20,
+                        ),
+                      ),
+                      data: "30",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -346,8 +650,8 @@ Ok([
                   column: 6,
                 ),
               ),
-              kind: While(
-                condition: Expression(
+              data: While(While(
+                condition: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -362,8 +666,8 @@ Ok([
                       column: 16,
                     ),
                   ),
-                  kind: BinaryOperation(
-                    left: Expression(
+                  data: BinaryOperation(BinaryOperation(
+                    left: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -378,11 +682,27 @@ Ok([
                           column: 12,
                         ),
                       ),
-                      kind: Variable(
-                        name: "b",
-                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 139,
+                              line: 8,
+                              column: 11,
+                            ),
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 140,
+                              line: 8,
+                              column: 12,
+                            ),
+                          ),
+                          data: "b",
+                        ),
+                      )),
                     ),
-                    operator: BinaryOperator(
+                    operator: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -397,9 +717,9 @@ Ok([
                           column: 14,
                         ),
                       ),
-                      kind: GreaterThan,
+                      data: GreaterThan,
                     ),
-                    right: Expression(
+                    right: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -414,13 +734,29 @@ Ok([
                           column: 16,
                         ),
                       ),
-                      kind: Variable(
-                        name: "a",
-                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 143,
+                              line: 8,
+                              column: 15,
+                            ),
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 144,
+                              line: 8,
+                              column: 16,
+                            ),
+                          ),
+                          data: "a",
+                        ),
+                      )),
                     ),
-                  ),
+                  )),
                 ),
-                body: Statement(
+                body: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -435,9 +771,9 @@ Ok([
                       column: 6,
                     ),
                   ),
-                  kind: Block(
+                  data: Block(Block(
                     statements: [
-                      Statement(
+                      Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -452,8 +788,8 @@ Ok([
                             column: 19,
                           ),
                         ),
-                        kind: Expression(
-                          expression: Expression(
+                        data: Expression(BinaryOperation(BinaryOperation(
+                          left: Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "loops.ta",
@@ -463,13 +799,13 @@ Ok([
                               ),
                               end: Location(
                                 file_name: "loops.ta",
-                                position: 164,
+                                position: 156,
                                 line: 9,
-                                column: 18,
+                                column: 10,
                               ),
                             ),
-                            kind: BinaryOperation(
-                              left: Expression(
+                            data: Variable(Variable(
+                              name: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -484,28 +820,44 @@ Ok([
                                     column: 10,
                                   ),
                                 ),
-                                kind: Variable(
-                                  name: "a",
-                                ),
+                                data: "a",
                               ),
-                              operator: BinaryOperator(
-                                span: Span(
-                                  start: Location(
-                                    file_name: "loops.ta",
-                                    position: 157,
-                                    line: 9,
-                                    column: 11,
-                                  ),
-                                  end: Location(
-                                    file_name: "loops.ta",
-                                    position: 158,
-                                    line: 9,
-                                    column: 12,
-                                  ),
-                                ),
-                                kind: Assignment,
+                            )),
+                          ),
+                          operator: Spanned(
+                            span: Span(
+                              start: Location(
+                                file_name: "loops.ta",
+                                position: 157,
+                                line: 9,
+                                column: 11,
                               ),
-                              right: Expression(
+                              end: Location(
+                                file_name: "loops.ta",
+                                position: 158,
+                                line: 9,
+                                column: 12,
+                              ),
+                            ),
+                            data: Assignment,
+                          ),
+                          right: Spanned(
+                            span: Span(
+                              start: Location(
+                                file_name: "loops.ta",
+                                position: 159,
+                                line: 9,
+                                column: 13,
+                              ),
+                              end: Location(
+                                file_name: "loops.ta",
+                                position: 164,
+                                line: 9,
+                                column: 18,
+                              ),
+                            ),
+                            data: BinaryOperation(BinaryOperation(
+                              left: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -515,13 +867,13 @@ Ok([
                                   ),
                                   end: Location(
                                     file_name: "loops.ta",
-                                    position: 164,
+                                    position: 160,
                                     line: 9,
-                                    column: 18,
+                                    column: 14,
                                   ),
                                 ),
-                                kind: BinaryOperation(
-                                  left: Expression(
+                                data: Variable(Variable(
+                                  name: Spanned(
                                     span: Span(
                                       start: Location(
                                         file_name: "loops.ta",
@@ -536,28 +888,44 @@ Ok([
                                         column: 14,
                                       ),
                                     ),
-                                    kind: Variable(
-                                      name: "a",
-                                    ),
+                                    data: "a",
                                   ),
-                                  operator: BinaryOperator(
-                                    span: Span(
-                                      start: Location(
-                                        file_name: "loops.ta",
-                                        position: 161,
-                                        line: 9,
-                                        column: 15,
-                                      ),
-                                      end: Location(
-                                        file_name: "loops.ta",
-                                        position: 162,
-                                        line: 9,
-                                        column: 16,
-                                      ),
-                                    ),
-                                    kind: Addition,
+                                )),
+                              ),
+                              operator: Spanned(
+                                span: Span(
+                                  start: Location(
+                                    file_name: "loops.ta",
+                                    position: 161,
+                                    line: 9,
+                                    column: 15,
                                   ),
-                                  right: Expression(
+                                  end: Location(
+                                    file_name: "loops.ta",
+                                    position: 162,
+                                    line: 9,
+                                    column: 16,
+                                  ),
+                                ),
+                                data: Addition,
+                              ),
+                              right: Spanned(
+                                span: Span(
+                                  start: Location(
+                                    file_name: "loops.ta",
+                                    position: 163,
+                                    line: 9,
+                                    column: 17,
+                                  ),
+                                  end: Location(
+                                    file_name: "loops.ta",
+                                    position: 164,
+                                    line: 9,
+                                    column: 18,
+                                  ),
+                                ),
+                                data: Literal(Integer(Integer(
+                                  value: Spanned(
                                     span: Span(
                                       start: Location(
                                         file_name: "loops.ta",
@@ -572,18 +940,16 @@ Ok([
                                         column: 18,
                                       ),
                                     ),
-                                    kind: IntegerLiteral(
-                                      value: "1",
-                                      radix: 10,
-                                    ),
+                                    data: "1",
                                   ),
-                                ),
+                                  radix: 10,
+                                ))),
                               ),
-                            ),
+                            )),
                           ),
-                        ),
+                        ))),
                       ),
-                      Statement(
+                      Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -598,8 +964,8 @@ Ok([
                             column: 10,
                           ),
                         ),
-                        kind: If(
-                          condition: Expression(
+                        data: If(If(
+                          condition: Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "loops.ta",
@@ -614,8 +980,8 @@ Ok([
                                 column: 19,
                               ),
                             ),
-                            kind: BinaryOperation(
-                              left: Expression(
+                            data: BinaryOperation(BinaryOperation(
+                              left: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -630,11 +996,27 @@ Ok([
                                     column: 13,
                                   ),
                                 ),
-                                kind: Variable(
-                                  name: "a",
-                                ),
+                                data: Variable(Variable(
+                                  name: Spanned(
+                                    span: Span(
+                                      start: Location(
+                                        file_name: "loops.ta",
+                                        position: 178,
+                                        line: 11,
+                                        column: 12,
+                                      ),
+                                      end: Location(
+                                        file_name: "loops.ta",
+                                        position: 179,
+                                        line: 11,
+                                        column: 13,
+                                      ),
+                                    ),
+                                    data: "a",
+                                  ),
+                                )),
                               ),
-                              operator: BinaryOperator(
+                              operator: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -649,9 +1031,9 @@ Ok([
                                     column: 16,
                                   ),
                                 ),
-                                kind: Equality,
+                                data: Equal,
                               ),
-                              right: Expression(
+                              right: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -666,14 +1048,30 @@ Ok([
                                     column: 19,
                                   ),
                                 ),
-                                kind: IntegerLiteral(
-                                  value: "15",
+                                data: Literal(Integer(Integer(
+                                  value: Spanned(
+                                    span: Span(
+                                      start: Location(
+                                        file_name: "loops.ta",
+                                        position: 183,
+                                        line: 11,
+                                        column: 17,
+                                      ),
+                                      end: Location(
+                                        file_name: "loops.ta",
+                                        position: 185,
+                                        line: 11,
+                                        column: 19,
+                                      ),
+                                    ),
+                                    data: "15",
+                                  ),
                                   radix: 10,
-                                ),
+                                ))),
                               ),
-                            ),
+                            )),
                           ),
-                          body: Statement(
+                          body: Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "loops.ta",
@@ -688,9 +1086,9 @@ Ok([
                                 column: 10,
                               ),
                             ),
-                            kind: Block(
+                            data: Block(Block(
                               statements: [
-                                Statement(
+                                Spanned(
                                   span: Span(
                                     start: Location(
                                       file_name: "loops.ta",
@@ -705,20 +1103,20 @@ Ok([
                                       column: 22,
                                     ),
                                   ),
-                                  kind: Continue,
+                                  data: Continue,
                                 ),
                               ],
-                            ),
+                            )),
                           ),
                           else_branch: None,
-                        ),
+                        )),
                       ),
                     ],
-                  ),
+                  )),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -733,8 +1131,8 @@ Ok([
                   column: 26,
                 ),
               ),
-              kind: Expression(
-                expression: Expression(
+              data: Expression(FunctionCall(FunctionCall(
+                function: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -744,13 +1142,13 @@ Ok([
                     ),
                     end: Location(
                       file_name: "loops.ta",
-                      position: 251,
+                      position: 237,
                       line: 16,
-                      column: 25,
+                      column: 11,
                     ),
                   ),
-                  kind: FunctionCall(
-                    source: Expression(
+                  data: Variable(Variable(
+                    name: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -765,12 +1163,28 @@ Ok([
                           column: 11,
                         ),
                       ),
-                      kind: Variable(
-                        name: "printf",
+                      data: "printf",
+                    ),
+                  )),
+                ),
+                arguments: [
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 238,
+                        line: 16,
+                        column: 12,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 247,
+                        line: 16,
+                        column: 21,
                       ),
                     ),
-                    arguments: [
-                      Expression(
+                    data: Literal(String(String(
+                      value: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -785,11 +1199,27 @@ Ok([
                             column: 21,
                           ),
                         ),
-                        kind: StringLiteral(
-                          value: "\"a: %d\\n\"",
-                        ),
+                        data: "\"a: %d\\n\"",
                       ),
-                      Expression(
+                    ))),
+                  ),
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 249,
+                        line: 16,
+                        column: 23,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 250,
+                        line: 16,
+                        column: 24,
+                      ),
+                    ),
+                    data: Variable(Variable(
+                      name: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -804,16 +1234,14 @@ Ok([
                             column: 24,
                           ),
                         ),
-                        kind: Variable(
-                          name: "a",
-                        ),
+                        data: "a",
                       ),
-                    ],
+                    )),
                   ),
-                ),
-              ),
+                ],
+              ))),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -828,8 +1256,8 @@ Ok([
                   column: 6,
                 ),
               ),
-              kind: ForInitCondUpdate(
-                initialization: Statement(
+              data: ForInitCondUpdate(ForInitCondUpdate(
+                init: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -844,9 +1272,25 @@ Ok([
                       column: 24,
                     ),
                   ),
-                  kind: VariableDeclaration(
-                    name: "i",
-                    ty: Some(Type(
+                  data: VariableDeclaration(VariableDeclaration(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 266,
+                          line: 18,
+                          column: 13,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 267,
+                          line: 18,
+                          column: 14,
+                        ),
+                      ),
+                      data: "i",
+                    ),
+                    ty: Some(Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -861,9 +1305,27 @@ Ok([
                           column: 19,
                         ),
                       ),
-                      kind: Named("i32"),
+                      data: Named(NamedType(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 269,
+                              line: 18,
+                              column: 16,
+                            ),
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 272,
+                              line: 18,
+                              column: 19,
+                            ),
+                          ),
+                          data: "i32",
+                        ),
+                      )),
                     )),
-                    value: Expression(
+                    value: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -878,13 +1340,29 @@ Ok([
                           column: 23,
                         ),
                       ),
-                      kind: Variable(
-                        name: "a",
-                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 275,
+                              line: 18,
+                              column: 22,
+                            ),
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 276,
+                              line: 18,
+                              column: 23,
+                            ),
+                          ),
+                          data: "a",
+                        ),
+                      )),
                     ),
-                  ),
+                  )),
                 ),
-                condition: Statement(
+                condition: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -899,8 +1377,8 @@ Ok([
                       column: 31,
                     ),
                   ),
-                  kind: Expression(
-                    expression: Expression(
+                  data: Expression(BinaryOperation(BinaryOperation(
+                    left: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -910,13 +1388,13 @@ Ok([
                         ),
                         end: Location(
                           file_name: "loops.ta",
-                          position: 283,
+                          position: 279,
                           line: 18,
-                          column: 30,
+                          column: 26,
                         ),
                       ),
-                      kind: BinaryOperation(
-                        left: Expression(
+                      data: Variable(Variable(
+                        name: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "loops.ta",
@@ -931,28 +1409,44 @@ Ok([
                               column: 26,
                             ),
                           ),
-                          kind: Variable(
-                            name: "i",
-                          ),
+                          data: "i",
                         ),
-                        operator: BinaryOperator(
-                          span: Span(
-                            start: Location(
-                              file_name: "loops.ta",
-                              position: 280,
-                              line: 18,
-                              column: 27,
-                            ),
-                            end: Location(
-                              file_name: "loops.ta",
-                              position: 281,
-                              line: 18,
-                              column: 28,
-                            ),
-                          ),
-                          kind: LessThan,
+                      )),
+                    ),
+                    operator: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 280,
+                          line: 18,
+                          column: 27,
                         ),
-                        right: Expression(
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 281,
+                          line: 18,
+                          column: 28,
+                        ),
+                      ),
+                      data: LessThan,
+                    ),
+                    right: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 282,
+                          line: 18,
+                          column: 29,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 283,
+                          line: 18,
+                          column: 30,
+                        ),
+                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "loops.ta",
@@ -967,15 +1461,13 @@ Ok([
                               column: 30,
                             ),
                           ),
-                          kind: Variable(
-                            name: "c",
-                          ),
+                          data: "c",
                         ),
-                      ),
+                      )),
                     ),
-                  ),
+                  ))),
                 ),
-                update: Statement(
+                update: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -990,8 +1482,8 @@ Ok([
                       column: 42,
                     ),
                   ),
-                  kind: Expression(
-                    expression: Expression(
+                  data: Expression(BinaryOperation(BinaryOperation(
+                    left: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -1001,13 +1493,13 @@ Ok([
                         ),
                         end: Location(
                           file_name: "loops.ta",
-                          position: 294,
+                          position: 286,
                           line: 18,
-                          column: 41,
+                          column: 33,
                         ),
                       ),
-                      kind: BinaryOperation(
-                        left: Expression(
+                      data: Variable(Variable(
+                        name: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "loops.ta",
@@ -1022,28 +1514,44 @@ Ok([
                               column: 33,
                             ),
                           ),
-                          kind: Variable(
-                            name: "i",
-                          ),
+                          data: "i",
                         ),
-                        operator: BinaryOperator(
-                          span: Span(
-                            start: Location(
-                              file_name: "loops.ta",
-                              position: 287,
-                              line: 18,
-                              column: 34,
-                            ),
-                            end: Location(
-                              file_name: "loops.ta",
-                              position: 288,
-                              line: 18,
-                              column: 35,
-                            ),
-                          ),
-                          kind: Assignment,
+                      )),
+                    ),
+                    operator: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 287,
+                          line: 18,
+                          column: 34,
                         ),
-                        right: Expression(
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 288,
+                          line: 18,
+                          column: 35,
+                        ),
+                      ),
+                      data: Assignment,
+                    ),
+                    right: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 289,
+                          line: 18,
+                          column: 36,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 294,
+                          line: 18,
+                          column: 41,
+                        ),
+                      ),
+                      data: BinaryOperation(BinaryOperation(
+                        left: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "loops.ta",
@@ -1053,13 +1561,13 @@ Ok([
                             ),
                             end: Location(
                               file_name: "loops.ta",
-                              position: 294,
+                              position: 290,
                               line: 18,
-                              column: 41,
+                              column: 37,
                             ),
                           ),
-                          kind: BinaryOperation(
-                            left: Expression(
+                          data: Variable(Variable(
+                            name: Spanned(
                               span: Span(
                                 start: Location(
                                   file_name: "loops.ta",
@@ -1074,28 +1582,44 @@ Ok([
                                   column: 37,
                                 ),
                               ),
-                              kind: Variable(
-                                name: "i",
-                              ),
+                              data: "i",
                             ),
-                            operator: BinaryOperator(
-                              span: Span(
-                                start: Location(
-                                  file_name: "loops.ta",
-                                  position: 291,
-                                  line: 18,
-                                  column: 38,
-                                ),
-                                end: Location(
-                                  file_name: "loops.ta",
-                                  position: 292,
-                                  line: 18,
-                                  column: 39,
-                                ),
-                              ),
-                              kind: Addition,
+                          )),
+                        ),
+                        operator: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 291,
+                              line: 18,
+                              column: 38,
                             ),
-                            right: Expression(
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 292,
+                              line: 18,
+                              column: 39,
+                            ),
+                          ),
+                          data: Addition,
+                        ),
+                        right: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "loops.ta",
+                              position: 293,
+                              line: 18,
+                              column: 40,
+                            ),
+                            end: Location(
+                              file_name: "loops.ta",
+                              position: 294,
+                              line: 18,
+                              column: 41,
+                            ),
+                          ),
+                          data: Literal(Integer(Integer(
+                            value: Spanned(
                               span: Span(
                                 start: Location(
                                   file_name: "loops.ta",
@@ -1110,18 +1634,16 @@ Ok([
                                   column: 41,
                                 ),
                               ),
-                              kind: IntegerLiteral(
-                                value: "1",
-                                radix: 10,
-                              ),
+                              data: "1",
                             ),
-                          ),
+                            radix: 10,
+                          ))),
                         ),
-                      ),
+                      )),
                     ),
-                  ),
+                  ))),
                 ),
-                body: Statement(
+                body: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -1136,9 +1658,9 @@ Ok([
                       column: 6,
                     ),
                   ),
-                  kind: Block(
+                  data: Block(Block(
                     statements: [
-                      Statement(
+                      Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -1153,8 +1675,8 @@ Ok([
                             column: 30,
                           ),
                         ),
-                        kind: Expression(
-                          expression: Expression(
+                        data: Expression(FunctionCall(FunctionCall(
+                          function: Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "loops.ta",
@@ -1164,13 +1686,13 @@ Ok([
                               ),
                               end: Location(
                                 file_name: "loops.ta",
-                                position: 326,
+                                position: 312,
                                 line: 19,
-                                column: 29,
+                                column: 15,
                               ),
                             ),
-                            kind: FunctionCall(
-                              source: Expression(
+                            data: Variable(Variable(
+                              name: Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "loops.ta",
@@ -1185,12 +1707,28 @@ Ok([
                                     column: 15,
                                   ),
                                 ),
-                                kind: Variable(
-                                  name: "printf",
+                                data: "printf",
+                              ),
+                            )),
+                          ),
+                          arguments: [
+                            Spanned(
+                              span: Span(
+                                start: Location(
+                                  file_name: "loops.ta",
+                                  position: 313,
+                                  line: 19,
+                                  column: 16,
+                                ),
+                                end: Location(
+                                  file_name: "loops.ta",
+                                  position: 322,
+                                  line: 19,
+                                  column: 25,
                                 ),
                               ),
-                              arguments: [
-                                Expression(
+                              data: Literal(String(String(
+                                value: Spanned(
                                   span: Span(
                                     start: Location(
                                       file_name: "loops.ta",
@@ -1205,11 +1743,27 @@ Ok([
                                       column: 25,
                                     ),
                                   ),
-                                  kind: StringLiteral(
-                                    value: "\"i: %d\\n\"",
-                                  ),
+                                  data: "\"i: %d\\n\"",
                                 ),
-                                Expression(
+                              ))),
+                            ),
+                            Spanned(
+                              span: Span(
+                                start: Location(
+                                  file_name: "loops.ta",
+                                  position: 324,
+                                  line: 19,
+                                  column: 27,
+                                ),
+                                end: Location(
+                                  file_name: "loops.ta",
+                                  position: 325,
+                                  line: 19,
+                                  column: 28,
+                                ),
+                              ),
+                              data: Variable(Variable(
+                                name: Spanned(
                                   span: Span(
                                     start: Location(
                                       file_name: "loops.ta",
@@ -1224,21 +1778,19 @@ Ok([
                                       column: 28,
                                     ),
                                   ),
-                                  kind: Variable(
-                                    name: "i",
-                                  ),
+                                  data: "i",
                                 ),
-                              ],
+                              )),
                             ),
-                          ),
-                        ),
+                          ],
+                        ))),
                       ),
                     ],
-                  ),
+                  )),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -1253,8 +1805,8 @@ Ok([
                   column: 46,
                 ),
               ),
-              kind: Expression(
-                expression: Expression(
+              data: Expression(FunctionCall(FunctionCall(
+                function: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -1264,13 +1816,13 @@ Ok([
                     ),
                     end: Location(
                       file_name: "loops.ta",
-                      position: 379,
+                      position: 345,
                       line: 22,
-                      column: 45,
+                      column: 11,
                     ),
                   ),
-                  kind: FunctionCall(
-                    source: Expression(
+                  data: Variable(Variable(
+                    name: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "loops.ta",
@@ -1285,12 +1837,28 @@ Ok([
                           column: 11,
                         ),
                       ),
-                      kind: Variable(
-                        name: "printf",
+                      data: "printf",
+                    ),
+                  )),
+                ),
+                arguments: [
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 346,
+                        line: 22,
+                        column: 12,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 369,
+                        line: 22,
+                        column: 35,
                       ),
                     ),
-                    arguments: [
-                      Expression(
+                    data: Literal(String(String(
+                      value: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -1305,11 +1873,27 @@ Ok([
                             column: 35,
                           ),
                         ),
-                        kind: StringLiteral(
-                          value: "\"a: %d, b: %d, c: %d\\n\"",
-                        ),
+                        data: "\"a: %d, b: %d, c: %d\\n\"",
                       ),
-                      Expression(
+                    ))),
+                  ),
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 371,
+                        line: 22,
+                        column: 37,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 372,
+                        line: 22,
+                        column: 38,
+                      ),
+                    ),
+                    data: Variable(Variable(
+                      name: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -1324,11 +1908,27 @@ Ok([
                             column: 38,
                           ),
                         ),
-                        kind: Variable(
-                          name: "a",
-                        ),
+                        data: "a",
                       ),
-                      Expression(
+                    )),
+                  ),
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 374,
+                        line: 22,
+                        column: 40,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 375,
+                        line: 22,
+                        column: 41,
+                      ),
+                    ),
+                    data: Variable(Variable(
+                      name: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -1343,11 +1943,27 @@ Ok([
                             column: 41,
                           ),
                         ),
-                        kind: Variable(
-                          name: "b",
-                        ),
+                        data: "b",
                       ),
-                      Expression(
+                    )),
+                  ),
+                  Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "loops.ta",
+                        position: 377,
+                        line: 22,
+                        column: 43,
+                      ),
+                      end: Location(
+                        file_name: "loops.ta",
+                        position: 378,
+                        line: 22,
+                        column: 44,
+                      ),
+                    ),
+                    data: Variable(Variable(
+                      name: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "loops.ta",
@@ -1362,16 +1978,14 @@ Ok([
                             column: 44,
                           ),
                         ),
-                        kind: Variable(
-                          name: "c",
-                        ),
+                        data: "c",
                       ),
-                    ],
+                    )),
                   ),
-                ),
-              ),
+                ],
+              ))),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "loops.ta",
@@ -1386,8 +2000,8 @@ Ok([
                   column: 14,
                 ),
               ),
-              kind: Return(
-                value: Some(Expression(
+              data: Return(Return(
+                value: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "loops.ta",
@@ -1402,16 +2016,32 @@ Ok([
                       column: 13,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "0",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "loops.ta",
+                          position: 393,
+                          line: 24,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "loops.ta",
+                          position: 394,
+                          line: 24,
+                          column: 13,
+                        ),
+                      ),
+                      data: "0",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 )),
-              ),
+              )),
             ),
           ],
-        ),
+        )),
       ),
-    ),
+    )),
   ),
-])
+]))

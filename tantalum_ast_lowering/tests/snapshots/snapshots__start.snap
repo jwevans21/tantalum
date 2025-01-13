@@ -1,0 +1,260 @@
+---
+source: tantalum_ast_lowering/tests/snapshots.rs
+expression: package
+snapshot_kind: text
+---
+HLIRPackage {
+    types: {
+        HLIRPath {
+            components: [
+                "bool",
+            ],
+        }: Builtin(
+            Bool,
+        ),
+        HLIRPath {
+            components: [
+                "char",
+            ],
+        }: Builtin(
+            Char,
+        ),
+        HLIRPath {
+            components: [
+                "f32",
+            ],
+        }: Builtin(
+            F32,
+        ),
+        HLIRPath {
+            components: [
+                "f64",
+            ],
+        }: Builtin(
+            F64,
+        ),
+        HLIRPath {
+            components: [
+                "i16",
+            ],
+        }: Builtin(
+            I16,
+        ),
+        HLIRPath {
+            components: [
+                "i32",
+            ],
+        }: Builtin(
+            I32,
+        ),
+        HLIRPath {
+            components: [
+                "i64",
+            ],
+        }: Builtin(
+            I64,
+        ),
+        HLIRPath {
+            components: [
+                "i8",
+            ],
+        }: Builtin(
+            I8,
+        ),
+        HLIRPath {
+            components: [
+                "str",
+            ],
+        }: Builtin(
+            Str,
+        ),
+        HLIRPath {
+            components: [
+                "u16",
+            ],
+        }: Builtin(
+            U16,
+        ),
+        HLIRPath {
+            components: [
+                "u32",
+            ],
+        }: Builtin(
+            U32,
+        ),
+        HLIRPath {
+            components: [
+                "u64",
+            ],
+        }: Builtin(
+            U64,
+        ),
+        HLIRPath {
+            components: [
+                "u8",
+            ],
+        }: Builtin(
+            U8,
+        ),
+        HLIRPath {
+            components: [
+                "void",
+            ],
+        }: Builtin(
+            Void,
+        ),
+    },
+    scope: HLIRScope {
+        next_index: ScopedValueIndex(
+            1,
+        ),
+        names: {
+            ScopedValueIndex(
+                0,
+            ): (
+                Function(
+                    HLIRFunctionPrototype {
+                        name: "main",
+                        inner: HLIRFunctionPrototypeAnonymous {
+                            parameters: [],
+                            is_variadic: false,
+                            return_type: Builtin(
+                                I32,
+                            ),
+                        },
+                        parameter_names: [],
+                    },
+                ),
+                Some(
+                    Function(
+                        HLIRFunctionType {
+                            prototype: HLIRFunctionPrototypeAnonymous {
+                                parameters: [],
+                                is_variadic: false,
+                                return_type: Builtin(
+                                    I32,
+                                ),
+                            },
+                        },
+                    ),
+                ),
+            ),
+        },
+        global: RefCell {
+            value: HLIRScopeBlock {
+                variables: {
+                    "main": ScopedValueIndex(
+                        0,
+                    ),
+                },
+                parent: None,
+            },
+        },
+        frames: [],
+    },
+    prototypes: {
+        "main": HLIRFunctionPrototype {
+            name: "main",
+            inner: HLIRFunctionPrototypeAnonymous {
+                parameters: [],
+                is_variadic: false,
+                return_type: Builtin(
+                    I32,
+                ),
+            },
+            parameter_names: [],
+        },
+    },
+    functions: {
+        HLIRFunctionPrototype {
+            name: "main",
+            inner: HLIRFunctionPrototypeAnonymous {
+                parameters: [],
+                is_variadic: false,
+                return_type: Builtin(
+                    I32,
+                ),
+            },
+            parameter_names: [],
+        }: HLIRFunction {
+            prototype: HLIRFunctionPrototype {
+                name: "main",
+                inner: HLIRFunctionPrototypeAnonymous {
+                    parameters: [],
+                    is_variadic: false,
+                    return_type: Builtin(
+                        I32,
+                    ),
+                },
+                parameter_names: [],
+            },
+            scope: RefCell {
+                value: HLIRScopeBlock {
+                    variables: {},
+                    parent: Some(
+                        RefCell {
+                            value: HLIRScopeBlock {
+                                variables: {
+                                    "main": ScopedValueIndex(
+                                        0,
+                                    ),
+                                },
+                                parent: None,
+                            },
+                        },
+                    ),
+                },
+            },
+            body: Block(
+                HLIRBlock {
+                    scope: RefCell {
+                        value: HLIRScopeBlock {
+                            variables: {},
+                            parent: Some(
+                                RefCell {
+                                    value: HLIRScopeBlock {
+                                        variables: {},
+                                        parent: Some(
+                                            RefCell {
+                                                value: HLIRScopeBlock {
+                                                    variables: {
+                                                        "main": ScopedValueIndex(
+                                                            0,
+                                                        ),
+                                                    },
+                                                    parent: None,
+                                                },
+                                            },
+                                        ),
+                                    },
+                                },
+                            ),
+                        },
+                    },
+                    statements: [
+                        Return(
+                            HLIRReturn {
+                                value: Some(
+                                    Literal(
+                                        HLIRLiteral(
+                                            Integer {
+                                                value: "0",
+                                                radix: 10,
+                                            },
+                                        ),
+                                    ),
+                                ),
+                            },
+                        ),
+                    ],
+                },
+            ),
+        },
+    },
+    literals: {
+        Integer {
+            value: "0",
+            radix: 10,
+        },
+    },
+}

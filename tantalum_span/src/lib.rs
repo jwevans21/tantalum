@@ -4,11 +4,12 @@
 
 use core::{
     fmt::{Debug, Display, Formatter, Result as FmtResult},
+    hash::Hash,
     num::Saturating,
-    ops::{Deref, Range},
+    ops::Range,
 };
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Location<'file_name> {
     /// The name of the file that this location is in
@@ -88,7 +89,7 @@ impl<'file_name> Location<'file_name> {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Span<'file_name> {
     /// The starting location of the span
@@ -149,7 +150,7 @@ impl Display for Span<'_> {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Spanned<'file_name, T: Debug + Clone + PartialEq + Eq> {
     #[cfg_attr(feature = "serde", serde(borrow))]
@@ -181,7 +182,7 @@ where
 
     pub fn map<U, F>(self, f: F) -> Spanned<'file_name, U>
     where
-        U: Debug + Clone + PartialEq + Eq,
+        U: Debug + Clone + PartialEq + Eq + Hash,
         F: FnOnce(T) -> U,
     {
         return Spanned::new(self.span, f(self.data));
@@ -238,31 +239,31 @@ where
 
 impl<T> Copy for Spanned<'_, T> where T: Copy + Debug + Clone + PartialEq + Eq {}
 
-impl<T> AsRef<T> for Spanned<'_, T>
-where
-    T: Debug + Clone + PartialEq + Eq,
-{
-    #[inline]
-    fn as_ref(&self) -> &T {
-        return &self.data;
-    }
-}
+// impl<T> AsRef<T> for Spanned<'_, T>
+// where
+//     T: Debug + Clone + PartialEq + Eq,
+// {
+//     #[inline]
+//     fn as_ref(&self) -> &T {
+//         return &self.data;
+//     }
+// }
 
-impl<T> Deref for Spanned<'_, T>
-where
-    T: Debug + Clone + PartialEq + Eq,
-{
-    type Target = T;
+// impl<T> Deref for Spanned<'_, T>
+// where
+//     T: Debug + Clone + PartialEq + Eq + Hash,
+// {
+//     type Target = T;
 
-    #[inline]
-    fn deref(&self) -> &Self::Target {
-        return &self.data;
-    }
-}
+//     #[inline]
+//     fn deref(&self) -> &Self::Target {
+//         return &self.data;
+//     }
+// }
 
 impl<T> Display for Spanned<'_, T>
 where
-    T: Display + Debug + Clone + PartialEq + Eq,
+    T: Display + Debug + Clone + PartialEq + Eq + Hash,
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {

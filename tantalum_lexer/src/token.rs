@@ -5,7 +5,7 @@
 use crate::token_kind::TokenKind;
 
 /// A token that was found in the source code
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Token<'source> {

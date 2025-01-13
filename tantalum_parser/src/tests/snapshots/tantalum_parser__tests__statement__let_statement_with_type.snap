@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "let_statement",
@@ -18,9 +18,25 @@ Ok(Statement(
       column: 30,
     ),
   ),
-  kind: VariableDeclaration(
-    name: "x",
-    ty: Some(Type(
+  data: VariableDeclaration(VariableDeclaration(
+    name: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "let_statement",
+          position: 4,
+          line: 1,
+          column: 5,
+        ),
+        end: Location(
+          file_name: "let_statement",
+          position: 5,
+          line: 1,
+          column: 6,
+        ),
+      ),
+      data: "x",
+    ),
+    ty: Some(Spanned(
       span: Span(
         start: Location(
           file_name: "let_statement",
@@ -35,25 +51,45 @@ Ok(Statement(
           column: 11,
         ),
       ),
-      kind: Pointer(Type(
-        span: Span(
-          start: Location(
-            file_name: "let_statement",
-            position: 8,
-            line: 1,
-            column: 9,
+      data: Pointer(PointerType(
+        ty: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "let_statement",
+              position: 8,
+              line: 1,
+              column: 9,
+            ),
+            end: Location(
+              file_name: "let_statement",
+              position: 10,
+              line: 1,
+              column: 11,
+            ),
           ),
-          end: Location(
-            file_name: "let_statement",
-            position: 10,
-            line: 1,
-            column: 11,
-          ),
+          data: Named(NamedType(
+            name: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "let_statement",
+                  position: 8,
+                  line: 1,
+                  column: 9,
+                ),
+                end: Location(
+                  file_name: "let_statement",
+                  position: 10,
+                  line: 1,
+                  column: 11,
+                ),
+              ),
+              data: "u8",
+            ),
+          )),
         ),
-        kind: Named("u8"),
       )),
     )),
-    value: Expression(
+    value: Spanned(
       span: Span(
         start: Location(
           file_name: "let_statement",
@@ -68,9 +104,25 @@ Ok(Statement(
           column: 29,
         ),
       ),
-      kind: StringLiteral(
-        value: "\"Hello, World!\"",
-      ),
+      data: Literal(String(String(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "let_statement",
+              position: 13,
+              line: 1,
+              column: 14,
+            ),
+            end: Location(
+              file_name: "let_statement",
+              position: 28,
+              line: 1,
+              column: 29,
+            ),
+          ),
+          data: "\"Hello, World!\"",
+        ),
+      ))),
     ),
-  ),
+  )),
 ))

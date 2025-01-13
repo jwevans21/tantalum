@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "while_statement",
@@ -18,8 +18,8 @@ Ok(Statement(
       column: 28,
     ),
   ),
-  kind: While(
-    condition: Expression(
+  data: While(While(
+    condition: Spanned(
       span: Span(
         start: Location(
           file_name: "while_statement",
@@ -34,8 +34,8 @@ Ok(Statement(
           column: 13,
         ),
       ),
-      kind: BinaryOperation(
-        left: Expression(
+      data: BinaryOperation(BinaryOperation(
+        left: Spanned(
           span: Span(
             start: Location(
               file_name: "while_statement",
@@ -50,11 +50,27 @@ Ok(Statement(
               column: 8,
             ),
           ),
-          kind: Variable(
-            name: "i",
-          ),
+          data: Variable(Variable(
+            name: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "while_statement",
+                  position: 6,
+                  line: 1,
+                  column: 7,
+                ),
+                end: Location(
+                  file_name: "while_statement",
+                  position: 7,
+                  line: 1,
+                  column: 8,
+                ),
+              ),
+              data: "i",
+            ),
+          )),
         ),
-        operator: BinaryOperator(
+        operator: Spanned(
           span: Span(
             start: Location(
               file_name: "while_statement",
@@ -69,9 +85,9 @@ Ok(Statement(
               column: 10,
             ),
           ),
-          kind: LessThan,
+          data: LessThan,
         ),
-        right: Expression(
+        right: Spanned(
           span: Span(
             start: Location(
               file_name: "while_statement",
@@ -86,14 +102,30 @@ Ok(Statement(
               column: 13,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "10",
+          data: Literal(Integer(Integer(
+            value: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "while_statement",
+                  position: 10,
+                  line: 1,
+                  column: 11,
+                ),
+                end: Location(
+                  file_name: "while_statement",
+                  position: 12,
+                  line: 1,
+                  column: 13,
+                ),
+              ),
+              data: "10",
+            ),
             radix: 10,
-          ),
+          ))),
         ),
-      ),
+      )),
     ),
-    body: Statement(
+    body: Spanned(
       span: Span(
         start: Location(
           file_name: "while_statement",
@@ -108,9 +140,9 @@ Ok(Statement(
           column: 28,
         ),
       ),
-      kind: Block(
+      data: Block(Block(
         statements: [
-          Statement(
+          Spanned(
             span: Span(
               start: Location(
                 file_name: "while_statement",
@@ -125,8 +157,8 @@ Ok(Statement(
                 column: 26,
               ),
             ),
-            kind: Expression(
-              expression: Expression(
+            data: Expression(BinaryOperation(BinaryOperation(
+              left: Spanned(
                 span: Span(
                   start: Location(
                     file_name: "while_statement",
@@ -136,13 +168,13 @@ Ok(Statement(
                   ),
                   end: Location(
                     file_name: "while_statement",
-                    position: 24,
+                    position: 16,
                     line: 1,
-                    column: 25,
+                    column: 17,
                   ),
                 ),
-                kind: BinaryOperation(
-                  left: Expression(
+                data: Variable(Variable(
+                  name: Spanned(
                     span: Span(
                       start: Location(
                         file_name: "while_statement",
@@ -157,28 +189,44 @@ Ok(Statement(
                         column: 17,
                       ),
                     ),
-                    kind: Variable(
-                      name: "i",
-                    ),
+                    data: "i",
                   ),
-                  operator: BinaryOperator(
-                    span: Span(
-                      start: Location(
-                        file_name: "while_statement",
-                        position: 17,
-                        line: 1,
-                        column: 18,
-                      ),
-                      end: Location(
-                        file_name: "while_statement",
-                        position: 18,
-                        line: 1,
-                        column: 19,
-                      ),
-                    ),
-                    kind: Assignment,
+                )),
+              ),
+              operator: Spanned(
+                span: Span(
+                  start: Location(
+                    file_name: "while_statement",
+                    position: 17,
+                    line: 1,
+                    column: 18,
                   ),
-                  right: Expression(
+                  end: Location(
+                    file_name: "while_statement",
+                    position: 18,
+                    line: 1,
+                    column: 19,
+                  ),
+                ),
+                data: Assignment,
+              ),
+              right: Spanned(
+                span: Span(
+                  start: Location(
+                    file_name: "while_statement",
+                    position: 19,
+                    line: 1,
+                    column: 20,
+                  ),
+                  end: Location(
+                    file_name: "while_statement",
+                    position: 24,
+                    line: 1,
+                    column: 25,
+                  ),
+                ),
+                data: BinaryOperation(BinaryOperation(
+                  left: Spanned(
                     span: Span(
                       start: Location(
                         file_name: "while_statement",
@@ -188,13 +236,13 @@ Ok(Statement(
                       ),
                       end: Location(
                         file_name: "while_statement",
-                        position: 24,
+                        position: 20,
                         line: 1,
-                        column: 25,
+                        column: 21,
                       ),
                     ),
-                    kind: BinaryOperation(
-                      left: Expression(
+                    data: Variable(Variable(
+                      name: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "while_statement",
@@ -209,28 +257,44 @@ Ok(Statement(
                             column: 21,
                           ),
                         ),
-                        kind: Variable(
-                          name: "i",
-                        ),
+                        data: "i",
                       ),
-                      operator: BinaryOperator(
-                        span: Span(
-                          start: Location(
-                            file_name: "while_statement",
-                            position: 21,
-                            line: 1,
-                            column: 22,
-                          ),
-                          end: Location(
-                            file_name: "while_statement",
-                            position: 22,
-                            line: 1,
-                            column: 23,
-                          ),
-                        ),
-                        kind: Addition,
+                    )),
+                  ),
+                  operator: Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "while_statement",
+                        position: 21,
+                        line: 1,
+                        column: 22,
                       ),
-                      right: Expression(
+                      end: Location(
+                        file_name: "while_statement",
+                        position: 22,
+                        line: 1,
+                        column: 23,
+                      ),
+                    ),
+                    data: Addition,
+                  ),
+                  right: Spanned(
+                    span: Span(
+                      start: Location(
+                        file_name: "while_statement",
+                        position: 23,
+                        line: 1,
+                        column: 24,
+                      ),
+                      end: Location(
+                        file_name: "while_statement",
+                        position: 24,
+                        line: 1,
+                        column: 25,
+                      ),
+                    ),
+                    data: Literal(Integer(Integer(
+                      value: Spanned(
                         span: Span(
                           start: Location(
                             file_name: "while_statement",
@@ -245,19 +309,17 @@ Ok(Statement(
                             column: 25,
                           ),
                         ),
-                        kind: IntegerLiteral(
-                          value: "1",
-                          radix: 10,
-                        ),
+                        data: "1",
                       ),
-                    ),
+                      radix: 10,
+                    ))),
                   ),
-                ),
+                )),
               ),
-            ),
+            ))),
           ),
         ],
-      ),
+      )),
     ),
-  ),
+  )),
 ))

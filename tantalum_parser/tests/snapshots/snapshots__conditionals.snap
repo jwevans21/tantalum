@@ -3,8 +3,8 @@ source: tantalum_parser/tests/snapshots.rs
 expression: ast
 snapshot_kind: text
 ---
-Ok([
-  TopLevelExpression(
+Ok(AST([
+  Spanned(
     span: Span(
       start: Location(
         file_name: "conditionals.ta",
@@ -19,10 +19,42 @@ Ok([
         column: 2,
       ),
     ),
-    kind: FunctionDeclaration(
-      name: "main",
-      parameters: [],
-      return_type: Type(
+    data: Function(Function(
+      name: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "conditionals.ta",
+            position: 3,
+            line: 1,
+            column: 4,
+          ),
+          end: Location(
+            file_name: "conditionals.ta",
+            position: 7,
+            line: 1,
+            column: 8,
+          ),
+        ),
+        data: "main",
+      ),
+      parameters: Spanned(
+        span: Span(
+          start: Location(
+            file_name: "conditionals.ta",
+            position: 7,
+            line: 1,
+            column: 8,
+          ),
+          end: Location(
+            file_name: "conditionals.ta",
+            position: 9,
+            line: 1,
+            column: 10,
+          ),
+        ),
+        data: [],
+      ),
+      return_type: Some(Spanned(
         span: Span(
           start: Location(
             file_name: "conditionals.ta",
@@ -37,9 +69,27 @@ Ok([
             column: 15,
           ),
         ),
-        kind: Named("i32"),
-      ),
-      body: Statement(
+        data: Named(NamedType(
+          name: Spanned(
+            span: Span(
+              start: Location(
+                file_name: "conditionals.ta",
+                position: 11,
+                line: 1,
+                column: 12,
+              ),
+              end: Location(
+                file_name: "conditionals.ta",
+                position: 14,
+                line: 1,
+                column: 15,
+              ),
+            ),
+            data: "i32",
+          ),
+        )),
+      )),
+      body: Spanned(
         span: Span(
           start: Location(
             file_name: "conditionals.ta",
@@ -54,9 +104,9 @@ Ok([
             column: 2,
           ),
         ),
-        kind: Block(
+        data: Block(Block(
           statements: [
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "conditionals.ta",
@@ -71,9 +121,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "a",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "conditionals.ta",
+                      position: 25,
+                      line: 2,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "conditionals.ta",
+                      position: 26,
+                      line: 2,
+                      column: 10,
+                    ),
+                  ),
+                  data: "a",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -88,9 +154,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 28,
+                          line: 2,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 31,
+                          line: 2,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -105,14 +189,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "10",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 34,
+                          line: 2,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 36,
+                          line: 2,
+                          column: 20,
+                        ),
+                      ),
+                      data: "10",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "conditionals.ta",
@@ -127,9 +227,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "b",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "conditionals.ta",
+                      position: 46,
+                      line: 3,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "conditionals.ta",
+                      position: 47,
+                      line: 3,
+                      column: 10,
+                    ),
+                  ),
+                  data: "b",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -144,9 +260,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 49,
+                          line: 3,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 52,
+                          line: 3,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -161,14 +295,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "20",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 55,
+                          line: 3,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 57,
+                          line: 3,
+                          column: 20,
+                        ),
+                      ),
+                      data: "20",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "conditionals.ta",
@@ -183,9 +333,25 @@ Ok([
                   column: 21,
                 ),
               ),
-              kind: VariableDeclaration(
-                name: "c",
-                ty: Some(Type(
+              data: VariableDeclaration(VariableDeclaration(
+                name: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "conditionals.ta",
+                      position: 67,
+                      line: 4,
+                      column: 9,
+                    ),
+                    end: Location(
+                      file_name: "conditionals.ta",
+                      position: 68,
+                      line: 4,
+                      column: 10,
+                    ),
+                  ),
+                  data: "c",
+                ),
+                ty: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -200,9 +366,27 @@ Ok([
                       column: 15,
                     ),
                   ),
-                  kind: Named("i32"),
+                  data: Named(NamedType(
+                    name: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 70,
+                          line: 4,
+                          column: 12,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 73,
+                          line: 4,
+                          column: 15,
+                        ),
+                      ),
+                      data: "i32",
+                    ),
+                  )),
                 )),
-                value: Expression(
+                value: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -217,14 +401,30 @@ Ok([
                       column: 20,
                     ),
                   ),
-                  kind: IntegerLiteral(
-                    value: "30",
+                  data: Literal(Integer(Integer(
+                    value: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "conditionals.ta",
+                          position: 76,
+                          line: 4,
+                          column: 18,
+                        ),
+                        end: Location(
+                          file_name: "conditionals.ta",
+                          position: 78,
+                          line: 4,
+                          column: 20,
+                        ),
+                      ),
+                      data: "30",
+                    ),
                     radix: 10,
-                  ),
+                  ))),
                 ),
-              ),
+              )),
             ),
-            Statement(
+            Spanned(
               span: Span(
                 start: Location(
                   file_name: "conditionals.ta",
@@ -239,8 +439,8 @@ Ok([
                   column: 6,
                 ),
               ),
-              kind: If(
-                condition: Expression(
+              data: If(If(
+                condition: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -255,8 +455,8 @@ Ok([
                       column: 13,
                     ),
                   ),
-                  kind: BinaryOperation(
-                    left: Expression(
+                  data: BinaryOperation(BinaryOperation(
+                    left: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -271,11 +471,27 @@ Ok([
                           column: 9,
                         ),
                       ),
-                      kind: Variable(
-                        name: "a",
-                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "conditionals.ta",
+                              position: 88,
+                              line: 6,
+                              column: 8,
+                            ),
+                            end: Location(
+                              file_name: "conditionals.ta",
+                              position: 89,
+                              line: 6,
+                              column: 9,
+                            ),
+                          ),
+                          data: "a",
+                        ),
+                      )),
                     ),
-                    operator: BinaryOperator(
+                    operator: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -290,9 +506,9 @@ Ok([
                           column: 11,
                         ),
                       ),
-                      kind: GreaterThan,
+                      data: GreaterThan,
                     ),
-                    right: Expression(
+                    right: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -307,13 +523,29 @@ Ok([
                           column: 13,
                         ),
                       ),
-                      kind: Variable(
-                        name: "b",
-                      ),
+                      data: Variable(Variable(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "conditionals.ta",
+                              position: 92,
+                              line: 6,
+                              column: 12,
+                            ),
+                            end: Location(
+                              file_name: "conditionals.ta",
+                              position: 93,
+                              line: 6,
+                              column: 13,
+                            ),
+                          ),
+                          data: "b",
+                        ),
+                      )),
                     ),
-                  ),
+                  )),
                 ),
-                body: Statement(
+                body: Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -328,9 +560,9 @@ Ok([
                       column: 6,
                     ),
                   ),
-                  kind: Block(
+                  data: Block(Block(
                     statements: [
-                      Statement(
+                      Spanned(
                         span: Span(
                           start: Location(
                             file_name: "conditionals.ta",
@@ -345,8 +577,8 @@ Ok([
                             column: 18,
                           ),
                         ),
-                        kind: Return(
-                          value: Some(Expression(
+                        data: Return(Return(
+                          value: Some(Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "conditionals.ta",
@@ -361,16 +593,32 @@ Ok([
                                 column: 17,
                               ),
                             ),
-                            kind: Variable(
-                              name: "a",
-                            ),
+                            data: Variable(Variable(
+                              name: Spanned(
+                                span: Span(
+                                  start: Location(
+                                    file_name: "conditionals.ta",
+                                    position: 111,
+                                    line: 7,
+                                    column: 16,
+                                  ),
+                                  end: Location(
+                                    file_name: "conditionals.ta",
+                                    position: 112,
+                                    line: 7,
+                                    column: 17,
+                                  ),
+                                ),
+                                data: "a",
+                              ),
+                            )),
                           )),
-                        ),
+                        )),
                       ),
                     ],
-                  ),
+                  )),
                 ),
-                else_branch: Some(Statement(
+                else_branch: Some(Spanned(
                   span: Span(
                     start: Location(
                       file_name: "conditionals.ta",
@@ -385,8 +633,8 @@ Ok([
                       column: 6,
                     ),
                   ),
-                  kind: If(
-                    condition: Expression(
+                  data: If(If(
+                    condition: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -401,8 +649,8 @@ Ok([
                           column: 20,
                         ),
                       ),
-                      kind: BinaryOperation(
-                        left: Expression(
+                      data: BinaryOperation(BinaryOperation(
+                        left: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "conditionals.ta",
@@ -417,11 +665,27 @@ Ok([
                               column: 16,
                             ),
                           ),
-                          kind: Variable(
-                            name: "b",
-                          ),
+                          data: Variable(Variable(
+                            name: Spanned(
+                              span: Span(
+                                start: Location(
+                                  file_name: "conditionals.ta",
+                                  position: 128,
+                                  line: 8,
+                                  column: 15,
+                                ),
+                                end: Location(
+                                  file_name: "conditionals.ta",
+                                  position: 129,
+                                  line: 8,
+                                  column: 16,
+                                ),
+                              ),
+                              data: "b",
+                            ),
+                          )),
                         ),
-                        operator: BinaryOperator(
+                        operator: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "conditionals.ta",
@@ -436,9 +700,9 @@ Ok([
                               column: 18,
                             ),
                           ),
-                          kind: GreaterThan,
+                          data: GreaterThan,
                         ),
-                        right: Expression(
+                        right: Spanned(
                           span: Span(
                             start: Location(
                               file_name: "conditionals.ta",
@@ -453,13 +717,29 @@ Ok([
                               column: 20,
                             ),
                           ),
-                          kind: Variable(
-                            name: "c",
-                          ),
+                          data: Variable(Variable(
+                            name: Spanned(
+                              span: Span(
+                                start: Location(
+                                  file_name: "conditionals.ta",
+                                  position: 132,
+                                  line: 8,
+                                  column: 19,
+                                ),
+                                end: Location(
+                                  file_name: "conditionals.ta",
+                                  position: 133,
+                                  line: 8,
+                                  column: 20,
+                                ),
+                              ),
+                              data: "c",
+                            ),
+                          )),
                         ),
-                      ),
+                      )),
                     ),
-                    body: Statement(
+                    body: Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -474,9 +754,9 @@ Ok([
                           column: 6,
                         ),
                       ),
-                      kind: Block(
+                      data: Block(Block(
                         statements: [
-                          Statement(
+                          Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "conditionals.ta",
@@ -491,8 +771,8 @@ Ok([
                                 column: 18,
                               ),
                             ),
-                            kind: Return(
-                              value: Some(Expression(
+                            data: Return(Return(
+                              value: Some(Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "conditionals.ta",
@@ -507,16 +787,32 @@ Ok([
                                     column: 17,
                                   ),
                                 ),
-                                kind: Variable(
-                                  name: "b",
-                                ),
+                                data: Variable(Variable(
+                                  name: Spanned(
+                                    span: Span(
+                                      start: Location(
+                                        file_name: "conditionals.ta",
+                                        position: 151,
+                                        line: 9,
+                                        column: 16,
+                                      ),
+                                      end: Location(
+                                        file_name: "conditionals.ta",
+                                        position: 152,
+                                        line: 9,
+                                        column: 17,
+                                      ),
+                                    ),
+                                    data: "b",
+                                  ),
+                                )),
                               )),
-                            ),
+                            )),
                           ),
                         ],
-                      ),
+                      )),
                     ),
-                    else_branch: Some(Statement(
+                    else_branch: Some(Spanned(
                       span: Span(
                         start: Location(
                           file_name: "conditionals.ta",
@@ -531,9 +827,9 @@ Ok([
                           column: 6,
                         ),
                       ),
-                      kind: Block(
+                      data: Block(Block(
                         statements: [
-                          Statement(
+                          Spanned(
                             span: Span(
                               start: Location(
                                 file_name: "conditionals.ta",
@@ -548,8 +844,8 @@ Ok([
                                 column: 18,
                               ),
                             ),
-                            kind: Return(
-                              value: Some(Expression(
+                            data: Return(Return(
+                              value: Some(Spanned(
                                 span: Span(
                                   start: Location(
                                     file_name: "conditionals.ta",
@@ -564,22 +860,38 @@ Ok([
                                     column: 17,
                                   ),
                                 ),
-                                kind: Variable(
-                                  name: "c",
-                                ),
+                                data: Variable(Variable(
+                                  name: Spanned(
+                                    span: Span(
+                                      start: Location(
+                                        file_name: "conditionals.ta",
+                                        position: 182,
+                                        line: 11,
+                                        column: 16,
+                                      ),
+                                      end: Location(
+                                        file_name: "conditionals.ta",
+                                        position: 183,
+                                        line: 11,
+                                        column: 17,
+                                      ),
+                                    ),
+                                    data: "c",
+                                  ),
+                                )),
                               )),
-                            ),
+                            )),
                           ),
                         ],
-                      ),
+                      )),
                     )),
-                  ),
+                  )),
                 )),
-              ),
+              )),
             ),
           ],
-        ),
+        )),
       ),
-    ),
+    )),
   ),
-])
+]))

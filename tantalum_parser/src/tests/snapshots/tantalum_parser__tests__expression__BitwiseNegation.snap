@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/expression.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Expression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "BitwiseNegation",
@@ -18,8 +18,8 @@ Ok(Expression(
       column: 3,
     ),
   ),
-  kind: UnaryOperation(
-    operator: UnaryOperator(
+  data: UnaryOperation(UnaryOperation(
+    operator: Spanned(
       span: Span(
         start: Location(
           file_name: "BitwiseNegation",
@@ -34,9 +34,9 @@ Ok(Expression(
           column: 2,
         ),
       ),
-      kind: BitwiseNegation,
+      data: BitwiseNegation,
     ),
-    operand: Expression(
+    operand: Spanned(
       span: Span(
         start: Location(
           file_name: "BitwiseNegation",
@@ -51,10 +51,26 @@ Ok(Expression(
           column: 3,
         ),
       ),
-      kind: IntegerLiteral(
-        value: "1",
+      data: Literal(Integer(Integer(
+        value: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "BitwiseNegation",
+              position: 1,
+              line: 1,
+              column: 2,
+            ),
+            end: Location(
+              file_name: "BitwiseNegation",
+              position: 2,
+              line: 1,
+              column: 3,
+            ),
+          ),
+          data: "1",
+        ),
         radix: 10,
-      ),
+      ))),
     ),
-  ),
+  )),
 ))

@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/top_level.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(TopLevelExpression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "function_declaration",
@@ -18,16 +18,31 @@ Ok(TopLevelExpression(
       column: 13,
     ),
   ),
-  kind: FunctionDeclaration(
-    name: "main",
-    parameters: [],
-    return_type: Type(
+  data: Function(Function(
+    name: Spanned(
       span: Span(
         start: Location(
           file_name: "function_declaration",
-          position: 8,
+          position: 3,
           line: 1,
-          column: 9,
+          column: 4,
+        ),
+        end: Location(
+          file_name: "function_declaration",
+          position: 7,
+          line: 1,
+          column: 8,
+        ),
+      ),
+      data: "main",
+    ),
+    parameters: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "function_declaration",
+          position: 7,
+          line: 1,
+          column: 8,
         ),
         end: Location(
           file_name: "function_declaration",
@@ -36,9 +51,10 @@ Ok(TopLevelExpression(
           column: 10,
         ),
       ),
-      kind: Named("void"),
+      data: [],
     ),
-    body: Statement(
+    return_type: None,
+    body: Spanned(
       span: Span(
         start: Location(
           file_name: "function_declaration",
@@ -53,9 +69,9 @@ Ok(TopLevelExpression(
           column: 13,
         ),
       ),
-      kind: Block(
+      data: Block(Block(
         statements: [],
-      ),
+      )),
     ),
-  ),
+  )),
 ))

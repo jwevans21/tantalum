@@ -1,0 +1,687 @@
+---
+source: tantalum_ast_lowering/tests/nested.rs
+expression: package
+snapshot_kind: text
+---
+HLIRPackage {
+    types: {
+        HLIRPath {
+            components: [
+                "bool",
+            ],
+        }: Builtin(
+            Bool,
+        ),
+        HLIRPath {
+            components: [
+                "char",
+            ],
+        }: Builtin(
+            Char,
+        ),
+        HLIRPath {
+            components: [
+                "f32",
+            ],
+        }: Builtin(
+            F32,
+        ),
+        HLIRPath {
+            components: [
+                "f64",
+            ],
+        }: Builtin(
+            F64,
+        ),
+        HLIRPath {
+            components: [
+                "i16",
+            ],
+        }: Builtin(
+            I16,
+        ),
+        HLIRPath {
+            components: [
+                "i32",
+            ],
+        }: Builtin(
+            I32,
+        ),
+        HLIRPath {
+            components: [
+                "i64",
+            ],
+        }: Builtin(
+            I64,
+        ),
+        HLIRPath {
+            components: [
+                "i8",
+            ],
+        }: Builtin(
+            I8,
+        ),
+        HLIRPath {
+            components: [
+                "str",
+            ],
+        }: Builtin(
+            Str,
+        ),
+        HLIRPath {
+            components: [
+                "u16",
+            ],
+        }: Builtin(
+            U16,
+        ),
+        HLIRPath {
+            components: [
+                "u32",
+            ],
+        }: Builtin(
+            U32,
+        ),
+        HLIRPath {
+            components: [
+                "u64",
+            ],
+        }: Builtin(
+            U64,
+        ),
+        HLIRPath {
+            components: [
+                "u8",
+            ],
+        }: Builtin(
+            U8,
+        ),
+        HLIRPath {
+            components: [
+                "void",
+            ],
+        }: Builtin(
+            Void,
+        ),
+    },
+    scope: HLIRScope {
+        next_index: ScopedValueIndex(
+            9,
+        ),
+        names: {
+            ScopedValueIndex(
+                0,
+            ): (
+                Function(
+                    HLIRFunctionPrototype {
+                        name: "printf",
+                        inner: HLIRFunctionPrototypeAnonymous {
+                            parameters: [
+                                Pointer(
+                                    Builtin(
+                                        U8,
+                                    ),
+                                ),
+                            ],
+                            is_variadic: true,
+                            return_type: Builtin(
+                                I32,
+                            ),
+                        },
+                        parameter_names: [
+                            "format",
+                        ],
+                    },
+                ),
+                Some(
+                    Function(
+                        HLIRFunctionType {
+                            prototype: HLIRFunctionPrototypeAnonymous {
+                                parameters: [
+                                    Pointer(
+                                        Builtin(
+                                            U8,
+                                        ),
+                                    ),
+                                ],
+                                is_variadic: true,
+                                return_type: Builtin(
+                                    I32,
+                                ),
+                            },
+                        },
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                1,
+            ): (
+                Function(
+                    HLIRFunctionPrototype {
+                        name: "main",
+                        inner: HLIRFunctionPrototypeAnonymous {
+                            parameters: [
+                                Builtin(
+                                    I32,
+                                ),
+                                UnsizedArray(
+                                    Pointer(
+                                        Builtin(
+                                            U8,
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            is_variadic: false,
+                            return_type: Builtin(
+                                I32,
+                            ),
+                        },
+                        parameter_names: [
+                            "argc",
+                            "argv",
+                        ],
+                    },
+                ),
+                Some(
+                    Function(
+                        HLIRFunctionType {
+                            prototype: HLIRFunctionPrototypeAnonymous {
+                                parameters: [
+                                    Builtin(
+                                        I32,
+                                    ),
+                                    UnsizedArray(
+                                        Pointer(
+                                            Builtin(
+                                                U8,
+                                            ),
+                                        ),
+                                    ),
+                                ],
+                                is_variadic: false,
+                                return_type: Builtin(
+                                    I32,
+                                ),
+                            },
+                        },
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                2,
+            ): (
+                Variable(
+                    "argc",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                3,
+            ): (
+                Variable(
+                    "argv",
+                ),
+                Some(
+                    UnsizedArray(
+                        Pointer(
+                            Builtin(
+                                U8,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                4,
+            ): (
+                Variable(
+                    "x",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                5,
+            ): (
+                Variable(
+                    "y",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                6,
+            ): (
+                Variable(
+                    "z",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                7,
+            ): (
+                Variable(
+                    "z",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+            ScopedValueIndex(
+                8,
+            ): (
+                Variable(
+                    "z",
+                ),
+                Some(
+                    Builtin(
+                        I32,
+                    ),
+                ),
+            ),
+        },
+        global: RefCell {
+            value: HLIRScopeBlock {
+                variables: {
+                    "main": ScopedValueIndex(
+                        1,
+                    ),
+                    "printf": ScopedValueIndex(
+                        0,
+                    ),
+                },
+                parent: None,
+            },
+        },
+        frames: [],
+    },
+    prototypes: {
+        "main": HLIRFunctionPrototype {
+            name: "main",
+            inner: HLIRFunctionPrototypeAnonymous {
+                parameters: [
+                    Builtin(
+                        I32,
+                    ),
+                    UnsizedArray(
+                        Pointer(
+                            Builtin(
+                                U8,
+                            ),
+                        ),
+                    ),
+                ],
+                is_variadic: false,
+                return_type: Builtin(
+                    I32,
+                ),
+            },
+            parameter_names: [
+                "argc",
+                "argv",
+            ],
+        },
+        "printf": HLIRFunctionPrototype {
+            name: "printf",
+            inner: HLIRFunctionPrototypeAnonymous {
+                parameters: [
+                    Pointer(
+                        Builtin(
+                            U8,
+                        ),
+                    ),
+                ],
+                is_variadic: true,
+                return_type: Builtin(
+                    I32,
+                ),
+            },
+            parameter_names: [
+                "format",
+            ],
+        },
+    },
+    functions: {
+        HLIRFunctionPrototype {
+            name: "main",
+            inner: HLIRFunctionPrototypeAnonymous {
+                parameters: [
+                    Builtin(
+                        I32,
+                    ),
+                    UnsizedArray(
+                        Pointer(
+                            Builtin(
+                                U8,
+                            ),
+                        ),
+                    ),
+                ],
+                is_variadic: false,
+                return_type: Builtin(
+                    I32,
+                ),
+            },
+            parameter_names: [
+                "argc",
+                "argv",
+            ],
+        }: HLIRFunction {
+            prototype: HLIRFunctionPrototype {
+                name: "main",
+                inner: HLIRFunctionPrototypeAnonymous {
+                    parameters: [
+                        Builtin(
+                            I32,
+                        ),
+                        UnsizedArray(
+                            Pointer(
+                                Builtin(
+                                    U8,
+                                ),
+                            ),
+                        ),
+                    ],
+                    is_variadic: false,
+                    return_type: Builtin(
+                        I32,
+                    ),
+                },
+                parameter_names: [
+                    "argc",
+                    "argv",
+                ],
+            },
+            scope: RefCell {
+                value: HLIRScopeBlock {
+                    variables: {
+                        "argc": ScopedValueIndex(
+                            2,
+                        ),
+                        "argv": ScopedValueIndex(
+                            3,
+                        ),
+                    },
+                    parent: Some(
+                        RefCell {
+                            value: HLIRScopeBlock {
+                                variables: {
+                                    "main": ScopedValueIndex(
+                                        1,
+                                    ),
+                                    "printf": ScopedValueIndex(
+                                        0,
+                                    ),
+                                },
+                                parent: None,
+                            },
+                        },
+                    ),
+                },
+            },
+            body: Block(
+                HLIRBlock {
+                    scope: RefCell {
+                        value: HLIRScopeBlock {
+                            variables: {
+                                "x": ScopedValueIndex(
+                                    4,
+                                ),
+                                "y": ScopedValueIndex(
+                                    5,
+                                ),
+                                "z": ScopedValueIndex(
+                                    8,
+                                ),
+                            },
+                            parent: Some(
+                                RefCell {
+                                    value: HLIRScopeBlock {
+                                        variables: {
+                                            "argc": ScopedValueIndex(
+                                                2,
+                                            ),
+                                            "argv": ScopedValueIndex(
+                                                3,
+                                            ),
+                                        },
+                                        parent: Some(
+                                            RefCell {
+                                                value: HLIRScopeBlock {
+                                                    variables: {
+                                                        "main": ScopedValueIndex(
+                                                            1,
+                                                        ),
+                                                        "printf": ScopedValueIndex(
+                                                            0,
+                                                        ),
+                                                    },
+                                                    parent: None,
+                                                },
+                                            },
+                                        ),
+                                    },
+                                },
+                            ),
+                        },
+                    },
+                    statements: [
+                        VariableDeclaration(
+                            HLIRVariableDeclaration {
+                                index: ScopedValueIndex(
+                                    4,
+                                ),
+                                ty: Some(
+                                    Builtin(
+                                        I32,
+                                    ),
+                                ),
+                                value: Variable(
+                                    ScopedValueIndex(
+                                        2,
+                                    ),
+                                ),
+                            },
+                        ),
+                        VariableDeclaration(
+                            HLIRVariableDeclaration {
+                                index: ScopedValueIndex(
+                                    5,
+                                ),
+                                ty: Some(
+                                    Builtin(
+                                        I32,
+                                    ),
+                                ),
+                                value: Literal(
+                                    HLIRLiteral(
+                                        Integer {
+                                            value: "42",
+                                            radix: 10,
+                                        },
+                                    ),
+                                ),
+                            },
+                        ),
+                        VariableDeclaration(
+                            HLIRVariableDeclaration {
+                                index: ScopedValueIndex(
+                                    6,
+                                ),
+                                ty: Some(
+                                    Builtin(
+                                        I32,
+                                    ),
+                                ),
+                                value: BinaryOperation(
+                                    HLIRBinaryOperation {
+                                        left: Variable(
+                                            ScopedValueIndex(
+                                                4,
+                                            ),
+                                        ),
+                                        operator: Addition,
+                                        right: Variable(
+                                            ScopedValueIndex(
+                                                5,
+                                            ),
+                                        ),
+                                    },
+                                ),
+                            },
+                        ),
+                        Block(
+                            HLIRBlock {
+                                scope: RefCell {
+                                    value: HLIRScopeBlock {
+                                        variables: {
+                                            "z": ScopedValueIndex(
+                                                7,
+                                            ),
+                                        },
+                                        parent: Some(
+                                            RefCell {
+                                                value: HLIRScopeBlock {
+                                                    variables: {
+                                                        "x": ScopedValueIndex(
+                                                            4,
+                                                        ),
+                                                        "y": ScopedValueIndex(
+                                                            5,
+                                                        ),
+                                                        "z": ScopedValueIndex(
+                                                            8,
+                                                        ),
+                                                    },
+                                                    parent: Some(
+                                                        RefCell {
+                                                            value: HLIRScopeBlock {
+                                                                variables: {
+                                                                    "argc": ScopedValueIndex(
+                                                                        2,
+                                                                    ),
+                                                                    "argv": ScopedValueIndex(
+                                                                        3,
+                                                                    ),
+                                                                },
+                                                                parent: Some(
+                                                                    RefCell {
+                                                                        value: HLIRScopeBlock {
+                                                                            variables: {
+                                                                                "main": ScopedValueIndex(
+                                                                                    1,
+                                                                                ),
+                                                                                "printf": ScopedValueIndex(
+                                                                                    0,
+                                                                                ),
+                                                                            },
+                                                                            parent: None,
+                                                                        },
+                                                                    },
+                                                                ),
+                                                            },
+                                                        },
+                                                    ),
+                                                },
+                                            },
+                                        ),
+                                    },
+                                },
+                                statements: [
+                                    VariableDeclaration(
+                                        HLIRVariableDeclaration {
+                                            index: ScopedValueIndex(
+                                                7,
+                                            ),
+                                            ty: Some(
+                                                Builtin(
+                                                    I32,
+                                                ),
+                                            ),
+                                            value: Literal(
+                                                HLIRLiteral(
+                                                    Integer {
+                                                        value: "42",
+                                                        radix: 10,
+                                                    },
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                ],
+                            },
+                        ),
+                        VariableDeclaration(
+                            HLIRVariableDeclaration {
+                                index: ScopedValueIndex(
+                                    8,
+                                ),
+                                ty: Some(
+                                    Builtin(
+                                        I32,
+                                    ),
+                                ),
+                                value: BinaryOperation(
+                                    HLIRBinaryOperation {
+                                        left: Variable(
+                                            ScopedValueIndex(
+                                                6,
+                                            ),
+                                        ),
+                                        operator: Addition,
+                                        right: Literal(
+                                            HLIRLiteral(
+                                                Integer {
+                                                    value: "1",
+                                                    radix: 10,
+                                                },
+                                            ),
+                                        ),
+                                    },
+                                ),
+                            },
+                        ),
+                        Return(
+                            HLIRReturn {
+                                value: Some(
+                                    Variable(
+                                        ScopedValueIndex(
+                                            8,
+                                        ),
+                                    ),
+                                ),
+                            },
+                        ),
+                    ],
+                },
+            ),
+        },
+    },
+    literals: {
+        Integer {
+            value: "1",
+            radix: 10,
+        },
+        Integer {
+            value: "42",
+            radix: 10,
+        },
+    },
+}

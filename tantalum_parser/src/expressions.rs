@@ -1,9 +1,9 @@
 use tantalum_ast::{
-    BinaryOperator, BinaryOperatorKind, Expression, ExpressionKind, UnaryOperator,
-    UnaryOperatorKind,
+    BinaryOperation, BinaryOperator, Expression, FunctionCall, Index, MemberAccess, TypeCast,
+    UnaryOperation, UnaryOperator, Variable,
 };
 use tantalum_lexer::{token::Token, token_kind::TokenKind};
-use tantalum_span::{Span, Spanned};
+use tantalum_span::Spanned;
 
 use crate::{ParseError, Parser};
 
@@ -117,27 +117,32 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     pub(crate) fn parse_expression(
         &mut self,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Expression<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         self.parse_expression_binary(0)
     }
 
     fn parse_expression_primary(
         &mut self,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Expression<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         match self.peek() {
             Some(token) => {
-                if let Some(((), right_binding_power)) = Self::prefix_binding_power(token.kind()) {
+                if let Some(((), right_binding_power)) =
+                    Self::prefix_binding_power(token.data().kind())
+                {
                     self.next();
 
                     let operand = self.parse_expression_binary(right_binding_power)?;
 
-                    Ok(Expression {
-                        span: Span::new(token.span().start(), operand.span.end()),
-                        kind: ExpressionKind::UnaryOperation {
+                    Ok(Spanned::join_spans(
+                        token.span(),
+                        operand.span(),
+                        Expression::UnaryOperation(UnaryOperation {
                             operator: Self::unary_operator_from_token(token),
                             operand: Box::from(operand),
-                        },
-                    })
+                        }),
+                    ))
                 } else {
                     self.parse_expression_primary_start()
                 }
@@ -148,93 +153,30 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
     fn parse_expression_primary_start(
         &mut self,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
-        let token = self.expect_any(
-            [Self::PRIMARY_START, Self::TYPE_START_SET]
-                .concat()
-                .as_slice(),
-        )?;
-        let expr = match token.kind() {
-            TokenKind::Identifier => Expression {
-                span: token.span(),
-                kind: ExpressionKind::Variable {
-                    name: token.lexeme(),
-                },
-            },
-            TokenKind::BinaryIntegerLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::IntegerLiteral {
-                    value: token.lexeme(),
-                    radix: 2,
-                },
-            },
-            TokenKind::OctalIntegerLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::IntegerLiteral {
-                    value: token.lexeme(),
-                    radix: 8,
-                },
-            },
-            TokenKind::DecimalIntegerLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::IntegerLiteral {
-                    value: token.lexeme(),
-                    radix: 10,
-                },
-            },
-            TokenKind::HexadecimalIntegerLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::IntegerLiteral {
-                    value: token.lexeme(),
-                    radix: 16,
-                },
-            },
-            TokenKind::FloatLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::FloatLiteral {
-                    value: token.lexeme(),
-                },
-            },
-            TokenKind::StringLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::StringLiteral {
-                    value: token.lexeme(),
-                },
-            },
-            TokenKind::CharacterLiteral => Expression {
-                span: token.span(),
-                kind: ExpressionKind::CharacterLiteral {
-                    value: token.lexeme(),
-                },
-            },
-            TokenKind::KeywordTrue => Expression {
-                span: token.span(),
-                kind: ExpressionKind::BooleanLiteral { value: true },
-            },
-            TokenKind::KeywordFalse => Expression {
-                span: token.span(),
-                kind: ExpressionKind::BooleanLiteral { value: false },
-            },
+    ) -> Result<Spanned<'file_name, Expression<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
+        let token = self.expect_any(Self::PRIMARY_START)?;
+
+        let expr = match token.data().kind() {
+            TokenKind::Identifier => token.map(|_| {
+                Expression::Variable(Variable {
+                    name: token.map(|name| name.lexeme()),
+                })
+            }),
+            TokenKind::BinaryIntegerLiteral
+            | TokenKind::OctalIntegerLiteral
+            | TokenKind::DecimalIntegerLiteral
+            | TokenKind::HexadecimalIntegerLiteral
+            | TokenKind::FloatLiteral
+            | TokenKind::KeywordTrue
+            | TokenKind::KeywordFalse
+            | TokenKind::CharacterLiteral
+            | TokenKind::StringLiteral => self.parse_literal(token)?.map(Expression::Literal),
             TokenKind::LeftParen => {
                 let expr = self.parse_expression()?;
                 self.expect(TokenKind::RightParen)?;
 
                 expr
-            }
-            kind if Self::TYPE_START_SET.contains(&kind) => {
-                let ty = self.parse_type()?;
-                self.expect(TokenKind::LeftParen)?;
-
-                let expr = self.parse_expression()?;
-                self.expect(TokenKind::RightParen)?;
-
-                Expression {
-                    span: Span::new(ty.span.start(), expr.span.end()),
-                    kind: ExpressionKind::TypeCast {
-                        ty,
-                        expression: Box::from(expr),
-                    },
-                }
             }
             _ => unreachable!(
                 "Already expected in set of primary expression starts ({:?})",
@@ -249,25 +191,28 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
     fn parse_expression_binary(
         &mut self,
         minimum_binding_power: u8,
-    ) -> Result<Expression<'file_name, 'source>, ParseError<'file_name, 'source>> {
+    ) -> Result<Spanned<'file_name, Expression<'file_name, 'source>>, ParseError<'file_name, 'source>>
+    {
         let mut lhs = self.parse_expression_primary()?;
 
         while let Some(token) = self.peek() {
-            let operator = if Self::infix_binding_power(token.kind()).is_some()
-                || Self::postfix_binding_power(token.kind()).is_some()
+            let operator = if Self::infix_binding_power(token.data().kind()).is_some()
+                || Self::postfix_binding_power(token.data().kind()).is_some()
             {
                 token
             } else {
                 break;
             };
 
-            if let Some((left_binding_power, ())) = Self::postfix_binding_power(operator.kind()) {
+            if let Some((left_binding_power, ())) =
+                Self::postfix_binding_power(operator.data().kind())
+            {
                 if left_binding_power < minimum_binding_power {
                     break;
                 }
                 self.next();
 
-                match operator.kind() {
+                match operator.data().kind() {
                     TokenKind::LeftParen => {
                         let mut arguments = Vec::new();
 
@@ -283,57 +228,62 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
                         let close = self.expect(TokenKind::RightParen)?;
 
-                        lhs = Expression {
-                            span: Span::new(lhs.span.start(), close.span().end()),
-                            kind: ExpressionKind::FunctionCall {
-                                source: Box::from(lhs),
+                        lhs = Spanned::join_spans(
+                            lhs.span(),
+                            close.span(),
+                            Expression::FunctionCall(FunctionCall {
+                                function: Box::new(lhs),
                                 arguments,
-                            },
-                        };
+                            }),
+                        );
                     }
                     TokenKind::LeftBracket => {
                         let index = self.parse_expression()?;
                         let close = self.expect(TokenKind::RightBracket)?;
 
-                        lhs = Expression {
-                            span: Span::new(lhs.span.start(), close.span().end()),
-                            kind: ExpressionKind::ArrayAccess {
-                                source: Box::from(lhs),
-                                index: Box::from(index),
-                            },
-                        };
+                        lhs = Spanned::join_spans(
+                            lhs.span(),
+                            close.span(),
+                            Expression::Index(Index {
+                                object: Box::new(lhs),
+                                index: Box::new(index),
+                            }),
+                        );
                     }
                     TokenKind::Dot => {
                         let member = self.expect(TokenKind::Identifier)?;
 
-                        lhs = Expression {
-                            span: Span::new(lhs.span.start(), member.span().end()),
-                            kind: ExpressionKind::MemberAccess {
-                                source: Box::from(lhs),
-                                member: member.lexeme(),
-                            },
-                        };
+                        lhs = Spanned::join_spans(
+                            lhs.span(),
+                            member.span(),
+                            Expression::MemberAccess(MemberAccess {
+                                object: Box::new(lhs),
+                                member: member.map(|member| member.lexeme()),
+                            }),
+                        );
                     }
                     TokenKind::Colon => {
                         let ty = self.parse_type()?;
 
-                        lhs = Expression {
-                            span: Span::new(lhs.span.start(), ty.span.end()),
-                            kind: ExpressionKind::TypeCast {
+                        lhs = Spanned::join_spans(
+                            lhs.span(),
+                            ty.span(),
+                            Expression::TypeCast(TypeCast {
+                                value: Box::new(lhs),
                                 ty,
-                                expression: Box::from(lhs),
-                            },
-                        };
+                            }),
+                        );
                     }
                     TokenKind::ColonColon => todo!("Parse Path Expression"),
                     _ => {
-                        lhs = Expression {
-                            span: Span::new(lhs.span.start(), operator.span().end()),
-                            kind: ExpressionKind::UnaryOperation {
+                        lhs = Spanned::join_spans(
+                            lhs.span(),
+                            operator.span(),
+                            Expression::UnaryOperation(UnaryOperation {
                                 operator: Self::unary_operator_from_token(operator),
                                 operand: Box::from(lhs),
-                            },
-                        };
+                            }),
+                        );
                     }
                 }
 
@@ -341,7 +291,8 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
             }
 
             let (left_binding_power, right_binding_power) =
-                Self::infix_binding_power(operator.kind()).expect("token is not an infix operator");
+                Self::infix_binding_power(operator.data().kind())
+                    .expect("token is not an infix operator");
 
             if left_binding_power < minimum_binding_power {
                 break;
@@ -351,136 +302,63 @@ impl<'file_name, 'source> Parser<'file_name, 'source> {
 
             let rhs = self.parse_expression_binary(right_binding_power)?;
 
-            lhs = Expression {
-                span: Span::new(lhs.span.start(), rhs.span.end()),
-                kind: ExpressionKind::BinaryOperation {
+            lhs = Spanned::join_spans(
+                lhs.span(),
+                rhs.span(),
+                Expression::BinaryOperation(BinaryOperation {
                     left: Box::from(lhs),
                     operator: Self::binary_operator_from_token(operator),
                     right: Box::from(rhs),
-                },
-            };
+                }),
+            );
         }
-        dbg!(&lhs);
 
         Ok(lhs)
     }
 
     fn unary_operator_from_token(
         token: Spanned<'file_name, Token<'source>>,
-    ) -> UnaryOperator<'file_name> {
-        match token.kind() {
-            TokenKind::Minus => UnaryOperator {
-                span: token.span(),
-                kind: UnaryOperatorKind::Negation,
-            },
-            TokenKind::Exclamation => UnaryOperator {
-                span: token.span(),
-                kind: UnaryOperatorKind::LogicalNegation,
-            },
-            TokenKind::Tilde => UnaryOperator {
-                span: token.span(),
-                kind: UnaryOperatorKind::BitwiseNegation,
-            },
-            TokenKind::DotAmpersand => UnaryOperator {
-                span: token.span(),
-                kind: UnaryOperatorKind::AddressOf,
-            },
-            TokenKind::DotStar => UnaryOperator {
-                span: token.span(),
-                kind: UnaryOperatorKind::Deref,
-            },
+    ) -> Spanned<'file_name, UnaryOperator> {
+        token.map(|token| match token.kind() {
+            TokenKind::Minus => UnaryOperator::Negation,
+            TokenKind::Exclamation => UnaryOperator::LogicalNegation,
+            TokenKind::Tilde => UnaryOperator::BitwiseNegation,
+            TokenKind::DotStar => UnaryOperator::Deref,
+            TokenKind::DotAmpersand => UnaryOperator::Ref,
             _ => unimplemented!("No Known Unary Operator for Token: {:?}", token),
-        }
+        })
     }
 
     fn binary_operator_from_token(
         token: Spanned<'file_name, Token<'source>>,
-    ) -> BinaryOperator<'file_name> {
-        match token.kind() {
-            TokenKind::Equal => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Assignment,
-            },
+    ) -> Spanned<'file_name, BinaryOperator> {
+        token.map(|token| match token.kind() {
+            TokenKind::Plus => BinaryOperator::Addition,
+            TokenKind::Minus => BinaryOperator::Subtraction,
+            TokenKind::Star => BinaryOperator::Multiplication,
+            TokenKind::Slash => BinaryOperator::Division,
+            TokenKind::Percent => BinaryOperator::Modulus,
 
-            TokenKind::AmpersandAmpersand => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::LogicalAnd,
-            },
-            TokenKind::PipePipe => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::LogicalOr,
-            },
+            TokenKind::Ampersand => BinaryOperator::BitwiseAnd,
+            TokenKind::Pipe => BinaryOperator::BitwiseOr,
+            TokenKind::Caret => BinaryOperator::BitwiseXor,
+            TokenKind::LeftAngleLeftAngle => BinaryOperator::LeftShift,
+            TokenKind::RightAngleRightAngle => BinaryOperator::RightShift,
 
-            TokenKind::Ampersand => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::BitwiseAnd,
-            },
-            TokenKind::Pipe => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::BitwiseOr,
-            },
-            TokenKind::Caret => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::BitwiseXor,
-            },
+            TokenKind::LeftAngle => BinaryOperator::LessThan,
+            TokenKind::LeftAngleEqual => BinaryOperator::LessThanOrEqual,
+            TokenKind::RightAngle => BinaryOperator::GreaterThan,
+            TokenKind::RightAngleEqual => BinaryOperator::GreaterThanOrEqual,
 
-            TokenKind::EqualEqual => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Equality,
-            },
-            TokenKind::ExclamationEqual => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::NotEqual,
-            },
+            TokenKind::EqualEqual => BinaryOperator::Equal,
+            TokenKind::ExclamationEqual => BinaryOperator::NotEqual,
 
-            TokenKind::LeftAngle => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::LessThan,
-            },
-            TokenKind::LeftAngleEqual => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::LessThanOrEqual,
-            },
-            TokenKind::RightAngle => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::GreaterThan,
-            },
-            TokenKind::RightAngleEqual => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::GreaterThanOrEqual,
-            },
+            TokenKind::AmpersandAmpersand => BinaryOperator::LogicalAnd,
+            TokenKind::PipePipe => BinaryOperator::LogicalOr,
 
-            TokenKind::LeftAngleLeftAngle => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::ShiftLeft,
-            },
-            TokenKind::RightAngleRightAngle => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::ShiftRight,
-            },
+            TokenKind::Equal => BinaryOperator::Assignment,
 
-            TokenKind::Plus => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Addition,
-            },
-            TokenKind::Minus => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Subtraction,
-            },
-
-            TokenKind::Star => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Multiplication,
-            },
-            TokenKind::Slash => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Division,
-            },
-            TokenKind::Percent => BinaryOperator {
-                span: token.span(),
-                kind: BinaryOperatorKind::Modulus,
-            },
             _ => unimplemented!("No Known Binary Operator for Token: {:?}", token),
-        }
+        })
     }
 }

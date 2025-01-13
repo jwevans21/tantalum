@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/statement.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(Statement(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "return_statement",
@@ -18,8 +18,8 @@ Ok(Statement(
       column: 16,
     ),
   ),
-  kind: Return(
-    value: Some(Expression(
+  data: Return(Return(
+    value: Some(Spanned(
       span: Span(
         start: Location(
           file_name: "return_statement",
@@ -34,8 +34,8 @@ Ok(Statement(
           column: 15,
         ),
       ),
-      kind: BinaryOperation(
-        left: Expression(
+      data: BinaryOperation(BinaryOperation(
+        left: Spanned(
           span: Span(
             start: Location(
               file_name: "return_statement",
@@ -50,12 +50,28 @@ Ok(Statement(
               column: 10,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "42",
+          data: Literal(Integer(Integer(
+            value: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "return_statement",
+                  position: 7,
+                  line: 1,
+                  column: 8,
+                ),
+                end: Location(
+                  file_name: "return_statement",
+                  position: 9,
+                  line: 1,
+                  column: 10,
+                ),
+              ),
+              data: "42",
+            ),
             radix: 10,
-          ),
+          ))),
         ),
-        operator: BinaryOperator(
+        operator: Spanned(
           span: Span(
             start: Location(
               file_name: "return_statement",
@@ -70,9 +86,9 @@ Ok(Statement(
               column: 12,
             ),
           ),
-          kind: Addition,
+          data: Addition,
         ),
-        right: Expression(
+        right: Spanned(
           span: Span(
             start: Location(
               file_name: "return_statement",
@@ -87,12 +103,28 @@ Ok(Statement(
               column: 15,
             ),
           ),
-          kind: IntegerLiteral(
-            value: "42",
+          data: Literal(Integer(Integer(
+            value: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "return_statement",
+                  position: 12,
+                  line: 1,
+                  column: 13,
+                ),
+                end: Location(
+                  file_name: "return_statement",
+                  position: 14,
+                  line: 1,
+                  column: 15,
+                ),
+              ),
+              data: "42",
+            ),
             radix: 10,
-          ),
+          ))),
         ),
-      ),
+      )),
     )),
-  ),
+  )),
 ))

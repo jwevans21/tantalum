@@ -1,0 +1,21 @@
+[package]
+name = "tantalum_ast_lowering"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+tantalum_ast = { path = "../tantalum_ast" }
+tantalum_hlir = { path = "../tantalum_hlir" }
+
+[dev-dependencies]
+insta = { workspace = true }
+tantalum_lexer = { path = "../tantalum_lexer" }
+tantalum_parser = { path = "../tantalum_parser" }
+
+[lints]
+workspace = true

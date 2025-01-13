@@ -3,7 +3,7 @@ source: tantalum_parser/src/tests/top_level.rs
 expression: result
 snapshot_kind: text
 ---
-Ok(TopLevelExpression(
+Ok(Spanned(
   span: Span(
     start: Location(
       file_name: "external_function_declaration_with_variadic",
@@ -18,48 +18,80 @@ Ok(TopLevelExpression(
       column: 47,
     ),
   ),
-  kind: ExternalFunction(
-    name: "printf",
-    parameters: [
-      Parameter(
-        span: Span(
-          start: Location(
-            file_name: "external_function_declaration_with_variadic",
-            position: 17,
-            line: 1,
-            column: 18,
-          ),
-          end: Location(
-            file_name: "external_function_declaration_with_variadic",
-            position: 34,
-            line: 1,
-            column: 35,
-          ),
+  data: ExternalFunction(ExternalFunction(
+    name: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "external_function_declaration_with_variadic",
+          position: 10,
+          line: 1,
+          column: 11,
         ),
-        kind: Named(
-          name: "format",
-          ty: Type(
-            span: Span(
-              start: Location(
-                file_name: "external_function_declaration_with_variadic",
-                position: 25,
-                line: 1,
-                column: 26,
-              ),
-              end: Location(
-                file_name: "external_function_declaration_with_variadic",
-                position: 34,
-                line: 1,
-                column: 35,
-              ),
+        end: Location(
+          file_name: "external_function_declaration_with_variadic",
+          position: 16,
+          line: 1,
+          column: 17,
+        ),
+      ),
+      data: "printf",
+    ),
+    parameters: Spanned(
+      span: Span(
+        start: Location(
+          file_name: "external_function_declaration_with_variadic",
+          position: 16,
+          line: 1,
+          column: 17,
+        ),
+        end: Location(
+          file_name: "external_function_declaration_with_variadic",
+          position: 40,
+          line: 1,
+          column: 41,
+        ),
+      ),
+      data: [
+        Spanned(
+          span: Span(
+            start: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 17,
+              line: 1,
+              column: 18,
             ),
-            kind: Pointer(Type(
+            end: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 34,
+              line: 1,
+              column: 35,
+            ),
+          ),
+          data: Named(NamedParameter(
+            name: Spanned(
               span: Span(
                 start: Location(
                   file_name: "external_function_declaration_with_variadic",
-                  position: 26,
+                  position: 17,
                   line: 1,
-                  column: 27,
+                  column: 18,
+                ),
+                end: Location(
+                  file_name: "external_function_declaration_with_variadic",
+                  position: 23,
+                  line: 1,
+                  column: 24,
+                ),
+              ),
+              data: "format",
+            ),
+            ty: Spanned(
+              span: Span(
+                start: Location(
+                  file_name: "external_function_declaration_with_variadic",
+                  position: 25,
+                  line: 1,
+                  column: 26,
                 ),
                 end: Location(
                   file_name: "external_function_declaration_with_variadic",
@@ -68,29 +100,84 @@ Ok(TopLevelExpression(
                   column: 35,
                 ),
               ),
-              kind: Const(Type(
-                span: Span(
-                  start: Location(
-                    file_name: "external_function_declaration_with_variadic",
-                    position: 32,
-                    line: 1,
-                    column: 33,
+              data: Pointer(PointerType(
+                ty: Spanned(
+                  span: Span(
+                    start: Location(
+                      file_name: "external_function_declaration_with_variadic",
+                      position: 26,
+                      line: 1,
+                      column: 27,
+                    ),
+                    end: Location(
+                      file_name: "external_function_declaration_with_variadic",
+                      position: 34,
+                      line: 1,
+                      column: 35,
+                    ),
                   ),
-                  end: Location(
-                    file_name: "external_function_declaration_with_variadic",
-                    position: 34,
-                    line: 1,
-                    column: 35,
-                  ),
+                  data: Const(ConstType(
+                    ty: Spanned(
+                      span: Span(
+                        start: Location(
+                          file_name: "external_function_declaration_with_variadic",
+                          position: 32,
+                          line: 1,
+                          column: 33,
+                        ),
+                        end: Location(
+                          file_name: "external_function_declaration_with_variadic",
+                          position: 34,
+                          line: 1,
+                          column: 35,
+                        ),
+                      ),
+                      data: Named(NamedType(
+                        name: Spanned(
+                          span: Span(
+                            start: Location(
+                              file_name: "external_function_declaration_with_variadic",
+                              position: 32,
+                              line: 1,
+                              column: 33,
+                            ),
+                            end: Location(
+                              file_name: "external_function_declaration_with_variadic",
+                              position: 34,
+                              line: 1,
+                              column: 35,
+                            ),
+                          ),
+                          data: "u8",
+                        ),
+                      )),
+                    ),
+                  )),
                 ),
-                kind: Named("u8"),
               )),
-            )),
-          ),
+            ),
+          )),
         ),
-      ),
-    ],
-    return_type: Type(
+        Spanned(
+          span: Span(
+            start: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 36,
+              line: 1,
+              column: 37,
+            ),
+            end: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 39,
+              line: 1,
+              column: 40,
+            ),
+          ),
+          data: Variadic,
+        ),
+      ],
+    ),
+    return_type: Some(Spanned(
       span: Span(
         start: Location(
           file_name: "external_function_declaration_with_variadic",
@@ -105,8 +192,25 @@ Ok(TopLevelExpression(
           column: 46,
         ),
       ),
-      kind: Named("i32"),
-    ),
-    is_variadic: true,
-  ),
+      data: Named(NamedType(
+        name: Spanned(
+          span: Span(
+            start: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 42,
+              line: 1,
+              column: 43,
+            ),
+            end: Location(
+              file_name: "external_function_declaration_with_variadic",
+              position: 45,
+              line: 1,
+              column: 46,
+            ),
+          ),
+          data: "i32",
+        ),
+      )),
+    )),
+  )),
 ))
