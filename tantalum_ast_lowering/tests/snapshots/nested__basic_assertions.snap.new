@@ -1,0 +1,385 @@
+---
+source: tantalum_ast_lowering/tests/nested.rs
+assertion_line: 44
+expression: package
+snapshot_kind: text
+---
+HLIRPackage {
+    types: Types {
+        next_id: TypeId(
+            14,
+        ),
+        known: {
+            TypeId(
+                12,
+            ): Ptr(
+                TypeId(
+                    5,
+                ),
+            ),
+            TypeId(
+                0,
+            ): Primitive(
+                Void,
+            ),
+            TypeId(
+                8,
+            ): Primitive(
+                U64,
+            ),
+            TypeId(
+                13,
+            ): UnsizedArray(
+                TypeId(
+                    12,
+                ),
+            ),
+            TypeId(
+                6,
+            ): Primitive(
+                U16,
+            ),
+            TypeId(
+                4,
+            ): Primitive(
+                I64,
+            ),
+            TypeId(
+                2,
+            ): Primitive(
+                I16,
+            ),
+            TypeId(
+                9,
+            ): Primitive(
+                Bool,
+            ),
+            TypeId(
+                7,
+            ): Primitive(
+                U32,
+            ),
+            TypeId(
+                10,
+            ): Primitive(
+                Char,
+            ),
+            TypeId(
+                1,
+            ): Primitive(
+                I8,
+            ),
+            TypeId(
+                5,
+            ): Primitive(
+                U8,
+            ),
+            TypeId(
+                11,
+            ): Primitive(
+                Str,
+            ),
+            TypeId(
+                3,
+            ): Primitive(
+                I32,
+            ),
+        },
+        type_ids: {
+            Primitive(
+                U32,
+            ): TypeId(
+                7,
+            ),
+            Primitive(
+                I16,
+            ): TypeId(
+                2,
+            ),
+            Primitive(
+                I64,
+            ): TypeId(
+                4,
+            ),
+            Primitive(
+                Bool,
+            ): TypeId(
+                9,
+            ),
+            Primitive(
+                Str,
+            ): TypeId(
+                11,
+            ),
+            Primitive(
+                U64,
+            ): TypeId(
+                8,
+            ),
+            Primitive(
+                Char,
+            ): TypeId(
+                10,
+            ),
+            Primitive(
+                I8,
+            ): TypeId(
+                1,
+            ),
+            Primitive(
+                U8,
+            ): TypeId(
+                5,
+            ),
+            Ptr(
+                TypeId(
+                    5,
+                ),
+            ): TypeId(
+                12,
+            ),
+            Primitive(
+                Void,
+            ): TypeId(
+                0,
+            ),
+            UnsizedArray(
+                TypeId(
+                    12,
+                ),
+            ): TypeId(
+                13,
+            ),
+            Primitive(
+                U16,
+            ): TypeId(
+                6,
+            ),
+            Primitive(
+                I32,
+            ): TypeId(
+                3,
+            ),
+        },
+        scope: TypeScope {
+            next_id: TypeScopeId(
+                1,
+            ),
+            current_block: TypeScopeId(
+                0,
+            ),
+            blocks: {
+                TypeScopeId(
+                    0,
+                ): TypeScopeBlock {
+                    parent: None,
+                    types: {
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "bool",
+                                },
+                            ],
+                        ): TypeId(
+                            9,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "i32",
+                                },
+                            ],
+                        ): TypeId(
+                            3,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "i64",
+                                },
+                            ],
+                        ): TypeId(
+                            4,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "u64",
+                                },
+                            ],
+                        ): TypeId(
+                            8,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "u8",
+                                },
+                            ],
+                        ): TypeId(
+                            5,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "void",
+                                },
+                            ],
+                        ): TypeId(
+                            0,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "u32",
+                                },
+                            ],
+                        ): TypeId(
+                            7,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "char",
+                                },
+                            ],
+                        ): TypeId(
+                            10,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "i16",
+                                },
+                            ],
+                        ): TypeId(
+                            2,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "str",
+                                },
+                            ],
+                        ): TypeId(
+                            11,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "u16",
+                                },
+                            ],
+                        ): TypeId(
+                            6,
+                        ),
+                        Path(
+                            [
+                                PathSegment {
+                                    name: "i8",
+                                },
+                            ],
+                        ): TypeId(
+                            1,
+                        ),
+                    },
+                },
+            },
+        },
+    },
+    traits: Traits {
+        next_id: TraitId(
+            0,
+        ),
+        known: {},
+        trait_defs: {},
+        trait_impls: {},
+    },
+    functions: Functions {
+        next_id: FunctionId(
+            2,
+        ),
+        known: {
+            Path(
+                [
+                    PathSegment {
+                        name: "printf",
+                    },
+                ],
+            ): FunctionId(
+                0,
+            ),
+            Path(
+                [
+                    PathSegment {
+                        name: "main",
+                    },
+                ],
+            ): FunctionId(
+                1,
+            ),
+        },
+        function_prototypes: {
+            FunctionId(
+                0,
+            ): FunctionPrototype {
+                parameters: [
+                    TypeId(
+                        12,
+                    ),
+                ],
+                is_variadic: true,
+                return_type: TypeId(
+                    3,
+                ),
+            },
+            FunctionId(
+                1,
+            ): FunctionPrototype {
+                parameters: [
+                    TypeId(
+                        3,
+                    ),
+                    TypeId(
+                        13,
+                    ),
+                ],
+                is_variadic: false,
+                return_type: TypeId(
+                    3,
+                ),
+            },
+        },
+        function_impls: {},
+    },
+    variables: Variables {
+        next_id: VariableId(
+            0,
+        ),
+        known: {},
+        scope: VariableScope {
+            next_id: VariableScopeBlockId(
+                0,
+            ),
+            current_block: VariableScopeBlockId(
+                0,
+            ),
+            blocks: {
+                VariableScopeBlockId(
+                    0,
+                ): VariableScopeBlock {
+                    parent: None,
+                    names: {},
+                },
+            },
+        },
+    },
+    type_inference_environment: TypeInferenceEnvironment {
+        next_id: TypeInferenceId(
+            0,
+        ),
+        resolved: {},
+        constraints: {},
+    },
+    building_functions: {},
+}

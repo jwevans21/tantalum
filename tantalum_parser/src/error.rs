@@ -56,6 +56,30 @@ impl<'file_name, 'source> ParseError<'file_name, 'source> {
     }
 }
 
+impl core::fmt::Display for ParseError<'_, '_> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        let lines = self.source.lines().collect::<Vec<_>>();
+
+        writeln!(f, "error: {}", self.kind)?;
+        writeln!(f, " --> {}:{}", self.location.file_name(), self.location.line())?;
+        writeln!(f)?;
+
+        for (i, line) in lines
+            .iter()
+            .enumerate()
+            .skip(self.location.line() - 2)
+            .take(3)
+        {
+            writeln!(f, "{:>4} | {}", i + 1, line)?;
+            if i + 1 == self.location.line() {
+                writeln!(f, "{:>4} | {:>1$}^", "", self.location.column())?;
+            }
+        }
+
+        Ok(())
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
@@ -65,4 +89,15 @@ pub enum ParseErrorKind {
         kind: TokenKind,
         set: Box<[TokenKind]>,
     },
+}
+
+impl core::fmt::Display for ParseErrorKind {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            ParseErrorKind::UnexpectedEof => write!(f, "unexpected end of file"),
+            ParseErrorKind::UnexpectedToken { kind, set } => {
+                write!(f, "unexpected token {kind:?}, expected one of {set:?}")
+            }
+        }
+    }
 }

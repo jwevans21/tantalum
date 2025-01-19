@@ -42,11 +42,12 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_function(&mut self, function: &Function<'file_name, 'source>);
+    fn visit_function(&mut self, function: &Function<'file_name, 'source>) {}
     fn visit_external_function(
         &mut self,
         external_function: &ExternalFunction<'file_name, 'source>,
-    );
+    ) {
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Parameters
@@ -59,8 +60,8 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_named_parameter(&mut self, named: &NamedParameter<'file_name, 'source>);
-    fn visit_variadic_parameter(&mut self);
+    fn visit_named_parameter(&mut self, named: &NamedParameter<'file_name, 'source>) {}
+    fn visit_variadic_parameter(&mut self) {}
 
     ////////////////////////////////////////////////////////////////////////////
     // Types
@@ -77,12 +78,12 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_named_type(&mut self, named: &NamedType<'file_name, 'source>);
-    fn visit_function_type(&mut self, function: &FunctionType<'file_name, 'source>);
-    fn visit_pointer_type(&mut self, pointer: &PointerType<'file_name, 'source>);
-    fn visit_sized_array_type(&mut self, array: &SizedArrayType<'file_name, 'source>);
-    fn visit_unsized_array_type(&mut self, array: &UnsizedArrayType<'file_name, 'source>);
-    fn visit_const_type(&mut self, constant: &ConstType<'file_name, 'source>);
+    fn visit_named_type(&mut self, named: &NamedType<'file_name, 'source>) {}
+    fn visit_function_type(&mut self, function: &FunctionType<'file_name, 'source>) {}
+    fn visit_pointer_type(&mut self, pointer: &PointerType<'file_name, 'source>) {}
+    fn visit_sized_array_type(&mut self, array: &SizedArrayType<'file_name, 'source>) {}
+    fn visit_unsized_array_type(&mut self, array: &UnsizedArrayType<'file_name, 'source>) {}
+    fn visit_const_type(&mut self, constant: &ConstType<'file_name, 'source>) {}
 
     ////////////////////////////////////////////////////////////////////////////
     // Statements
@@ -106,20 +107,22 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_block(&mut self, block: &Block<'file_name, 'source>);
+    fn visit_block(&mut self, block: &Block<'file_name, 'source>) {}
     fn visit_variable_declaration(
         &mut self,
         declaration: &VariableDeclaration<'file_name, 'source>,
-    );
-    fn visit_if(&mut self, if_statement: &If<'file_name, 'source>);
-    fn visit_while(&mut self, while_statement: &While<'file_name, 'source>);
+    ) {
+    }
+    fn visit_if(&mut self, if_statement: &If<'file_name, 'source>) {}
+    fn visit_while(&mut self, while_statement: &While<'file_name, 'source>) {}
     fn visit_for_init_cond_update(
         &mut self,
         for_statement: &ForInitCondUpdate<'file_name, 'source>,
-    );
-    fn visit_break(&mut self);
-    fn visit_continue(&mut self);
-    fn visit_return(&mut self, return_statement: &Return<'file_name, 'source>);
+    ) {
+    }
+    fn visit_break(&mut self) {}
+    fn visit_continue(&mut self) {}
+    fn visit_return(&mut self, return_statement: &Return<'file_name, 'source>) {}
     fn visit_expression_statement(&mut self, expression: &Expression<'file_name, 'source>) {
         self.visit_expression(expression);
     }
@@ -141,13 +144,13 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_variable(&mut self, variable: &Variable<'file_name, 'source>);
-    fn visit_function_call(&mut self, call: &FunctionCall<'file_name, 'source>);
-    fn visit_member_access(&mut self, access: &MemberAccess<'file_name, 'source>);
-    fn visit_array_access(&mut self, index: &Index<'file_name, 'source>);
-    fn visit_unary_operation(&mut self, unary: &UnaryOperation<'file_name, 'source>);
-    fn visit_binary_operation(&mut self, binary: &BinaryOperation<'file_name, 'source>);
-    fn visit_type_cast(&mut self, cast: &TypeCast<'file_name, 'source>);
+    fn visit_variable(&mut self, variable: &Variable<'file_name, 'source>) {}
+    fn visit_function_call(&mut self, call: &FunctionCall<'file_name, 'source>) {}
+    fn visit_member_access(&mut self, access: &MemberAccess<'file_name, 'source>) {}
+    fn visit_array_access(&mut self, index: &Index<'file_name, 'source>) {}
+    fn visit_unary_operation(&mut self, unary: &UnaryOperation<'file_name, 'source>) {}
+    fn visit_binary_operation(&mut self, binary: &BinaryOperation<'file_name, 'source>) {}
+    fn visit_type_cast(&mut self, cast: &TypeCast<'file_name, 'source>) {}
 
     ////////////////////////////////////////////////////////////////////////////
     // Literals
@@ -163,11 +166,11 @@ pub trait ASTVisitor<'file_name, 'source> {
         }
     }
 
-    fn visit_integer_literal(&mut self, integer: &Integer<'file_name, 'source>);
-    fn visit_float_literal(&mut self, float: &Float<'file_name, 'source>);
-    fn visit_boolean_literal(&mut self, boolean: &Boolean<'file_name, 'source>);
-    fn visit_character_literal(&mut self, character: &Character<'file_name, 'source>);
-    fn visit_string_literal(&mut self, string: &String<'file_name, 'source>);
+    fn visit_integer_literal(&mut self, integer: &Integer<'file_name, 'source>) {}
+    fn visit_float_literal(&mut self, float: &Float<'file_name, 'source>) {}
+    fn visit_boolean_literal(&mut self, boolean: &Boolean<'file_name, 'source>) {}
+    fn visit_character_literal(&mut self, character: &Character<'file_name, 'source>) {}
+    fn visit_string_literal(&mut self, string: &String<'file_name, 'source>) {}
 }
 
 /*

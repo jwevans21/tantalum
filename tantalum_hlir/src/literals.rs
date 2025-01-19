@@ -1,15 +1,25 @@
-use std::rc::Rc;
+use crate::inference::InferenceId;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct HLIRLiteral(pub Rc<HLIRLiteralInner>);
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Literal {
+    value: LiteralValue,
+    ty: InferenceId,
+}
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum HLIRLiteralInner {
+impl Literal {
+    pub fn new(value: LiteralValue, ty: InferenceId) -> Self {
+        Self { value, ty }
+    }
+    pub fn ty(&self) -> InferenceId {
+        self.ty
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum LiteralValue {
     Integer { value: String, radix: u32 },
     Float { value: String },
     Boolean { value: bool },
-    Character { value: char },
+    Character { value: String },
     String { value: String },
 }
