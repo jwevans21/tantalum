@@ -89,6 +89,13 @@ impl<'file_name> Location<'file_name> {
     }
 }
 
+impl core::fmt::Display for Location<'_> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        return write!(f, "{}:{}:{}", self.file_name, self.line, self.column);
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Span<'file_name> {

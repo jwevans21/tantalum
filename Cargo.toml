@@ -1,6 +1,13 @@
 [workspace]
 resolver = "2"
-members = ["tantalum_ast", "tantalum_ast_lowering", "tantalum_hlir", "tantalum_lexer", "tantalum_parser", "tantalum_span"]
+members = [
+    "tantalum_ast",
+    "tantalum_ast_lowering",
+    "tantalum_hlir",
+    "tantalum_lexer",
+    "tantalum_parser",
+    "tantalum_span",
+]
 
 [workspace.package]
 authors = ["Jacob Evans <jacob@evansj.dev>"]
