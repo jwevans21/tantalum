@@ -22,6 +22,7 @@ pub struct Functions {
 }
 
 impl Functions {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_id: FunctionId(0),
@@ -31,18 +32,43 @@ impl Functions {
         }
     }
 
+    pub fn prototypes(&self) -> impl Iterator<Item = (FunctionId, &FunctionPrototype)> {
+        self.function_prototypes
+            .iter()
+            .map(|(id, prototype)| (*id, prototype.as_ref()))
+    }
+
+    pub fn impls(&self) -> impl Iterator<Item = (FunctionId, &Function)> {
+        self.function_impls
+            .iter()
+            .map(|(id, function)| (*id, function))
+    }
+
     pub fn next_id(&mut self) -> FunctionId {
         let id = self.next_id;
         self.next_id = FunctionId(id.0 + 1);
         id
     }
 
+    #[must_use]
     pub fn get(&self, path: &Path) -> Option<FunctionId> {
         self.known.get(path).copied()
     }
 
+    #[must_use]
     pub fn get_prototype(&self, id: FunctionId) -> Option<Rc<FunctionPrototype>> {
         self.function_prototypes.get(&id).cloned()
+    }
+
+    #[must_use]
+    pub fn get_path(&self, id: &FunctionId) -> Option<&Path> {
+        self.known.iter().find_map(|(path, function_id)| {
+            if *function_id == *id {
+                Some(path)
+            } else {
+                None
+            }
+        })
     }
 
     pub fn create_function(&mut self, path: Path, prototype: FunctionPrototype) -> FunctionId {
@@ -57,6 +83,12 @@ impl Functions {
         debug_assert!(!self.function_impls.contains_key(&id));
 
         self.function_impls.insert(id, function);
+    }
+}
+
+impl Default for Functions {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

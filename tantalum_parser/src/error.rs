@@ -61,7 +61,12 @@ impl core::fmt::Display for ParseError<'_, '_> {
         let lines = self.source.lines().collect::<Vec<_>>();
 
         writeln!(f, "error: {}", self.kind)?;
-        writeln!(f, " --> {}:{}", self.location.file_name(), self.location.line())?;
+        writeln!(
+            f,
+            " --> {}:{}",
+            self.location.file_name(),
+            self.location.line()
+        )?;
         writeln!(f)?;
 
         for (i, line) in lines

@@ -1,0 +1,21 @@
+[package]
+name = "tantalum_codegen_llvm"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+inkwell = { version = "0.5.0", features = ["llvm18-0-force-dynamic"] }
+tantalum_hlir = { path = "../tantalum_hlir" }
+
+[dev-dependencies]
+tantalum_lexer = { path = "../tantalum_lexer" }
+tantalum_parser = { path = "../tantalum_parser" }
+tantalum_ast_lowering = { path = "../tantalum_ast_lowering" }
+
+[lints]
+workspace = true

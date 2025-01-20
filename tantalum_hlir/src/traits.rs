@@ -45,6 +45,7 @@ pub struct Trait {
 }
 
 impl Trait {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_parameter_id: TraitTypeParameterId(0),
@@ -66,7 +67,8 @@ impl Trait {
         self.next_method_id = TraitMethodId(id.0 + 1);
         id
     }
-    
+
+    #[must_use]
     pub fn get_type_parameter(&self, name: &str) -> Option<TraitTypeParameterId> {
         self.type_parameters.get(name).copied()
     }
@@ -77,6 +79,9 @@ impl Trait {
         id
     }
 
+    /// # Panics
+    ///
+    /// Panics if the type parameter ID is not found for the current trait.
     pub fn add_type_parameter_constraint(
         &mut self,
         id: TraitTypeParameterId,
@@ -85,6 +90,18 @@ impl Trait {
         debug_assert!(
             self.type_parameters.values().any(|&x| x == id),
             "Type parameter ID not found for current trait"
+        );
+
+        let name = self
+            .type_parameters
+            .iter()
+            .find_map(|(name, &x)| if x == id { Some(name.clone()) } else { None })
+            .unwrap();
+
+        todo!(
+            "add type parameter constraint to trait: {} -> {:?}",
+            name,
+            constraint
         );
     }
 
@@ -105,6 +122,12 @@ impl Trait {
             },
         );
         id
+    }
+}
+
+impl Default for Trait {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -133,6 +156,7 @@ pub struct Traits {
 }
 
 impl Traits {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_id: TraitId(0),
@@ -160,6 +184,7 @@ impl Traits {
         id
     }
 
+    #[must_use]
     pub fn get_trait(&self, id: TraitId) -> Option<&Trait> {
         self.trait_defs.get(&id)
     }
@@ -168,10 +193,12 @@ impl Traits {
         self.trait_defs.get_mut(&id)
     }
 
+    #[must_use]
     pub fn get_trait_impls(&self, id: TraitId) -> Option<&HashMap<TypeId, TraitImpl>> {
         self.trait_impls.get(&id)
     }
 
+    #[must_use]
     pub fn get_trait_impl(&self, trait_id: TraitId, type_id: TypeId) -> Option<&TraitImpl> {
         self.trait_impls.get(&trait_id)?.get(&type_id)
     }
@@ -181,5 +208,11 @@ impl Traits {
             .entry(impl_.trait_id)
             .or_default()
             .insert(impl_.type_id, impl_);
+    }
+}
+
+impl Default for Traits {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -87,7 +87,7 @@ impl tantalum_ast::ASTVisitor<'_, '_> for FunctionLoweringContext<'_> {
     }
 
     fn visit_function_type(&mut self, function: &FunctionType<'_, '_>) {
-        todo!()
+        todo!("function types not yet implemented, did not lower {function:?}");
     }
 
     fn visit_pointer_type(&mut self, pointer: &PointerType<'_, '_>) {
@@ -103,7 +103,7 @@ impl tantalum_ast::ASTVisitor<'_, '_> for FunctionLoweringContext<'_> {
     }
 
     fn visit_sized_array_type(&mut self, array: &SizedArrayType<'_, '_>) {
-        todo!()
+        todo!("sized arrays not yet implemented, did not lower {array:?}");
     }
 
     fn visit_unsized_array_type(&mut self, array: &UnsizedArrayType<'_, '_>) {
@@ -120,7 +120,7 @@ impl tantalum_ast::ASTVisitor<'_, '_> for FunctionLoweringContext<'_> {
     }
 
     fn visit_const_type(&mut self, constant: &ConstType<'_, '_>) {
-        todo!()
+        todo!("const types not yet implemented, did not lower {constant:?}");
     }
 
     fn visit_block(&mut self, block: &tantalum_ast::Block<'_, '_>) {
@@ -271,11 +271,11 @@ impl tantalum_ast::ASTVisitor<'_, '_> for FunctionLoweringContext<'_> {
     }
 
     fn visit_member_access(&mut self, access: &MemberAccess<'_, '_>) {
-        todo!()
+        todo!("member access not yet implemented, did not lower {access:?}");
     }
 
     fn visit_array_access(&mut self, index: &Index<'_, '_>) {
-        todo!()
+        todo!("array access not yet implemented, did not lower {index:?}");
     }
 
     fn visit_unary_operation(&mut self, unary: &UnaryOperation<'_, '_>) {
@@ -397,7 +397,7 @@ impl tantalum_ast::ASTVisitor<'_, '_> for FunctionLoweringContext<'_> {
     }
 
     fn visit_character_literal(&mut self, character: &Character<'_, '_>) {
-        todo!()
+        todo!("character literals not yet implemented, did not lower {character:?}");
     }
 
     fn visit_string_literal(&mut self, string: &tantalum_ast::String<'_, '_>) {

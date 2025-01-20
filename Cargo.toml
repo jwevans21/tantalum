@@ -2,7 +2,7 @@
 resolver = "2"
 members = [
     "tantalum_ast",
-    "tantalum_ast_lowering",
+    "tantalum_ast_lowering", "tantalum_codegen_llvm",
     "tantalum_hlir",
     "tantalum_lexer",
     "tantalum_parser",

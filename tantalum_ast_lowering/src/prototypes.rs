@@ -60,7 +60,7 @@ impl tantalum_ast::ASTVisitor<'_, '_> for PrototypeLoweringContext<'_> {
 
         let prototype = self
             .package
-            .build_function_prototype(parameters, false, return_type);
+            .build_function_prototype(parameters, variadic, return_type);
 
         self.package
             .create_function(Path::from(*(function.name.data())), prototype);

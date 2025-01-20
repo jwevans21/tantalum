@@ -1,8 +1,6 @@
 use crate::types::{PrimitiveType, Type, Types};
 use crate::{traits::TraitId, types::TypeId, Path, PathSegment};
 use std::collections::HashMap;
-use std::ops::Deref;
-use std::rc::Rc;
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
@@ -38,14 +36,15 @@ pub enum TypeConstraint {
 }
 
 impl TypeConstraint {
+    #[must_use]
     pub fn to_display(&self, types: &Types) -> String {
         match self {
-            TypeConstraint::Type(ty) => format!("{}", types.to_display(*ty)),
-            TypeConstraint::ConvertedFrom(id) => format!("ConvertedFrom({})", id),
-            TypeConstraint::ConvertibleTo(id) => format!("ConvertibleTo({})", id),
-            TypeConstraint::Implements(trait_id) => format!("Implements({:?})", trait_id),
-            TypeConstraint::DerefTo(id) => format!("DerefTo({})", id),
-            TypeConstraint::RefTo(id) => format!("RefTo({})", id),
+            TypeConstraint::Type(ty) => types.to_display(*ty).to_string(),
+            TypeConstraint::ConvertedFrom(id) => format!("ConvertedFrom({id})"),
+            TypeConstraint::ConvertibleTo(id) => format!("ConvertibleTo({id})"),
+            TypeConstraint::Implements(trait_id) => format!("Implements({trait_id:?})"),
+            TypeConstraint::DerefTo(id) => format!("DerefTo({id})"),
+            TypeConstraint::RefTo(id) => format!("RefTo({id})"),
             TypeConstraint::FromIntegerLiteral => "FromIntegerLiteral".to_string(),
             TypeConstraint::FromFloatLiteral => "FromFloatLiteral".to_string(),
         }
@@ -60,6 +59,7 @@ pub struct TypeInferenceEnvironment {
 }
 
 impl TypeInferenceEnvironment {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_id: InferenceId(0),
@@ -68,6 +68,7 @@ impl TypeInferenceEnvironment {
         }
     }
 
+    #[must_use]
     pub fn to_display(&self, id: InferenceId, types: &Types) -> String {
         match self.resolve(id) {
             Some(ty) => types.to_display(ty),
@@ -93,6 +94,9 @@ impl TypeInferenceEnvironment {
         id
     }
 
+    /// # Panics
+    ///
+    /// Panics if the `id` is not found in the constraints.
     pub fn add_constraint(&mut self, id: InferenceId, constraint: TypeConstraint) {
         let entry = self.constraints.get_mut(&id).expect(
             "TypeInferenceId not found in constraints, either it was resolved or not created",
@@ -101,6 +105,9 @@ impl TypeInferenceEnvironment {
         entry.push(constraint);
     }
 
+    /// # Panics
+    ///
+    /// Panics if both `a` and `b` are resolved to different types.
     pub fn unify(&mut self, a: InferenceId, b: InferenceId, types: &Types) {
         match (self.resolve(a), self.resolve(b)) {
             (Some(a), Some(b)) => {
@@ -127,6 +134,9 @@ impl TypeInferenceEnvironment {
         }
     }
 
+    /// # Panics
+    ///
+    /// Panics if the type of `a` is not equal to `ty`.
     pub fn unify_with(&mut self, a: InferenceId, ty: TypeId, types: &Types) {
         if let Some(resolved) = self.resolve(a) {
             dbg!(&self, &types);
@@ -143,6 +153,9 @@ impl TypeInferenceEnvironment {
         }
     }
 
+    /// # Panics
+    ///
+    /// Panics if it cannot unify the constraints into a concrete type id.
     pub fn unify_final(&mut self, types: &Types) {
         let constraints = self.constraints.clone();
 
@@ -152,11 +165,8 @@ impl TypeInferenceEnvironment {
                     TypeConstraint::Type(ty) => {
                         self.resolved.insert(id, ty);
                     }
-                    TypeConstraint::ConvertedFrom(other) => {
+                    TypeConstraint::ConvertedFrom(other) | TypeConstraint::ConvertibleTo(other) => {
                         self.unify(id, other, types);
-                    }
-                    TypeConstraint::ConvertibleTo(other) => {
-                        self.unify(other, id, types);
                     }
                     TypeConstraint::FromIntegerLiteral => {
                         self.unify_with(
@@ -203,6 +213,11 @@ impl TypeInferenceEnvironment {
         }
     }
 
+    /// # Panics
+    ///
+    /// Panics if the type of `id` does not match the expected type or if
+    /// the other constraints cannot be resolved.
+    #[allow(clippy::too_many_lines)]
     fn check_constraints(&mut self, id: InferenceId, ty: TypeId, types: &Types) {
         let constraints = self.constraints.remove(&id).unwrap();
         for constraint in constraints {
@@ -216,16 +231,13 @@ impl TypeInferenceEnvironment {
                         types.to_display(expected)
                     );
                 }
-                TypeConstraint::ConvertedFrom(other) => {
+                TypeConstraint::ConvertedFrom(other) | TypeConstraint::ConvertibleTo(other) => {
                     self.unify(id, other, types);
                 }
-                TypeConstraint::ConvertibleTo(other) => {
-                    self.unify(other, id, types);
-                }
-                TypeConstraint::Implements(trait_id) => {
+                TypeConstraint::Implements(_trait_id) => {
                     todo!()
                 }
-                TypeConstraint::DerefTo(other) => {
+                TypeConstraint::DerefTo(_other) => {
                     todo!()
                 }
                 TypeConstraint::RefTo(other) => match self.resolve(other) {
@@ -320,12 +332,20 @@ impl TypeInferenceEnvironment {
         }
     }
 
+    #[must_use]
     pub fn is_resolved(&self, id: InferenceId) -> bool {
         self.resolved.contains_key(&id)
     }
 
+    #[must_use]
     pub fn resolve(&self, id: InferenceId) -> Option<TypeId> {
         self.resolved.get(&id).copied()
+    }
+}
+
+impl Default for TypeInferenceEnvironment {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

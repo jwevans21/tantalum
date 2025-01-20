@@ -1,8 +1,8 @@
+use crate::functions::FunctionId;
 use crate::inference::InferenceId;
 use crate::literals::Literal;
 use crate::variables::VariableId;
-use crate::{HLIRPackage, TypeId};
-use crate::functions::FunctionId;
+use crate::HLIRPackage;
 
 /// The expressions used in HLIR
 ///

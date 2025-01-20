@@ -1,7 +1,7 @@
 use crate::expressions::Expression;
 use crate::types::TypeScopeId;
 use crate::variables::{VariableId, VariableScopeBlockId};
-use std::fmt::{Formatter, Pointer};
+use std::fmt::Formatter;
 
 #[derive(Clone, PartialEq, Eq)]
 pub enum Statement {
@@ -82,6 +82,7 @@ pub struct Return {
 }
 
 impl Return {
+    #[must_use]
     pub fn void() -> Self {
         Self { value: None }
     }

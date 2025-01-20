@@ -19,6 +19,16 @@ impl Path {
     pub fn segments(&self) -> &[PathSegment] {
         &self.0
     }
+
+    #[must_use]
+    pub fn to_mangled_string(&self) -> String {
+        let mut result = String::new();
+        for segment in self.segments() {
+            result.push_str("__");
+            result.push_str(&segment.name);
+        }
+        result
+    }
 }
 
 impl From<&str> for Path {

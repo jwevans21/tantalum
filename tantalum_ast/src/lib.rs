@@ -22,6 +22,7 @@ pub struct AST<'file_name, 'source>(
     pub  Vec<Spanned<'file_name, Item<'file_name, 'source>>>,
 );
 
+#[allow(unused_variables)]
 pub trait ASTVisitor<'file_name, 'source> {
     fn visit_ast(&mut self, ast: &AST<'file_name, 'source>) {
         for item in &ast.0 {

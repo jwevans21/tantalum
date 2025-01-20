@@ -1,7 +1,6 @@
-use crate::{types::TypeId, variables::scope::VariableScope};
+use crate::variables::scope::VariableScope;
 use std::collections::HashMap;
 use std::fmt::Formatter;
-use std::rc::Rc;
 
 mod scope;
 
@@ -74,6 +73,7 @@ pub struct Variables {
 }
 
 impl Variables {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_id: VariableId(0),
@@ -130,10 +130,20 @@ impl Variables {
         id
     }
 
+    #[must_use]
     pub fn get(&self, name: &str) -> Option<VariableId> {
         self.scope.get(name)
     }
 
+    #[must_use]
+    pub fn get_name(&self, id: &VariableId) -> Option<&str> {
+        match self.known.get(id) {
+            Some(VariableType::Variable(variable)) => Some(&variable.name),
+            _ => None,
+        }
+    }
+
+    #[must_use]
     pub fn get_type(&self, id: VariableId) -> Option<InferenceId> {
         match self.known.get(&id) {
             Some(VariableType::Variable(variable)) => Some(variable.ty),
@@ -152,6 +162,12 @@ impl Variables {
         self.scope.insert(name, id);
 
         id
+    }
+}
+
+impl Default for Variables {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

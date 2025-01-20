@@ -58,10 +58,10 @@ impl core::fmt::Display for Type {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Type::Unresolved(_) => write!(f, "unresolved"),
-            Type::Primitive(ty) => write!(f, "{}", ty),
-            Type::Ptr(ty) => write!(f, "*{:?}", ty),
-            Type::SizedArray(ty, len) => write!(f, "[{:?}; {}]", ty, len),
-            Type::UnsizedArray(ty) => write!(f, "[{:?}]", ty),
+            Type::Primitive(ty) => write!(f, "{ty}"),
+            Type::Ptr(ty) => write!(f, "*{ty:?}"),
+            Type::SizedArray(ty, len) => write!(f, "[{ty:?}; {len}]"),
+            Type::UnsizedArray(ty) => write!(f, "[{ty:?}]"),
         }
     }
 }
@@ -133,6 +133,7 @@ pub struct Types {
 }
 
 impl Types {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             next_id: TypeId(0),
@@ -156,6 +157,10 @@ impl Types {
         id
     }
 
+    pub fn iter(&self) -> impl Iterator<Item = (TypeId, &Type)> + '_ {
+        self.known.iter().map(|(&id, ty)| (id, ty.as_ref()))
+    }
+
     /// Get the ID of a type, inserting it if it does not already exist.
     ///
     /// Used to ensure deduplication of types.
@@ -174,14 +179,17 @@ impl Types {
         id
     }
 
+    #[must_use]
     pub fn get(&self, path: &Path) -> Option<TypeId> {
         self.scope.get(path)
     }
 
+    #[must_use]
     pub fn get_by_id(&self, id: TypeId) -> Option<Rc<Type>> {
         self.known.get(&id).cloned()
     }
-    
+
+    #[must_use]
     pub fn to_display(&self, id: TypeId) -> String {
         match self.get_by_id(id) {
             None => String::new(),
@@ -209,6 +217,12 @@ impl Types {
     pub fn create_type_with_id(&mut self, path: Path, id: TypeId) {
         debug_assert!(self.known.contains_key(&id));
         self.scope.insert(path, id);
+    }
+}
+
+impl Default for Types {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

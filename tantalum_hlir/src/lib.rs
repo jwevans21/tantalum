@@ -1,36 +1,18 @@
 #![feature(debug_closure_helpers)]
 
-use crate::{
-    functions::{FunctionId, Functions},
-    inference::{InferenceId, TypeInferenceEnvironment},
-    items::{FunctionBuilder, FunctionPrototype},
-    literals::Literal,
-    statements::Let,
-    traits::Traits,
-    types::PrimitiveType,
-    types::{Type, Types},
-    variables::Variables,
-};
 use std::collections::HashMap;
 use std::rc::Rc;
 
-use crate::expressions::{
-    BinaryOperation, BinaryOperator, FunctionCall, TypeCast, UnaryOperation, UnaryOperator,
-};
-use crate::inference::TypeConstraint;
-use crate::items::Function;
-use crate::literals::LiteralValue;
-use crate::statements::{Block, If, Return, While};
-use crate::traits::TraitImpl;
-use crate::types::TypeScopeId;
-use crate::variables::VariableScopeBlockId;
-pub use crate::{
-    expressions::Expression,
-    path::{Path, PathSegment},
-    statements::Statement,
-    types::TypeId,
-    variables::VariableId,
-};
+pub use expressions::*;
+pub use functions::*;
+pub use inference::*;
+pub use items::*;
+pub use literals::*;
+pub use path::*;
+pub use statements::*;
+pub use traits::*;
+pub use types::*;
+pub use variables::*;
 
 mod expressions;
 mod functions;
@@ -193,6 +175,48 @@ impl HLIRPackage {
     //     };
     // }
 
+    pub fn types(&self) -> impl Iterator<Item = (TypeId, &Type)> {
+        self.types.iter()
+    }
+
+    /// # Panics
+    ///
+    /// Panics if no path is found for the function ID.
+    pub fn prototypes(&self) -> impl Iterator<Item = (FunctionId, String, &FunctionPrototype)> {
+        self.functions.prototypes().map(|(id, prototype)| {
+            let name = self
+                .get_function_path(&id)
+                .expect("expected function to exist")
+                .to_mangled_string();
+            (id, name, prototype)
+        })
+    }
+
+    pub fn impls(&self) -> impl Iterator<Item = (FunctionId, &Function)> {
+        self.functions.impls()
+    }
+
+    // pub fn walk_types(&self, f: impl FnMut((TypeId, &Type))) {
+    //     self.types.iter().for_each(f);
+    // }
+    //
+    // pub fn walk_prototypes(&self, f: impl FnMut((FunctionId, String, &FunctionPrototype))) {
+    //     self.functions
+    //         .prototypes()
+    //         .map(|(id, prototype)| {
+    //             let name = self
+    //                 .get_function_path(&id)
+    //                 .expect("expected function to exist")
+    //                 .to_mangled_string();
+    //             (id, name, prototype)
+    //         })
+    //         .for_each(f);
+    // }
+    //
+    // pub fn walk_functions(&self, f: impl FnMut((FunctionId, &Function))) {
+    //     self.functions.impls().for_each(f);
+    // }
+
     // TODO: Implement a building interface for types
 
     /// Used to define completely new types.
@@ -218,6 +242,11 @@ impl HLIRPackage {
     #[must_use]
     pub fn get_type_id(&self, path: &Path) -> Option<TypeId> {
         self.types.get(path)
+    }
+
+    #[must_use]
+    pub fn get_resolved_type(&self, id: InferenceId) -> Option<TypeId> {
+        self.type_inference_environment.resolve(id)
     }
 
     // TODO: Implement a building interface for types
@@ -262,6 +291,11 @@ impl HLIRPackage {
     #[must_use]
     pub fn get_function_id(&self, path: &Path) -> Option<FunctionId> {
         self.functions.get(path)
+    }
+
+    #[must_use]
+    pub fn get_function_path(&self, id: &FunctionId) -> Option<&Path> {
+        self.functions.get_path(id)
     }
 
     #[must_use]
@@ -381,6 +415,14 @@ impl HLIRPackage {
         self.variables.get(name)
     }
 
+    /// # Panics
+    ///
+    /// Panics if the variable is not found.
+    #[must_use]
+    pub fn get_variable_name(&self, id: &VariableId) -> &str {
+        self.variables.get_name(id).expect("variable not found")
+    }
+
     // TODO: Implement a building interface for statements
 
     pub fn build_block_start(&mut self) {
@@ -467,6 +509,9 @@ impl HLIRPackage {
         Return::void().into()
     }
 
+    /// # Panics
+    ///
+    /// Panics if the current function is not found.
     pub fn build_statement_return(&mut self, value: Expression) -> Statement {
         let function_return_ty = self
             .building_functions
@@ -506,6 +551,10 @@ impl HLIRPackage {
         Expression::Literal(literal)
     }
 
+    /// # Panics
+    ///
+    /// Panics if the function is not found or if the arguments do not match the
+    /// function prototype.
     pub fn build_function_call(
         &mut self,
         function: FunctionId,
@@ -670,6 +719,9 @@ impl HLIRPackage {
         BinaryOperator::GreaterThanOrEqual
     }
 
+    /// # Panics
+    ///
+    /// This function will panic if the `bool` type is not found in the package.
     pub fn build_expression_binary(
         &mut self,
         operator: BinaryOperator,
@@ -747,6 +799,9 @@ impl HLIRPackage {
         Literal::new(LiteralValue::Float { value }, type_inference_id)
     }
 
+    /// # Panics
+    ///
+    /// Panics if the `bool` type is not found in the package.
     pub fn build_boolean_literal(&mut self, value: bool) -> Literal {
         let type_inference_id = self.create_type_inference_variable();
 
@@ -762,6 +817,9 @@ impl HLIRPackage {
         Literal::new(LiteralValue::Boolean { value }, type_inference_id)
     }
 
+    /// # Panics
+    ///
+    /// Panics if the `char` type is not found in the package.
     pub fn build_character_literal(&mut self, value: String) -> Literal {
         let type_inference_id = self.create_type_inference_variable();
 
@@ -777,6 +835,9 @@ impl HLIRPackage {
         Literal::new(LiteralValue::Character { value }, type_inference_id)
     }
 
+    /// # Panics
+    ///
+    /// Panics if the `str` type is not found in the package.
     pub fn build_string_literal(&mut self, value: String) -> Literal {
         let type_inference_id = self.create_type_inference_variable();
 

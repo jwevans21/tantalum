@@ -55,6 +55,7 @@ pub struct FunctionBuilder {
 }
 
 impl FunctionBuilder {
+    #[must_use]
     pub fn new(
         variable_scope: VariableScopeBlockId,
         type_scope: TypeScopeId,
@@ -80,6 +81,7 @@ impl FunctionBuilder {
     /// Build the function based on the current state of the builder.
     ///
     /// If the body of the function is not set, this will return `None`.
+    #[must_use]
     pub fn build(self) -> Option<Function> {
         Some(Function {
             variable_scope: self.variable_scope,
