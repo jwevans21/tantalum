@@ -1,0 +1,36 @@
+[workspace]
+resolver = "2"
+members = [ "crates/tantalum_lexer", "crates/tantalum_parser","crates/tantalum_source", "crates/tantalum_syntax"]
+
+[workspace.dependencies]
+insta = "1.42.0"
+
+[workspace.package]
+authors = ["Jacob Evans <jacob@evansj.dev>"]
+categories = ["programming-languages"]
+description = "The Tantalum Programming Language"
+edition = "2021"
+keywords = ["tantalum", "programming", "language"]
+license = "Apache-2.0 OR MIT"
+readme = "README.md"
+repository = "https://github.com/jwevans21/tantalum"
+rust-version = "1.83.0"
+
+[workspace.lints.clippy]
+cargo = { level = "forbid", priority = -1 }
+complexity = { level = "forbid", priority = -1 }
+correctness = { level = "forbid", priority = -1 }
+pedantic = { level = "forbid", priority = -1 }
+perf = { level = "forbid", priority = -1 }
+restriction = { level = "allow", priority = -1 }
+style = { level = "forbid", priority = -1 }
+suspicious = { level = "forbid", priority = -1 }
+
+[package]
+name = "tantalum"
+edition = "2021"
+
+[dependencies]
+tantalum_lexer = { path = "crates/tantalum_lexer" }
+tantalum_parser = { path = "crates/tantalum_parser" }
+tantalum_source = { path = "crates/tantalum_source" }
