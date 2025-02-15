@@ -9,7 +9,7 @@ repository.workspace = true
 publish.workspace = true
 
 [dependencies]
-inkwell = { version = "0.5.0", features = ["llvm18-0-force-dynamic"] }
+inkwell = { version = "0.5.0", features = ["llvm18-0"] }
 tantalum_hlir = { path = "../tantalum_hlir" }
 
 [dev-dependencies]
